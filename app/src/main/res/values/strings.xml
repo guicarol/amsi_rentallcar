@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">rentallcar</string>
+    <string name="txt_login">Login</string>
+    <string name="txt_password">Introduza a Password</string>
+    <string name="txt_email">Introduza o email</string>
+    <string name="txt_registar">Registar</string>
+    <string name="txt_recolha">Recolha</string>
+    <string name="txt_localizacao">Localização</string>
+    <string name="txt_data_de_recolha">Data de recolha</string>
+    <string name="txt_pesquisar">Pesquisar</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_email_invalido">Email invalido</string>
+    <string name="txt_password_invalida">Passowrd invalida</string>
+    <string name="txt_titulo">Titulo</string>
+    <string name="txt_serie">serie</string>
+    <string name="txt_autor">autoor</string>
+    <string name="txt_ano">ano</string>
 </resources>
