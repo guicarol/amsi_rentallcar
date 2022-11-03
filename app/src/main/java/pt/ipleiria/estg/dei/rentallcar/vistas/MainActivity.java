@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
+import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
 import pt.ipleiria.estg.dei.rentallcar.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,8 +16,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent= getIntent();
+    }
 
-
+    public void onClickPesquisar(View view) {
+        Intent intent= new Intent(this, ResultadoPesquisa.class);
+        startActivity(intent);
+        finish();
     }
 }

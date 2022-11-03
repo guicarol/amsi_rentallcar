@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 
 import pt.ipleiria.estg.dei.rentallcar.vistas.Favoritos;
+import pt.ipleiria.estg.dei.rentallcar.vistas.Pesquisar;
+import pt.ipleiria.estg.dei.rentallcar.vistas.Utilizador;
 
 public class MenuMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -65,6 +67,14 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
         switch (item.getItemId()) {
+            case R.id.pesquisar:
+                fragment = new Pesquisar();
+                setTitle(item.getTitle());
+                break;
+            case R.id.utilizador:
+                fragment = new Utilizador();
+                setTitle(item.getTitle());
+                break;
             case R.id.favoritos:
                 fragment = new Favoritos();
                 setTitle(item.getTitle());
