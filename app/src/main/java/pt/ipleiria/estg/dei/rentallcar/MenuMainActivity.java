@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import pt.ipleiria.estg.dei.rentallcar.vistas.Favoritos;
 import pt.ipleiria.estg.dei.rentallcar.vistas.Pesquisar;
+import pt.ipleiria.estg.dei.rentallcar.vistas.ResultadoPesquisa;
 import pt.ipleiria.estg.dei.rentallcar.vistas.Utilizador;
 
 public class MenuMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -79,6 +81,9 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
                 fragment = new Favoritos();
                 setTitle(item.getTitle());
                 break;
+            case R.id.logout:
+                onDestroy();
+                break;
         }
         if (fragment != null)
             fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
@@ -86,4 +91,10 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void onClickPesquisar(View view) {
+        Intent intent=new Intent(this, ResultadoPesquisa.class);
+        startActivity(intent);
+    }
+
 }

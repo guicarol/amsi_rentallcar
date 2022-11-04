@@ -18,9 +18,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onClickPesquisar(View view) {
-        Intent intent= new Intent(this, ResultadoPesquisa.class);
-        startActivity(intent);
-        finish();
-    }
+
 }

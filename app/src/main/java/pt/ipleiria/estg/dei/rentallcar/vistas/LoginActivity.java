@@ -60,4 +60,10 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         return pass.length() >= MIN_PASS;
     }
+
+    public void onClickRegistar(View view) {
+        Intent intent= new Intent(this, RegistoActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
