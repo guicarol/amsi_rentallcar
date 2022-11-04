@@ -12,10 +12,10 @@ import pt.ipleiria.estg.dei.rentallcar.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Utilizador#newInstance} factory method to
+ * Use the {@link ReservasFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Utilizador extends Fragment {
+public class ReservasFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class Utilizador extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Utilizador() {
+    public ReservasFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class Utilizador extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Utilizador.
+     * @return A new instance of fragment ReservasFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Utilizador newInstance(String param1, String param2) {
-        Utilizador fragment = new Utilizador();
+    public static ReservasFragment newInstance(String param1, String param2) {
+        ReservasFragment fragment = new ReservasFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,9 +61,6 @@ public class Utilizador extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_utilizador, container, false);
-    }
-
-    public void onClickAlterar(View view) {
+        return inflater.inflate(R.layout.fragment_reservas, container, false);
     }
 }

@@ -12,24 +12,8 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.3"
+        android:layout_weight="0.4"
         tools:srcCompat="@tools:sample/avatars" />
-
-    <EditText
-        android:id="@+id/etNome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Nome" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Name" />
 
     <EditText
         android:id="@+id/etUsername"
@@ -37,7 +21,31 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="UserName" />
+        android:hint="Username" />
+
+    <EditText
+        android:id="@+id/etNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Noome" />
+
+    <EditText
+        android:id="@+id/etApelido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Apelido" />
+
+    <EditText
+        android:id="@+id/etTelefone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Telefone" />
 
     <EditText
         android:id="@+id/etEmail"
