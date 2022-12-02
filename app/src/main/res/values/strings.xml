@@ -20,4 +20,22 @@
     <string name="txt_ano">ano</string>
     <string name="txt_sobre">A RentAllCar é uma empresa reconhecida a nivel nacional criada por 3 jovens que procuram soluções modernas para as necessidades atuais.</string>
     <string name="txt_equipa">Com sede em Leiria, a equipa é composta por 3 talentos da criatividade com vários conhecimentos de negócio e com uma cratividade incrivel.</string>
+
+
+    <string name="txt_dinamico">Ver Detalhes Livro (Dinâmico)</string>
+    <string name="txt_menu_email">Enviar Email</string>
+    <string name="txt_boas_vindas">Bem-vindo!</string>
+    <string name="txt_pass_invalida">Password ivalida</string>
+    <string name="act_estatico">Dados estáticos</string>
+    <string name="act_dinamico">Dados Dimanico</string>
+    <string name="menu_estatico">Livro Lista</string>
+    <string name="menu_dinamico">Livro Grelha</string>
+    <string name="menu_comunicar">Comunicar</string>
+    <string name="menu_email">Email</string>
+    <string name="act_livro">Detalhes: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="menu_pesquisar">Pesquisa</string>
+    <string name="menu_remover">Remover</string>
+    <string name="act_detalhes">Adicionar Livro</string>
+
 </resources>
