@@ -29,7 +29,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/txt_titulo"
+                android:text="@string/txt_marca"
                 android:textStyle="bold" />
 
             <TextView
@@ -48,7 +48,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/txt_serie"
+                android:text="@string/txt_modelo"
                 android:textStyle="bold" />
 
             <TextView
@@ -67,7 +67,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/txt_autor"
+                android:text="@string/txt_combustivel"
                 android:textStyle="bold" />
 
             <TextView
@@ -86,7 +86,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/txt_ano"
+                android:text="@string/txt_preco"
                 android:textStyle="bold" />
 
             <TextView

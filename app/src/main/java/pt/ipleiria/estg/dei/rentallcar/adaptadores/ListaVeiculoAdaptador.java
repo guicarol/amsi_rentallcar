@@ -11,32 +11,32 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.rentallcar.R;
-import pt.ipleiria.estg.dei.rentallcar.modelo.Livro;
+import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
 
-public class ListaLivroAdaptador extends BaseAdapter {
+public class ListaVeiculoAdaptador extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater;
-    private ArrayList<Livro>livros;
+    private ArrayList<Veiculo> veiculos;
 
-    public ListaLivroAdaptador(Context context, ArrayList<Livro> livros) {
+    public ListaVeiculoAdaptador(Context context, ArrayList<Veiculo> veiculos) {
         this.context = context;
-        this.livros = livros;
+        this.veiculos = veiculos;
     }
 
     @Override
     public int getCount() {
-        return livros.size();
+        return veiculos.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return livros.get(i);
+        return veiculos.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return livros.get(i).getId();
+        return veiculos.get(i).getId();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ListaLivroAdaptador extends BaseAdapter {
             view.setTag(viewHolder);
         }
 
-        viewHolder.update(livros.get(i));
+        viewHolder.update(veiculos.get(i));
 
         return view;
     }
@@ -70,12 +70,12 @@ public class ListaLivroAdaptador extends BaseAdapter {
             tvAno=view.findViewById(R.id.tvAno);
             imgCapa=view.findViewById(R.id.imgCapa);
         }
-        public void update(Livro livro){
-            tvTitulo.setText(livro.getTitulo());
-            tvSerie.setText(livro.getSerie());
-            tvAutor.setText(livro.getAutor());
-            tvAno.setText(livro.getAno()+"");
-            imgCapa.setImageResource(livro.getCapa());
+        public void update(Veiculo veiculo){
+            tvTitulo.setText(veiculo.getMarca());
+            tvSerie.setText(veiculo.getModelo());
+            tvAutor.setText(veiculo.getCombustivel());
+            tvAno.setText(veiculo.getPreco()+"");
+            imgCapa.setImageResource(veiculo.getCapa());
         }
     }
 }

@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/txt_titulo"
+                android:hint="@string/txt_marca"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/txt_serie"
+                android:hint="@string/txt_modelo"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/txt_autor"
+                android:hint="@string/txt_combustivel"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/txt_ano"
+                android:hint="@string/txt_preco"
                 android:inputType="number" />
 
             <Space

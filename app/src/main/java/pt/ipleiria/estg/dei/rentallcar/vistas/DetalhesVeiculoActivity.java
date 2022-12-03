@@ -20,12 +20,12 @@ import java.util.Calendar;
 
 import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
 import pt.ipleiria.estg.dei.rentallcar.R;
-import pt.ipleiria.estg.dei.rentallcar.modelo.Livro;
-import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorLivros;
+import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
+import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 
 public class DetalhesVeiculoActivity extends AppCompatActivity {
 
-    private Livro livro;
+    private Veiculo veiculo;
     private EditText etTitulo, etSerie, etAno, etAutor;
     private ImageView imgCapa;
     private FloatingActionButton fabGuardar;
@@ -46,8 +46,8 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
 
         int id = getIntent().getIntExtra(IDLIVRO, 0);
 
-        livro = SingletonGestorLivros.getInstance(getApplicationContext()).getLivro(id);
-        if (livro != null) {
+        veiculo = SingletonGestorVeiculos.getInstance(getApplicationContext()).getLivro(id);
+        if (veiculo != null) {
             carregarLivro();
             fabGuardar.setImageResource(R.drawable.ic_action_guardar);
         } else {
@@ -63,21 +63,21 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
                     String serie = etSerie.getText().toString();
                     int ano = Integer.parseInt(etAno.getText().toString());
                     Intent intent = new Intent();
-                    if (livro != null) {
+                    if (veiculo != null) {
                         //editar livro
                         //livroAux= new Livro(ano,livro.getCapa(),titulo,serie,autor);
-                        livro.setTitulo(titulo);
-                        livro.setAutor(autor);
-                        livro.setSerie(serie);
-                        livro.setAno(ano);
-                        SingletonGestorLivros.getInstance(getApplicationContext()).editarLivroBD(livro);
+                        veiculo.setMarca(titulo);
+                        veiculo.setCombustivel(autor);
+                        veiculo.setModelo(serie);
+                        veiculo.setPreco(ano);
+                        SingletonGestorVeiculos.getInstance(getApplicationContext()).editarLivroBD(veiculo);
                         intent.putExtra(MenuMainActivity.OPERACAO, MenuMainActivity.EDIT);
 
 
                     } else {
                         //criar Livro
-                        Livro livroAux = new Livro(ano, R.drawable.logoipl, titulo, serie, autor);
-                        SingletonGestorLivros.getInstance(getApplicationContext()).adicionarLivroBD(livroAux);
+                        Veiculo veiculoAux = new Veiculo(ano, R.drawable.logoipl, titulo, serie, autor);
+                        SingletonGestorVeiculos.getInstance(getApplicationContext()).adicionarLivroBD(veiculoAux);
                         intent.putExtra(MenuMainActivity.OPERACAO, MenuMainActivity.ADD);
 
                     }
@@ -120,18 +120,18 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
 
     private void carregarLivro() {
         Resources res = getResources();
-        String nome = String.format(res.getString(R.string.act_livro), livro.getTitulo());
+        String nome = String.format(res.getString(R.string.act_livro), veiculo.getMarca());
         setTitle(nome);
-        etTitulo.setText(livro.getTitulo());
-        etSerie.setText(livro.getSerie());
-        etAutor.setText(livro.getAutor());
-        etAno.setText(livro.getAno() + "");
-        imgCapa.setImageResource(livro.getCapa());
+        etTitulo.setText(veiculo.getMarca());
+        etSerie.setText(veiculo.getModelo());
+        etAutor.setText(veiculo.getCombustivel());
+        etAno.setText(veiculo.getPreco() + "");
+        imgCapa.setImageResource(veiculo.getCapa());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (livro != null) {
+        if (veiculo != null) {
             getMenuInflater().inflate(R.menu.menu_detalhes_livro, menu);
             return super.onCreateOptionsMenu(menu);
         }
@@ -157,7 +157,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SingletonGestorLivros.getInstance(getApplicationContext()).removerLivroBD(livro.getId());
+                        SingletonGestorVeiculos.getInstance(getApplicationContext()).removerLivroBD(veiculo.getId());
                         Intent intent = new Intent();
                         intent.putExtra(MenuMainActivity.OPERACAO, MenuMainActivity.DELETE);
                         setResult(RESULT_OK, intent);

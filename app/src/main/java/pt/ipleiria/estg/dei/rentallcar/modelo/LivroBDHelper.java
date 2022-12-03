@@ -45,34 +45,34 @@ public class LivroBDHelper  extends SQLiteOpenHelper {
 
     }
 
-    public Livro adicionarLivroBD(Livro livro) {
+    public Veiculo adicionarLivroBD(Veiculo veiculo) {
 
         ContentValues values = new ContentValues();
-        values.put(TITULO, livro.getTitulo());
-        values.put(SERIE, livro.getSerie());
-        values.put(AUTOR, livro.getAutor());
-        values.put(ANO, livro.getAno());
-        values.put(CAPA, livro.getCapa());
+        values.put(TITULO, veiculo.getMarca());
+        values.put(SERIE, veiculo.getModelo());
+        values.put(AUTOR, veiculo.getCombustivel());
+        values.put(ANO, veiculo.getPreco());
+        values.put(CAPA, veiculo.getCapa());
 
         long id = db.insert(TABLE_LIVROS, null, values);
 
         if (id > -1) {
-            livro.setId((int) id);
-            return livro;
+            veiculo.setId((int) id);
+            return veiculo;
         }
         return null;
     }
 
-    public boolean editarLivroBD(Livro livro) {
+    public boolean editarLivroBD(Veiculo veiculo) {
 
         ContentValues values = new ContentValues();
-        values.put(TITULO, livro.getTitulo());
-        values.put(SERIE, livro.getSerie());
-        values.put(AUTOR, livro.getAutor());
-        values.put(ANO, livro.getAno());
-        values.put(CAPA, livro.getCapa());
+        values.put(TITULO, veiculo.getMarca());
+        values.put(SERIE, veiculo.getModelo());
+        values.put(AUTOR, veiculo.getCombustivel());
+        values.put(ANO, veiculo.getPreco());
+        values.put(CAPA, veiculo.getCapa());
 
-        return db.update(TABLE_LIVROS, values, ID + "=?", new String[]{livro.getId() + ""}) == 1;
+        return db.update(TABLE_LIVROS, values, ID + "=?", new String[]{veiculo.getId() + ""}) == 1;
 
 
     }
@@ -81,21 +81,21 @@ public class LivroBDHelper  extends SQLiteOpenHelper {
         return db.delete(TABLE_LIVROS, ID + "=?", new String[]{id + ""}) == 1;
     }
 
-    public ArrayList<Livro> getAllLivroBD() {
-        ArrayList<Livro> livros = new ArrayList<>();
+    public ArrayList<Veiculo> getAllLivroBD() {
+        ArrayList<Veiculo> veiculos = new ArrayList<>();
         Cursor cursor = db.query(TABLE_LIVROS, new String[]{ANO, CAPA, TITULO, SERIE, AUTOR, ID}, null, null, null, null, null);
 
         if (cursor.moveToFirst()){
             do{
-                Livro livroAux =new Livro(cursor.getInt(0),cursor.getInt(1),cursor.getString(2),cursor.getString(3),cursor.getString(4));
+                Veiculo veiculoAux =new Veiculo(cursor.getInt(0),cursor.getInt(1),cursor.getString(2),cursor.getString(3),cursor.getString(4));
 
-                livroAux.setId(cursor.getInt(5));
-                livros.add(livroAux);
+                veiculoAux.setId(cursor.getInt(5));
+                veiculos.add(veiculoAux);
 
             }while (cursor.moveToNext());
             cursor.close();
         }
-        return livros;
+        return veiculos;
     }
 
 
