@@ -37,5 +37,6 @@
     <string name="menu_pesquisar">Pesquisa</string>
     <string name="menu_remover">Remover</string>
     <string name="act_detalhes">Adicionar Livro</string>
+    <string name="txt_categoria">Categoria</string>
 
 </resources>
