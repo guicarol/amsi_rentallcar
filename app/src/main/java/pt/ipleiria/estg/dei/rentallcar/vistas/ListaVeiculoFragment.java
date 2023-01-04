@@ -3,11 +3,6 @@ package pt.ipleiria.estg.dei.rentallcar.vistas;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +14,10 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -26,10 +25,11 @@ import java.util.ArrayList;
 import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
 import pt.ipleiria.estg.dei.rentallcar.R;
 import pt.ipleiria.estg.dei.rentallcar.adaptadores.ListaVeiculoAdaptador;
-import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
+import pt.ipleiria.estg.dei.rentallcar.listeners.VeiculosListener;
 import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
+import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
 
-public class ListaVeiculoFragment extends Fragment {
+public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
 
     private ListView lvLivros;
     private ArrayList<Veiculo> veiculos;
@@ -41,7 +41,6 @@ public class ListaVeiculoFragment extends Fragment {
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -49,8 +48,9 @@ public class ListaVeiculoFragment extends Fragment {
         setHasOptionsMenu(true);
         lvLivros = view.findViewById(R.id.lvLivros);
         fabLista = view.findViewById(R.id.fabLista);
-        veiculos = SingletonGestorVeiculos.getInstance(getContext()).getLivrosBD();
-        lvLivros.setAdapter(new ListaVeiculoAdaptador(getContext(), veiculos));
+        SingletonGestorVeiculos.getInstance(getContext()).setVeiculosListener(this);
+
+        SingletonGestorVeiculos.getInstance(getContext()).getAllLivrosAPI(getContext());
 
         lvLivros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,7 +76,7 @@ public class ListaVeiculoFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         if (resultCode == Activity.RESULT_OK && requestCode == DETALHES) {
-            veiculos = SingletonGestorVeiculos.getInstance(getContext()).getLivrosBD();
+            veiculos = SingletonGestorVeiculos.getInstance(getContext()).getVeiculosBD();
             lvLivros.setAdapter(new ListaVeiculoAdaptador(getContext(), veiculos));
             switch (intent.getIntExtra(MenuMainActivity.OPERACAO, 0)) {
                 case MenuMainActivity.ADD:
@@ -122,6 +122,13 @@ public class ListaVeiculoFragment extends Fragment {
         if (searchView != null)
             searchView.onActionViewCollapsed();
         super.onResume();
+    }
+
+    @Override
+    public void onRefreshListaVeiculos(ArrayList<Veiculo> listaVeiculos) {
+        if (listaVeiculos != null)
+            lvLivros.setAdapter(new ListaVeiculoAdaptador(getContext(), listaVeiculos));
+
     }
 }
 

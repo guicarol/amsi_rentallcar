@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.rentallcar.R;
@@ -41,17 +44,17 @@ public class ListaVeiculoAdaptador extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if(inflater==null)
-            inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (inflater == null)
+            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (view==null)
-            view=inflater.inflate(R.layout.item_lista_veiculo, null);
+        if (view == null)
+            view = inflater.inflate(R.layout.item_lista_veiculo, null);
 
         /*otimizaçao*/
 
-        ViewHolderlista viewHolder=(ViewHolderlista) view.getTag();
-        if (viewHolder== null){
-            viewHolder=new ViewHolderlista(view);
+        ViewHolderlista viewHolder = (ViewHolderlista) view.getTag();
+        if (viewHolder == null) {
+            viewHolder = new ViewHolderlista(view);
             view.setTag(viewHolder);
         }
 
@@ -59,23 +62,29 @@ public class ListaVeiculoAdaptador extends BaseAdapter {
 
         return view;
     }
-    private class ViewHolderlista{
-        private TextView tvTitulo, tvSerie,tvAno, tvAutor;
+
+    private class ViewHolderlista {
+        private TextView tvTitulo, tvSerie, tvAno, tvAutor;
         private ImageView imgCapa;
 
-        public ViewHolderlista(View view){
-            tvTitulo=view.findViewById(R.id.tvTitulo);
-            tvSerie=view.findViewById(R.id.tvSerie);
-            tvAutor=view.findViewById(R.id.tvAutor);
-            tvAno=view.findViewById(R.id.tvAno);
-            imgCapa=view.findViewById(R.id.imgCapa);
+        public ViewHolderlista(View view) {
+            tvTitulo = view.findViewById(R.id.tvTitulo);
+            tvSerie = view.findViewById(R.id.tvSerie);
+            tvAutor = view.findViewById(R.id.tvAutor);
+            tvAno = view.findViewById(R.id.tvAno);
+            imgCapa = view.findViewById(R.id.imgCapa);
         }
-        public void update(Veiculo veiculo){
+
+        public void update(Veiculo veiculo) {
             tvTitulo.setText(veiculo.getMarca());
             tvSerie.setText(veiculo.getModelo());
             tvAutor.setText(veiculo.getCombustivel());
-            tvAno.setText(veiculo.getPreco()+"");
-            imgCapa.setImageResource(veiculo.getCapa());
+            tvAno.setText(veiculo.getPreco() + "");
+            Glide.with(context)
+                    .load(veiculo.getDescricao())
+                    .placeholder(R.drawable.logoipl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imgCapa);
         }
     }
 }
