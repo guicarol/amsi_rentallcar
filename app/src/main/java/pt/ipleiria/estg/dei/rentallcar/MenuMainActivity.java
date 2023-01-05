@@ -103,6 +103,7 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
                 fragment = new SobreFragment();
                 setTitle(item.getTitle());
                 break;
+
             case R.id.logout:
                 onDestroy();
                 break;

@@ -31,7 +31,7 @@ public class VeiculoBDHelper extends SQLiteOpenHelper {
                 MODELO + " TEXT NOT NULL, " +
                 COMBUSTIVEL + " TEXT NOT NULL, " +
                 PRECO + " INTEGER NOT NULL, " +
-                DESCRICAO + " INTEGER" +
+                DESCRICAO + " TEXT NOT NULL" +
                 ");";
         sqLiteDatabase.execSQL(createSQLTableLivro);
 

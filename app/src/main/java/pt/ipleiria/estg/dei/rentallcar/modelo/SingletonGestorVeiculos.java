@@ -28,7 +28,7 @@ public class SingletonGestorVeiculos {
     private static SingletonGestorVeiculos instance = null;
     private VeiculoBDHelper veiculosBD;
     private static RequestQueue volleyQueue = null;
-    private static final String mUrLAPILivros = "http://192.168.1.70/rentallcar_api/web/";
+    private static final String mUrLAPIVeiculos = "http://localhost:8080/";
     private static final String TOKEN = "AMSI-TOKEN";
     private VeiculosListener veiculosListener;
     private DetalhesListener detalhesListener;
@@ -56,19 +56,7 @@ public class SingletonGestorVeiculos {
     public void setDetalhesListener(DetalhesListener detalhesListener) {
         this.detalhesListener = detalhesListener;
     }
-    /* private void gerarDadosDinamico() {
-        livros = new ArrayList<>();
-        livros.add(new Livro(2021, R.drawable.programarandroid2, "Programar em Android AMSI - 1", "2ª Temporada", "AMSI TEAM"));
-        livros.add(new Livro(2021, R.drawable.programarandroid1, "Programar em Android AMSI - 2", "2ª Temporada", "AMSI TEAM"));
-        livros.add(new Livro(2021, R.drawable.logoipl, "Programar em Android AMSI - 3", "2ª Temporada", "AMSI TEAM"));
-        livros.add(new Livro(2021, R.drawable.programarandroid2, "Programar em Android AMSI - 4", "2ª Temporada", "AMSI TEAM"));
-        livros.add(new Livro(2021, R.drawable.programarandroid1, "Programar em Android AMSI - 5", "2ª Temporada", "AMSI TEAM"));
-        livros.add(new Livro(2021, R.drawable.logoipl, "Programar em Android AMSI - 6", "2ª Temporada", "AMSI TEAM"));
-        livros.add(new Livro(2021, R.drawable.programarandroid2, "Programar em Android AMSI - 7", "2ª Temporada", "AMSI TEAM"));
-        livros.add(new Livro(2021, R.drawable.programarandroid1, "Programar em Android AMSI - 8", "2ª Temporada", "AMSI TEAM"));
-        livros.add(new Livro(2021, R.drawable.logoipl, "Programar em Android AMSI - 9", "2ª Temporada", "AMSI TEAM"));
-        livros.add(new Livro(2021, R.drawable.programarandroid2, "Programar em Android AMSI - 10", "2ª Temporada", "AMSI TEAM"));
-    }*/
+
 
 
     //region LIVRO-BD
@@ -85,38 +73,38 @@ public class SingletonGestorVeiculos {
         return null;
     }
 
-    public void adicionarLivroBD(Veiculo livro) {
-        veiculosBD.adicionarLivroBD(livro);
+    public void adicionarLivroBD(Veiculo veiculo) {
+        veiculosBD.adicionarLivroBD(veiculo);
     }
 
-    public void adicionarLivrosBD(ArrayList<Veiculo> livros) {
+    public void adicionarLivrosBD(ArrayList<Veiculo> veiculos) {
         veiculosBD.removerAllLivrosBD();
-        for (Veiculo l : livros)
+        for (Veiculo l : veiculos)
             adicionarLivroBD(l);
     }
 
     public void removerLivroBD(int id) {
-        Veiculo livroAux = getLivro(id);
-        if (livroAux != null) {
+        Veiculo veiculoAux = getLivro(id);
+        if (veiculoAux != null) {
             if (veiculosBD.removerLivroBD(id)) ;
         }
     }
 
-    public void editarLivroBD(Veiculo livro) {
-        Veiculo livroAux = getLivro(livro.getId());
-        if (livroAux != null) {
-            veiculosBD.editarLivroBD(livro);
+    public void editarLivroBD(Veiculo veiculo) {
+        Veiculo veiculoAux = getLivro(veiculo.getId());
+        if (veiculoAux != null) {
+            veiculosBD.editarLivroBD(veiculo);
         }
     }
     //endregion
 
 
     //region LIVRO-API
-    public void adicionarLivroAPI(final Veiculo livro, final Context context) {
+    public void adicionarLivroAPI(final Veiculo veiculo, final Context context) {
         if (!VeiculosJsonParser.isConnectionInternet(context))
             Toast.makeText(context, "Sem ligaçao a internet", Toast.LENGTH_LONG).show();
         else {
-            StringRequest req = new StringRequest(Request.Method.POST, mUrLAPILivros, new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.POST, mUrLAPIVeiculos, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     adicionarLivroBD(VeiculosJsonParser.parserJsonLivro(response));
@@ -134,11 +122,11 @@ public class SingletonGestorVeiculos {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("token", TOKEN);
-                    params.put("titulo", livro.getMarca());
-                    params.put("autor", livro.getModelo());
-                    params.put("serie", livro.getCombustivel());
-                    params.put("ano", livro.getPreco() + "");
-                    params.put("capa", livro.getDescricao());
+                    params.put("titulo", veiculo.getMarca());
+                    params.put("autor", veiculo.getModelo());
+                    params.put("serie", veiculo.getCombustivel());
+                    params.put("ano", veiculo.getPreco() + "");
+                    params.put("capa", veiculo.getDescricao());
                     return params;
                 }
             };
@@ -155,7 +143,7 @@ public class SingletonGestorVeiculos {
             if (veiculosListener != null)
                 veiculosListener.onRefreshListaVeiculos(veiculosBD.getAllLivroBD());
         } else {
-            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrLAPILivros + "veiculo", null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrLAPIVeiculos + "veiculo", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     veiculos = VeiculosJsonParser.parserJsonLivros(response);
@@ -178,14 +166,14 @@ public class SingletonGestorVeiculos {
 
     }
 
-    public void removerLivroAPI(final Veiculo livro, final Context context) {
+    public void removerLivroAPI(final Veiculo veiculo, final Context context) {
         if (!VeiculosJsonParser.isConnectionInternet(context))
             Toast.makeText(context, "Sem ligaçao a internet", Toast.LENGTH_LONG).show();
         else {
-            StringRequest req = new StringRequest(Request.Method.DELETE, mUrLAPILivros + "/" + livro.getId(), new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.DELETE, mUrLAPIVeiculos + "/" + veiculo.getId(), new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    removerLivroBD(livro.getId());
+                    removerLivroBD(veiculo.getId());
                     if (detalhesListener != null)
                         detalhesListener.onRefreshDetalhes(MenuMainActivity.DELETE);
 
@@ -202,14 +190,14 @@ public class SingletonGestorVeiculos {
 
     }
 
-    public void editarLivroAPI(final Veiculo livro, final Context context) {
+    public void editarLivroAPI(final Veiculo veiculo, final Context context) {
         if (!VeiculosJsonParser.isConnectionInternet(context))
             Toast.makeText(context, "Sem ligaçao a internet", Toast.LENGTH_LONG).show();
         else {
-            StringRequest req = new StringRequest(Request.Method.PUT, mUrLAPILivros + "/" + livro.getId(), new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.PUT, mUrLAPIVeiculos + "/" + veiculo.getId(), new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    editarLivroBD(livro);
+                    editarLivroBD(veiculo);
                     if (detalhesListener != null)
                         detalhesListener.onRefreshDetalhes(MenuMainActivity.EDIT);
 
@@ -224,11 +212,11 @@ public class SingletonGestorVeiculos {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("token", TOKEN);
-                    params.put("titulo", livro.getMarca());
-                    params.put("autor", livro.getModelo());
-                    params.put("serie", livro.getCombustivel());
-                    params.put("ano", livro.getPreco() + "");
-                    params.put("capa", livro.getDescricao());
+                    params.put("titulo", veiculo.getMarca());
+                    params.put("autor", veiculo.getModelo());
+                    params.put("serie", veiculo.getCombustivel());
+                    params.put("ano", veiculo.getPreco() + "");
+                    params.put("capa", veiculo.getDescricao());
                     return params;
                 }
             };

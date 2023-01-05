@@ -64,27 +64,24 @@ public class ListaVeiculoAdaptador extends BaseAdapter {
     }
 
     private class ViewHolderlista {
-        private TextView tvTitulo, tvSerie, tvAno, tvAutor;
-        private ImageView imgCapa;
+        private TextView tvMarca, tvModelo, tvCombustivel, tvPreco;
+
 
         public ViewHolderlista(View view) {
-            tvTitulo = view.findViewById(R.id.tvTitulo);
-            tvSerie = view.findViewById(R.id.tvSerie);
-            tvAutor = view.findViewById(R.id.tvAutor);
-            tvAno = view.findViewById(R.id.tvAno);
-            imgCapa = view.findViewById(R.id.imgCapa);
+            tvMarca = view.findViewById(R.id.tvMarca);
+            tvModelo = view.findViewById(R.id.tvModelo);
+            tvCombustivel = view.findViewById(R.id.tvCombustivel);
+            tvPreco = view.findViewById(R.id.tvPreco);
+
         }
 
         public void update(Veiculo veiculo) {
-            tvTitulo.setText(veiculo.getMarca());
-            tvSerie.setText(veiculo.getModelo());
-            tvAutor.setText(veiculo.getCombustivel());
-            tvAno.setText(veiculo.getPreco() + "");
-            Glide.with(context)
-                    .load(veiculo.getDescricao())
-                    .placeholder(R.drawable.logoipl)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(imgCapa);
+            if(veiculo!=null) {
+                tvMarca.setText(veiculo.getMarca());
+                tvModelo.setText(veiculo.getModelo());
+                tvCombustivel.setText(veiculo.getCombustivel());
+                tvPreco.setText(veiculo.getPreco() + "");
+            }
         }
     }
 }

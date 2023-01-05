@@ -33,7 +33,6 @@ public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
 
     private ListView lvLivros;
     private ArrayList<Veiculo> veiculos;
-    private FloatingActionButton fabLista;
     private SearchView searchView;
     public static final int DETALHES = 1;
 
@@ -45,9 +44,10 @@ public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_lista_veiculo, container, false);
+
         setHasOptionsMenu(true);
+
         lvLivros = view.findViewById(R.id.lvLivros);
-        fabLista = view.findViewById(R.id.fabLista);
         SingletonGestorVeiculos.getInstance(getContext()).setVeiculosListener(this);
 
         SingletonGestorVeiculos.getInstance(getContext()).getAllLivrosAPI(getContext());
@@ -62,13 +62,7 @@ public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
             }
         });
 
-        fabLista.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), DetalhesVeiculoActivity.class);
-                startActivityForResult(intent, DETALHES);
-            }
-        });
+
 
         return view;
     }

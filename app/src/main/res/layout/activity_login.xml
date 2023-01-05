@@ -21,7 +21,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/txt_email"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:text="teste@teste.com" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -29,7 +30,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/txt_password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:text="123324" />
 
     <Button
         android:id="@+id/btnLogin"
