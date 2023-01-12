@@ -6,10 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.rentallcar.R;
-import pt.ipleiria.estg.dei.rentallcar.modelo.Extras;
+import pt.ipleiria.estg.dei.rentallcar.vistas.Extras;
 
 public class ListaExtrasAdaptador extends BaseAdapter {
 
@@ -39,16 +40,16 @@ public class ListaExtrasAdaptador extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        if (inflater == null)
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if(inflater==null)
+            inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (view == null)
-            view = inflater.inflate(R.layout.item_rotas, null);
+        if(view == null)
+            view = inflater.inflate(R.layout.item_extras,null);
 
         /*otimização para não estar a repetir várias vezes*/
-        ViewHolderLista viewHolder = (ViewHolderLista) view.getTag();
-        if (viewHolder == null) {
-            viewHolder = new ViewHolderLista(view);
+        ViewHolderLista viewHolder=(ViewHolderLista) view.getTag();
+        if(viewHolder==null){
+            viewHolder=new ViewHolderLista(view);
             view.setTag(viewHolder);
         }
 
@@ -57,17 +58,18 @@ public class ListaExtrasAdaptador extends BaseAdapter {
         return view;
     }
 
-    private class ViewHolderLista {
-        private TextView tvNome, tvPreco;
 
-        public ViewHolderLista(View view) {
-            tvNome = view.findViewById(R.id.tvNome);
-            tvPreco = view.findViewById(R.id.tvPreco);
+    private class ViewHolderLista{
+        private TextView tvExtras, tvHorarioChegada;
+
+        public ViewHolderLista(View view){
+            tvExtras =view.findViewById(R.id.tvExtra);
+            //tvHorarioChegada=view.findViewById(R.id.tvHorarioChegada);
         }
 
-        public void update(Extras extras) {
-            tvNome.setText(extras.getDescricao());
-            tvPreco.setText(extras.getPreco() + "");
+        public void update(Extras extras){
+            tvExtras.setText(" " + extras.get());
+            //tvHorarioChegada.setText(" " + horarios.getHoraFim());
         }
 
     }

@@ -8,30 +8,29 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import pt.ipleiria.estg.dei.rentallcar.R;
-import pt.ipleiria.estg.dei.rentallcar.modelo.Extras;
 import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 
-public class DetalhesExtras extends AppCompatActivity {
+public class Extras extends AppCompatActivity {
 
     private TextView tvNomeRota;
     private Button btComprarBilhete;
-    private Extras rota;
-    private ListView listaHorarios;
+    private pt.ipleiria.estg.dei.rentallcar.modelo.Extras rota;
+    private ListView listaExtras;
 
     private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalhes_rotas);
+        setContentView(R.layout.activity_detalhes_veiculo);
 
-        tvNomeRota = findViewById(R.id.tvNomeRota);
-        btComprarBilhete = findViewById(R.id.btComprarBilhete);
-        listaHorarios = findViewById(R.id.listaHorarios);
+//        tvNomeRota = findViewById(R.id.tvNomeRota);
+  //      btComprarBilhete = findViewById(R.id.btComprarBilhete);
+        listaExtras = findViewById(R.id.listaExtras);
 
         id = getIntent().getIntExtra("ID_ROTA", 0);
 
-        rota = SingletonGestorVeiculos.getInstance(getApplicationContext()).getRota(id);
+        rota = SingletonGestorVeiculos.getInstance(getApplicationContext()).getExtra(id);
 
         //SingletonGestorVeiculos.getInstance(this).setVeiculosListener(this);
         //SingletonGestorVeiculos.getInstance(this).getAllHorariosEXPAPI(this, id);

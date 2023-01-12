@@ -1,15 +1,17 @@
 package pt.ipleiria.estg.dei.rentallcar.vistas;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
 import pt.ipleiria.estg.dei.rentallcar.R;
+import pt.ipleiria.estg.dei.rentallcar.modelo.Perfil;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -29,24 +31,26 @@ public class LoginActivity extends AppCompatActivity {
 
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
-/*
-        if(!isEmailValido(email)){
+
+        if (!isEmailValido(email)) {
             etEmail.setError(getString(R.string.txt_email_invalido));
             return;
         }
-        if(!isPasswordValida(password)){
+        if (!isPasswordValida(password)) {
             etPassword.setError(getString(R.string.txt_password_invalida));
             return;
-        }*/
-        Intent intent= new Intent(this, MenuMainActivity.class);
-        intent.putExtra("EMAIL",email);
+        }
+        Intent intent = new Intent(this, MenuMainActivity.class);
+        intent.putExtra("EMAIL", email);
         startActivity(intent);
         finish();
+        Intent dados = new Intent(this, Utilizador.class);
+        dados.putExtra("EMAIL", email);
 
-        /*if (isEmailValido(email) && isPasswordValida(password))
+        if (isEmailValido(email) && isPasswordValida(password))
             Toast.makeText(this, "Login efetuado com sucesso", Toast.LENGTH_LONG).show();
         else
-            Toast.makeText(this, "Erro no login", Toast.LENGTH_LONG).show();*/
+            Toast.makeText(this, "Erro no login", Toast.LENGTH_LONG).show();
     }
 
     private boolean isEmailValido(String email) {
@@ -62,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClickRegistar(View view) {
-        Intent intent= new Intent(this, RegistoActivity.class);
+        Intent intent = new Intent(this, RegistoActivity.class);
         startActivity(intent);
         finish();
     }

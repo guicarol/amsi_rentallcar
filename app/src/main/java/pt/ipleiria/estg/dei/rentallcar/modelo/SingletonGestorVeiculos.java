@@ -244,10 +244,10 @@ public class SingletonGestorVeiculos {
             Toast.makeText(context, "Sem internet", Toast.LENGTH_SHORT).show();
 
         } else {
-            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPI + "rotas", null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPI + "extra", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    extras = RotasJsonParser.parseJsonRotas(response);
+                    extras = RotasJsonParser.parseJsonExtras(response);
 
                     if (extrasListener != null)
                         extrasListener.onRefreshListaExtras(extras);
@@ -263,7 +263,7 @@ public class SingletonGestorVeiculos {
         }
     }
 
-    public Extras getRota(int id) {
+    public Extras getExtra(int id) {
         for (Extras b : extras)
             if (b.getId() == id)
                 return b;

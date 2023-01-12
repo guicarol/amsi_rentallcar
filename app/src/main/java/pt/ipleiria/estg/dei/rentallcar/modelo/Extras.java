@@ -5,7 +5,7 @@ public class Extras {
     private String descricao;
     private float preco;
 
-    public Extras(int id_extra, String descricao, String coordenadas, float preco) {
+    public Extras(int id_extra, String descricao, float preco) {
         this.id_extra = id_extra;
         this.descricao = descricao;
         this.preco = preco;

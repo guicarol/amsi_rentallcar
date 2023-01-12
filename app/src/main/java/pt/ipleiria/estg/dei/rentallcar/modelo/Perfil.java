@@ -2,15 +2,15 @@ package pt.ipleiria.estg.dei.rentallcar.modelo;
 
 public class Perfil {
     private int id;
-    private String nome, apelido, telemovel, codPostal, imgPerfil;
+    private String nome, apelido, telemovel, nif, imgPerfil;
 
-    public Perfil(int id, String nome, String apelido, /*String imgPerfil,*/ String telemovel, String codPostal) {
+    public Perfil(int id, String nome, String apelido, /*String imgPerfil,*/ String telemovel, String nif) {
         this.id = id;
         this.nome = nome;
         this.apelido = apelido;
         //this.imgPerfil = imgPerfil;
         this.telemovel = telemovel;
-        this.codPostal = codPostal;
+        this.nif = nif;
     }
 
     public int getId() {
@@ -53,11 +53,11 @@ public class Perfil {
         this.telemovel = telemovel;
     }
 
-    public String getCodPostal() {
-        return codPostal;
+    public String getNif() {
+        return nif;
     }
 
-    public void setCodPostal(String codPostal) {
-        this.codPostal = codPostal;
+    public void setNif(String nif) {
+        this.nif = nif;
     }
 }

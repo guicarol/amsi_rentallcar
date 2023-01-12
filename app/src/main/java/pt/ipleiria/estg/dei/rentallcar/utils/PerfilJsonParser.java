@@ -19,13 +19,13 @@ public class PerfilJsonParser {
         try {
             for (int i = 0; i < response.length(); i++) {
                 JSONObject dados = (JSONObject) response.get(i);
-                int id = dados.getInt("id");
+                int id = dados.getInt("id_profile");
                 String nome = dados.getString("nome");
                 String apelido = dados.getString("apelido");
                 //String imgPerfil = dados.getString("imgPerfil");
                 String telemovel = dados.getString("telemovel");
-                String codPostal = dados.getString("codPostal");
-                Perfil auxDadosPessoal = new Perfil(id, nome, apelido, /*imgPerfil,*/ telemovel, codPostal);
+                String nif = dados.getString("nif");
+                Perfil auxDadosPessoal = new Perfil(id, nome, apelido, /*imgPerfil,*/ telemovel, nif);
                 dadosPessoais.add(auxDadosPessoal);
             }
         } catch (JSONException e) {
@@ -38,13 +38,13 @@ public class PerfilJsonParser {
         Perfil auxDadosPessoal = null;
         try {
             JSONObject dados = new JSONObject(response);
-            int id = dados.getInt("id");
+            int id = dados.getInt("id_profile");
             String nome = dados.getString("nome");
             String apelido = dados.getString("apelido");
             //String imgPerfil = dados.getString("imgPerfil");
             String telemovel = dados.getString("telemovel");
-            String codPostal = dados.getString("codPostal");
-            auxDadosPessoal = new Perfil(id, nome, apelido, /*imgPerfil,*/ telemovel, codPostal);
+            String nif = dados.getString("nif");
+            auxDadosPessoal = new Perfil(id, nome, apelido, /*imgPerfil,*/ telemovel, nif);
         } catch (JSONException e) {
             e.printStackTrace();
         }

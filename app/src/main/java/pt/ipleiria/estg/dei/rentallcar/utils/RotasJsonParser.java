@@ -15,22 +15,21 @@ import pt.ipleiria.estg.dei.rentallcar.modelo.Extras;
 
 public class RotasJsonParser {
 
-    public static ArrayList<Extras> parseJsonRotas (JSONArray response){
-        ArrayList<Extras> rotas = new ArrayList<>();
+    public static ArrayList<Extras> parseJsonExtras(JSONArray response){
+        ArrayList<Extras> extras = new ArrayList<>();
         try {
         for(int i = 0; i <response.length(); i++){
                 JSONObject rota = (JSONObject) response.get(i);
-                int id = rota.getInt("idRota");
-                String nome = rota.getString("nome");
-                String coordenadas = rota.getString("coordenadas");
+                int id = rota.getInt("id_extra");
+                String nome = rota.getString("descricao");
                 float preco = BigDecimal.valueOf(rota.getDouble("preco")).floatValue();
-                Extras auxRota = new Extras(id, nome, coordenadas, preco);
-            rotas.add(auxRota);
+                Extras auxRota = new Extras(id, nome, preco);
+            extras.add(auxRota);
             }
         }catch (JSONException e) {
             e.printStackTrace();
         }
-        return rotas;
+        return extras;
     }
 
     public static Boolean isConnectionInternet(Context context){

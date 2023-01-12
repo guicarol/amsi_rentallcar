@@ -18,15 +18,15 @@ import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 public class Utilizador extends Fragment implements PerfilListener {
 
     private Button usado;
+    private String email;
 
-    private TextView logout, etNome, etCodPostal, etTelemovel;
+    private TextView logout, etNome, etApelido, etTelefone, etNif,etEmail;
 
     private Perfil perfil;
 
     public Utilizador() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,8 +39,10 @@ public class Utilizador extends Fragment implements PerfilListener {
         logout = (TextView) view.findViewById(R.id.LogOut);
 
         etNome = view.findViewById(R.id.etNome);
-        etCodPostal = view.findViewById(R.id.etApelido);
-        etTelemovel = view.findViewById(R.id.etTelefone);
+        etApelido = view.findViewById(R.id.etApelido);
+        etTelefone = view.findViewById(R.id.etTelefone);
+        etNif = view.findViewById(R.id.etNif);
+        etEmail=view.findViewById(R.id.etEmail);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,13 +59,16 @@ public class Utilizador extends Fragment implements PerfilListener {
         return view;
     }
 
-
     @Override
     public void onRefreshPerfil(Perfil perfil) {
-        if(perfil != null) {
-            etNome.setText(" " + perfil.getNome() + " " + perfil.getApelido());
-            etCodPostal.setText(perfil.getCodPostal());
-            etTelemovel.setText(perfil.getTelemovel());
+        if (perfil != null) {
+            etNome.setText(perfil.getNome());
+            etApelido.setText(perfil.getApelido());
+            etTelefone.setText(perfil.getTelemovel());
+            etNif.setText(perfil.getNif());
+            etEmail.setText(email);
+            //etNome.setText(" " + perfil.getNome() + " " + perfil.getApelido());
+
         }
     }
 }
