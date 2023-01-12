@@ -53,6 +53,7 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
         navigationView.setNavigationItemSelectedListener(this);
         fragmentManager = getSupportFragmentManager();
         carregarFragmentoInicial();
+
     }
 
     private boolean carregarFragmentoInicial() {
@@ -84,11 +85,11 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
         switch (item.getItemId()) {
 
             case R.id.utilizador:
-                fragment = new Utilizador();
+                fragment = new ListaVeiculoFragment();
                 setTitle(item.getTitle());
                 break;
             case R.id.pesquisar:
-                fragment = new ListaVeiculoFragment();
+                fragment = new Utilizador();
                 setTitle(item.getTitle());
                 break;
             case R.id.reservas:
@@ -119,5 +120,6 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
         Intent intent=new Intent(this, ResultadoPesquisa.class);
         startActivity(intent);
     }
+
 
 }

@@ -13,18 +13,19 @@ import java.util.ArrayList;
 import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
 
 public class VeiculosJsonParser {
-    public static ArrayList<Veiculo> parserJsonLivros(JSONArray response) {
+    public static ArrayList<Veiculo> parserJsonVeiculos(JSONArray response) {
         ArrayList<Veiculo> livros = new ArrayList<>();
         try {
             for (int i = 0; i < response.length(); i++) {
                 JSONObject livro = (JSONObject) response.get(i);
-                int id = livro.getInt("id");
+                int id_veiculo = livro.getInt("id_veiculo");
                 String marca = livro.getString("marca");
                 String modelo = livro.getString("modelo");
                 String combustivel = livro.getString("combustivel");
                 int preco = livro.getInt("preco");
-                String capa = livro.getString("capa");
-                Veiculo livroAux = new Veiculo(id, preco, capa, marca, modelo, combustivel);
+                String descricao = livro.getString("descricao");
+                String matricula = livro.getString("matricula");
+                Veiculo livroAux = new Veiculo(id_veiculo, preco,descricao, marca, modelo, combustivel,matricula);
                 livros.add(livroAux);
             }
         } catch (JSONException e) {
@@ -33,17 +34,18 @@ public class VeiculosJsonParser {
         return livros;
     }
 
-    public static Veiculo parserJsonLivro(String response) {
+    public static Veiculo parserJsonVeiculo(String response) {
         Veiculo livroAux = null;
         try {
             JSONObject livro = new JSONObject(response);
-            int id = livro.getInt("id");
+            int id = livro.getInt("id_veiculo");
             String marca = livro.getString("marca");
             String modelo = livro.getString("modelo");
             String combustivel = livro.getString("combustivel");
             int preco = livro.getInt("preco");
             String descricao = livro.getString("descricao");
-            livroAux = new Veiculo(id, preco, descricao, marca, modelo, combustivel);
+            String matricula = livro.getString("matricula");
+            livroAux = new Veiculo(id, preco, descricao, marca, modelo, combustivel,matricula);
         } catch (JSONException e) {
             e.printStackTrace();
         }

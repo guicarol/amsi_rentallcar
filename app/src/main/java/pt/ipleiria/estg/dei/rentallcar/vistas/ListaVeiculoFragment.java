@@ -18,8 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
@@ -31,7 +29,7 @@ import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
 
 public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
 
-    private ListView lvLivros;
+    private ListView lvVeiculos;
     private ArrayList<Veiculo> veiculos;
     private SearchView searchView;
     public static final int DETALHES = 1;
@@ -47,22 +45,20 @@ public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
 
         setHasOptionsMenu(true);
 
-        lvLivros = view.findViewById(R.id.lvLivros);
+        lvVeiculos = view.findViewById(R.id.lvLivros);
         SingletonGestorVeiculos.getInstance(getContext()).setVeiculosListener(this);
 
-        SingletonGestorVeiculos.getInstance(getContext()).getAllLivrosAPI(getContext());
+        SingletonGestorVeiculos.getInstance(getContext()).getAllVeiculosAPI(getContext());
 
-        lvLivros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvVeiculos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Toast.makeText(getContext(), livros.get(position).getTitulo(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), DetalhesVeiculoActivity.class);
-                intent.putExtra(DetalhesVeiculoActivity.IDLIVRO, (int) id);
+                intent.putExtra(DetalhesVeiculoActivity.IDVEICULO, (int) id);
                 startActivityForResult(intent, DETALHES);
             }
         });
-
-
 
         return view;
     }
@@ -71,7 +67,7 @@ public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         if (resultCode == Activity.RESULT_OK && requestCode == DETALHES) {
             veiculos = SingletonGestorVeiculos.getInstance(getContext()).getVeiculosBD();
-            lvLivros.setAdapter(new ListaVeiculoAdaptador(getContext(), veiculos));
+            lvVeiculos.setAdapter(new ListaVeiculoAdaptador(getContext(), veiculos));
             switch (intent.getIntExtra(MenuMainActivity.OPERACAO, 0)) {
                 case MenuMainActivity.ADD:
                     Toast.makeText(getContext(), "Livro adicionado com sucesso", Toast.LENGTH_SHORT).show();
@@ -103,7 +99,7 @@ public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
                 for (Veiculo l : veiculos)
                     if (l.getMarca().toLowerCase().contains(s.toLowerCase()))
                         listaTempVeiculos.add(l);
-                lvLivros.setAdapter(new ListaVeiculoAdaptador(getContext(), listaTempVeiculos));
+                lvVeiculos.setAdapter(new ListaVeiculoAdaptador(getContext(), listaTempVeiculos));
                 return true;
             }
         });
@@ -121,7 +117,7 @@ public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
     @Override
     public void onRefreshListaVeiculos(ArrayList<Veiculo> listaVeiculos) {
         if (listaVeiculos != null)
-            lvLivros.setAdapter(new ListaVeiculoAdaptador(getContext(), listaVeiculos));
+            lvVeiculos.setAdapter(new ListaVeiculoAdaptador(getContext(), listaVeiculos));
 
     }
 }

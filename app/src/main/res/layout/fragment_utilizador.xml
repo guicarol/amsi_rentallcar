@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_margin="20dp"
+    android:orientation="vertical"
     tools:context=".vistas.Utilizador">
 
     <!-- TODO: Update blank fragment layout -->
@@ -22,32 +22,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Username" />
+        android:hint="Username"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etNome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Nome" />
+        android:hint="Nome"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etApelido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Apelido" />
+        android:hint="Apelido"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etTelefone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Telefone" />
+        android:hint="Telefone"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etEmail"
@@ -69,13 +69,34 @@
         android:id="@+id/btnRegistar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Alterar"
-        android:onClick="onClickAlterar"/>
+        android:onClick="onClickAlterar"
+        android:text="Alterar" />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"/>
+        android:layout_weight="0.3" />
+
+    <Button
+        android:id="@+id/btn_usado"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#4CAF50"
+        android:onClick="onClickLista"
+        android:text="extras"
+        android:textSize="16sp" />
 
 
+    <TextView
+        android:id="@+id/LogOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1.5"
+        android:onClick="onClickLogout"
+        android:text="Logout"
+        android:textAlignment="center"
+        android:textColor="@color/teal_200"
+        android:textSize="25dp" />
 </LinearLayout>

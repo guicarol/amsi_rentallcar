@@ -5,11 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
@@ -80,7 +76,7 @@ public class ListaVeiculoAdaptador extends BaseAdapter {
                 tvMarca.setText(veiculo.getMarca());
                 tvModelo.setText(veiculo.getModelo());
                 tvCombustivel.setText(veiculo.getCombustivel());
-                tvPreco.setText(veiculo.getPreco() + "");
+                tvPreco.setText(veiculo.getPreco() + "€");
             }
         }
     }

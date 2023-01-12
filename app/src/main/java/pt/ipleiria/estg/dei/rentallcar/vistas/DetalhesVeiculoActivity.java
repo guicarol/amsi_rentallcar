@@ -28,10 +28,10 @@ import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
 public class DetalhesVeiculoActivity extends AppCompatActivity {
 
     private Veiculo veiculo;
-    private EditText etTitulo, etSerie, etAno, etAutor;
+    private EditText etMarca, etModelo, etPreco, etCombustivel, etMatricula;
     private ImageView imgCapa;
     private FloatingActionButton fabGuardar;
-    public static final String IDLIVRO = "IDLIVRO";
+    public static final String IDVEICULO = "IDVEICULO";
     public static final int MIN_CHAR = 3;
     public static final int MIN_NUMERO = 4;
 
@@ -39,18 +39,19 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_veiculo);
-        etTitulo = findViewById(R.id.etTitulo);
-        etAutor = findViewById(R.id.etAutor);
-        etSerie = findViewById(R.id.etSerie);
-        etAno = findViewById(R.id.etAno);
+        etMarca = findViewById(R.id.etMarca);
+        etCombustivel = findViewById(R.id.etCombustivel);
+        etModelo = findViewById(R.id.etModelo);
+        etPreco = findViewById(R.id.etPreco);
+        etMatricula = findViewById(R.id.etMatricula);
         imgCapa = findViewById(R.id.imgCapa);
         fabGuardar = findViewById(R.id.fabGuardar);
 
-        int id = getIntent().getIntExtra(IDLIVRO, 0);
+        int id = getIntent().getIntExtra(IDVEICULO, 0);
 
-        veiculo = SingletonGestorVeiculos.getInstance(getApplicationContext()).getLivro(id);
+        veiculo = SingletonGestorVeiculos.getInstance(getApplicationContext()).getVeiculo(id);
         if (veiculo != null) {
-            carregarLivro();
+            carregarVeiculo();
             fabGuardar.setImageResource(R.drawable.ic_action_guardar);
         } else {
             setTitle(getString(R.string.act_detalhes));
@@ -59,27 +60,28 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
         fabGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isLivroValido()) {
-                    String titulo = etTitulo.getText().toString();
-                    String autor = etAutor.getText().toString();
-                    String serie = etSerie.getText().toString();
-                    int ano = Integer.parseInt(etAno.getText().toString());
+                if (isVeiculoValido()) {
+                    String marca = etMarca.getText().toString();
+                    String combustivel = etCombustivel.getText().toString();
+                    String modelo = etModelo.getText().toString();
+                    int preco = Integer.parseInt(etPreco.getText().toString());
+                    String matricula = etMatricula.getText().toString();
                     Intent intent = new Intent();
                     if (veiculo != null) {
                         //editar livro
-                        //livroAux= new Livro(ano,livro.getCapa(),titulo,serie,autor);
-                        veiculo.setMarca(titulo);
-                        veiculo.setCombustivel(autor);
-                        veiculo.setModelo(serie);
-                        veiculo.setPreco(ano);
-                        SingletonGestorVeiculos.getInstance(getApplicationContext()).editarLivroBD(veiculo);
+                        //livroAux= new Livro(preco,livro.getCapa(),marca,modelo,combustivel);
+                        veiculo.setMarca(marca);
+                        veiculo.setCombustivel(combustivel);
+                        veiculo.setModelo(modelo);
+                        veiculo.setPreco(preco);
+                        veiculo.setMatricula(matricula);
+                        SingletonGestorVeiculos.getInstance(getApplicationContext()).editarVeiculoBD(veiculo);
                         intent.putExtra(MenuMainActivity.OPERACAO, MenuMainActivity.EDIT);
-
 
                     } else {
                         //criar Livro
-                        Veiculo livroAux = new Veiculo(0, ano, "http://amsi.dei.estg.ipleiria.pt/img/ipl_semfundo.png", titulo, serie, autor);
-                        SingletonGestorVeiculos.getInstance(getApplicationContext()).adicionarLivroAPI(livroAux, getApplicationContext());
+                        Veiculo livroAux = new Veiculo(0, preco, "http://amsi.dei.estg.ipleiria.pt/img/ipl_semfundo.png", marca, modelo, combustivel, matricula);
+                        SingletonGestorVeiculos.getInstance(getApplicationContext()).adicionarVeiculoAPI(livroAux, getApplicationContext());
 
                     }
                     setResult(RESULT_OK, intent);
@@ -90,46 +92,47 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isLivroValido() {
-        String titulo = etTitulo.getText().toString();
-        String autor = etAutor.getText().toString();
-        String serie = etSerie.getText().toString();
-        String ano = etAno.getText().toString();
+    private boolean isVeiculoValido() {
+        String titulo = etMarca.getText().toString();
+        String autor = etCombustivel.getText().toString();
+        String serie = etModelo.getText().toString();
+        String ano = etPreco.getText().toString();
         if (titulo.length() < MIN_CHAR) {
-            etTitulo.setError("Titulo invalido");
+            etMarca.setError("Titulo invalido");
             return false;
         }
 
         if (titulo.length() < MIN_CHAR) {
-            etAutor.setError("Serie invalida");
+            etCombustivel.setError("Serie invalida");
             return false;
         } else if (autor.length() < MIN_CHAR) {
-            etAutor.setError("autor invalido");
+            etCombustivel.setError("autor invalido");
             return false;
         } else if (serie.length() < MIN_CHAR) {
-            etSerie.setError("serie invalido");
+            etModelo.setError("serie invalido");
             return false;
         } else {
             int anoNumero = Integer.parseInt(ano);
             if (anoNumero < 1900 || anoNumero > Calendar.getInstance().get(Calendar.YEAR)) {
-                etAno.setError("Ano invalido");
+                etPreco.setError("Ano invalido");
                 return false;
             }
         }
         return true;
     }
 
-    private void carregarLivro() {
+    private void carregarVeiculo() {
         Resources res = getResources();
-        String nome = String.format(res.getString(R.string.act_livro), veiculo.getMarca());
+        String nome = String.format(res.getString(R.string.act_livro), veiculo.getMarca() + " " + veiculo.getModelo());
         setTitle(nome);
-        etTitulo.setText(veiculo.getMarca());
-        etSerie.setText(veiculo.getModelo());
-        etAutor.setText(veiculo.getCombustivel());
-        etAno.setText(veiculo.getPreco() + "");
+        etMarca.setText(veiculo.getMarca());
+        etModelo.setText(veiculo.getModelo());
+        etCombustivel.setText(veiculo.getCombustivel());
+        etPreco.setText(veiculo.getPreco() + "");
+        etMatricula.setText(etMatricula.toString()+ veiculo.getMatricula());
         Glide.with(this)
                 .load(veiculo.getDescricao())
-                .placeholder(R.drawable.logoipl)
+                .placeholder(R.drawable.logo)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgCapa);
     }
@@ -162,7 +165,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SingletonGestorVeiculos.getInstance(getApplicationContext()).removerLivroBD(veiculo.getId());
+                        SingletonGestorVeiculos.getInstance(getApplicationContext()).removerVeiculoBD(veiculo.getId());
                         Intent intent = new Intent();
                         intent.putExtra(MenuMainActivity.OPERACAO, MenuMainActivity.DELETE);
                         setResult(RESULT_OK, intent);

@@ -15,7 +15,7 @@ public class VeiculoBDHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "bdveiculos";
     private static final int DB_VERSION = 1;
     private static final String TABLE_VEICULOS = "veiculos";
-    private static final String ID = "id", MARCA = "marca", MODELO = "modelo", COMBUSTIVEL = "combustivel", PRECO = "preco", DESCRICAO = "descricao";
+    private static final String ID = "id_veiculo", MARCA = "marca", MODELO = "modelo", COMBUSTIVEL = "combustivel", PRECO = "preco", DESCRICAO = "descricao", MATRICULA = "matricula";
     private final SQLiteDatabase db;
 
     public VeiculoBDHelper(@Nullable Context context) {
@@ -31,7 +31,8 @@ public class VeiculoBDHelper extends SQLiteOpenHelper {
                 MODELO + " TEXT NOT NULL, " +
                 COMBUSTIVEL + " TEXT NOT NULL, " +
                 PRECO + " INTEGER NOT NULL, " +
-                DESCRICAO + " TEXT NOT NULL" +
+                DESCRICAO + " TEXT NOT NULL," +
+                MATRICULA + " TEXT NOT NULL" +
                 ");";
         sqLiteDatabase.execSQL(createSQLTableLivro);
 
@@ -89,11 +90,11 @@ public class VeiculoBDHelper extends SQLiteOpenHelper {
 
     public ArrayList<Veiculo> getAllLivroBD() {
         ArrayList<Veiculo> veiculos = new ArrayList<>();
-        Cursor cursor = db.query(TABLE_VEICULOS, new String[]{PRECO, DESCRICAO, MARCA, MODELO, COMBUSTIVEL, ID}, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_VEICULOS, new String[]{PRECO, DESCRICAO, MARCA, MODELO, COMBUSTIVEL, ID, MATRICULA}, null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
-                Veiculo veiculoAux = new Veiculo(cursor.getInt(5), cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+                Veiculo veiculoAux = new Veiculo(cursor.getInt(5), cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(6));
 
                 veiculos.add(veiculoAux);
 

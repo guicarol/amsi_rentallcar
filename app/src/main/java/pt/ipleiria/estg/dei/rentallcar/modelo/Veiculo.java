@@ -6,13 +6,14 @@ public class Veiculo {
     private String marca, combustivel, modelo,matricula, descricao;
     private static int autoIncrementId=1;
 
-    public Veiculo(int id, int preco, String descricao, String marca, String modelo, String combustivel) {
+    public Veiculo(int id, int preco, String descricao, String marca, String modelo, String combustivel,String matricula) {
         this.id = id;
         this.preco = preco;
         this.descricao = descricao;
         this.marca = marca;
         this.combustivel = combustivel;
         this.modelo = modelo;
+        this.matricula=matricula;
     }
 
     public int getId() {
@@ -61,5 +62,13 @@ public class Veiculo {
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String modelo) {
+        this.matricula = matricula;
     }
 }

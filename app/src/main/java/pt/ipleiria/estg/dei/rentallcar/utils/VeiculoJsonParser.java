@@ -25,7 +25,8 @@ public class VeiculoJsonParser {
                 String autor = livro.getString("autor");
                 int ano = livro.getInt("ano");
                 String descricao = livro.getString("descricao");
-                Veiculo livroAux = new Veiculo(id, ano, descricao, titulo, serie, autor);
+                String matricula = livro.getString("matricula");
+                Veiculo livroAux = new Veiculo(id, ano, descricao, titulo, serie, autor, matricula);
                 livros.add(livroAux);
             }
 
@@ -45,7 +46,9 @@ public class VeiculoJsonParser {
             String autor = livro.getString("autor");
             int ano = livro.getInt("ano");
             String descricao = livro.getString("descricao");
-            livroAux = new Veiculo(id, ano, descricao, titulo, serie, autor);
+            String matricula = livro.getString("matricula");
+
+            livroAux = new Veiculo(id, ano, descricao, titulo, serie, autor, matricula);
 
         } catch (JSONException e) {
             e.printStackTrace();

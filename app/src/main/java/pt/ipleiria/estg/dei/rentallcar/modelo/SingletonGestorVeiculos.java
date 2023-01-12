@@ -19,7 +19,11 @@ import java.util.Map;
 
 import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
 import pt.ipleiria.estg.dei.rentallcar.listeners.DetalhesListener;
+import pt.ipleiria.estg.dei.rentallcar.listeners.ExtrasListener;
+import pt.ipleiria.estg.dei.rentallcar.listeners.PerfilListener;
 import pt.ipleiria.estg.dei.rentallcar.listeners.VeiculosListener;
+import pt.ipleiria.estg.dei.rentallcar.utils.PerfilJsonParser;
+import pt.ipleiria.estg.dei.rentallcar.utils.RotasJsonParser;
 import pt.ipleiria.estg.dei.rentallcar.utils.VeiculosJsonParser;
 
 
@@ -28,11 +32,16 @@ public class SingletonGestorVeiculos {
     private static SingletonGestorVeiculos instance = null;
     private VeiculoBDHelper veiculosBD;
     private static RequestQueue volleyQueue = null;
-    private static final String mUrLAPIVeiculos = "http://localhost:8080/";
+    private static final String mUrlAPI = "http://192.168.1.70/plsi_rentallcar/backend/web/api/";
     private static final String TOKEN = "AMSI-TOKEN";
     private VeiculosListener veiculosListener;
     private DetalhesListener detalhesListener;
 
+    private ExtrasListener extrasListener;
+    private ArrayList<Extras> extras;
+
+    private PerfilListener perfilListener;
+    private Perfil perfil;
 
     public static synchronized SingletonGestorVeiculos getInstance(Context context) {
         if (instance == null)
@@ -56,7 +65,9 @@ public class SingletonGestorVeiculos {
     public void setDetalhesListener(DetalhesListener detalhesListener) {
         this.detalhesListener = detalhesListener;
     }
-
+    public void setDadosPessoaisListener(PerfilListener perfilListener) {
+        this.perfilListener = perfilListener;
+    }
 
 
     //region LIVRO-BD
@@ -66,32 +77,32 @@ public class SingletonGestorVeiculos {
         return new ArrayList(veiculos);
     }
 
-    public Veiculo getLivro(int id) {
+    public Veiculo getVeiculo(int id) {
         for (Veiculo l : veiculos)
             if (l.getId() == id)
                 return l;
         return null;
     }
 
-    public void adicionarLivroBD(Veiculo veiculo) {
+    public void adicionarVeiculoBD(Veiculo veiculo) {
         veiculosBD.adicionarLivroBD(veiculo);
     }
 
-    public void adicionarLivrosBD(ArrayList<Veiculo> veiculos) {
+    public void adicionarVeiculosBD(ArrayList<Veiculo> veiculos) {
         veiculosBD.removerAllLivrosBD();
         for (Veiculo l : veiculos)
-            adicionarLivroBD(l);
+            adicionarVeiculoBD(l);
     }
 
-    public void removerLivroBD(int id) {
-        Veiculo veiculoAux = getLivro(id);
+    public void removerVeiculoBD(int id) {
+        Veiculo veiculoAux = getVeiculo(id);
         if (veiculoAux != null) {
             if (veiculosBD.removerLivroBD(id)) ;
         }
     }
 
-    public void editarLivroBD(Veiculo veiculo) {
-        Veiculo veiculoAux = getLivro(veiculo.getId());
+    public void editarVeiculoBD(Veiculo veiculo) {
+        Veiculo veiculoAux = getVeiculo(veiculo.getId());
         if (veiculoAux != null) {
             veiculosBD.editarLivroBD(veiculo);
         }
@@ -100,14 +111,14 @@ public class SingletonGestorVeiculos {
 
 
     //region LIVRO-API
-    public void adicionarLivroAPI(final Veiculo veiculo, final Context context) {
+    public void adicionarVeiculoAPI(final Veiculo veiculo, final Context context) {
         if (!VeiculosJsonParser.isConnectionInternet(context))
             Toast.makeText(context, "Sem ligaçao a internet", Toast.LENGTH_LONG).show();
         else {
-            StringRequest req = new StringRequest(Request.Method.POST, mUrLAPIVeiculos, new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.POST, mUrlAPI + "veiculo", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    adicionarLivroBD(VeiculosJsonParser.parserJsonLivro(response));
+                    adicionarVeiculoBD(VeiculosJsonParser.parserJsonVeiculo(response));
                     if (detalhesListener != null)
                         detalhesListener.onRefreshDetalhes(MenuMainActivity.ADD);
 
@@ -136,18 +147,18 @@ public class SingletonGestorVeiculos {
 
     }
 
-    public void getAllLivrosAPI(final Context context) {
+    public void getAllVeiculosAPI(final Context context) {
         if (!VeiculosJsonParser.isConnectionInternet(context)) {
             Toast.makeText(context, "Sem ligaçao a internet", Toast.LENGTH_LONG).show();
 
             if (veiculosListener != null)
                 veiculosListener.onRefreshListaVeiculos(veiculosBD.getAllLivroBD());
         } else {
-            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrLAPIVeiculos + "veiculo", null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPI + "veiculo", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    veiculos = VeiculosJsonParser.parserJsonLivros(response);
-                    adicionarLivrosBD(veiculos);
+                    veiculos = VeiculosJsonParser.parserJsonVeiculos(response);
+                    adicionarVeiculosBD(veiculos);
 
                     if (veiculosListener != null)
                         veiculosListener.onRefreshListaVeiculos(veiculos);
@@ -162,18 +173,16 @@ public class SingletonGestorVeiculos {
             volleyQueue.add(req);
 
         }
-
-
     }
 
-    public void removerLivroAPI(final Veiculo veiculo, final Context context) {
+    public void removerVeiculoAPI(final Veiculo veiculo, final Context context) {
         if (!VeiculosJsonParser.isConnectionInternet(context))
             Toast.makeText(context, "Sem ligaçao a internet", Toast.LENGTH_LONG).show();
         else {
-            StringRequest req = new StringRequest(Request.Method.DELETE, mUrLAPIVeiculos + "/" + veiculo.getId(), new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.DELETE, mUrlAPI + "veiculo" + "/" + veiculo.getId(), new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    removerLivroBD(veiculo.getId());
+                    removerVeiculoBD(veiculo.getId());
                     if (detalhesListener != null)
                         detalhesListener.onRefreshDetalhes(MenuMainActivity.DELETE);
 
@@ -190,14 +199,14 @@ public class SingletonGestorVeiculos {
 
     }
 
-    public void editarLivroAPI(final Veiculo veiculo, final Context context) {
+    public void editarVeiculoAPI(final Veiculo veiculo, final Context context) {
         if (!VeiculosJsonParser.isConnectionInternet(context))
             Toast.makeText(context, "Sem ligaçao a internet", Toast.LENGTH_LONG).show();
         else {
-            StringRequest req = new StringRequest(Request.Method.PUT, mUrLAPIVeiculos + "/" + veiculo.getId(), new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.PUT, mUrlAPI + "veiculo" + "/" + veiculo.getId(), new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    editarLivroBD(veiculo);
+                    editarVeiculoBD(veiculo);
                     if (detalhesListener != null)
                         detalhesListener.onRefreshDetalhes(MenuMainActivity.EDIT);
 
@@ -229,5 +238,64 @@ public class SingletonGestorVeiculos {
 
     //endregion
 
+    //region métodos Rotas
+    public void getAllExtrasAPI(final Context context) {
+        if (!RotasJsonParser.isConnectionInternet(context)) {
+            Toast.makeText(context, "Sem internet", Toast.LENGTH_SHORT).show();
+
+        } else {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPI + "rotas", null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    extras = RotasJsonParser.parseJsonRotas(response);
+
+                    if (extrasListener != null)
+                        extrasListener.onRefreshListaExtras(extras);
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "erro", Toast.LENGTH_SHORT).show();
+                }
+            });
+            volleyQueue.add(req);
+        }
+    }
+
+    public Extras getRota(int id) {
+        for (Extras b : extras)
+            if (b.getId() == id)
+                return b;
+        return null;
+    }
+//endregion
+
+    //region métodos getDadosPessoais
+    public Perfil getDadosPessoaisAPI (final Context context, int id){
+        if (!PerfilJsonParser.isConnectionInternet(context)) {
+            Toast.makeText(context, "Sem internet", Toast.LENGTH_SHORT).show();
+
+        } else {
+            StringRequest req = new StringRequest(Request.Method.GET, mUrlAPI + "profile/view?id=" + id, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    perfil = PerfilJsonParser.parseJsonDadosPessoal(response);
+
+                    if(perfilListener!=null)
+                        perfilListener.onRefreshPerfil(perfil);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            volleyQueue.add(req);
+            return perfil;
+        }
+        return null;
+    }
+//endregion
 
 }
