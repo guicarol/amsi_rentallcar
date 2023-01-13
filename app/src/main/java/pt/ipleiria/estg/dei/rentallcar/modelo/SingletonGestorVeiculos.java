@@ -22,8 +22,8 @@ import pt.ipleiria.estg.dei.rentallcar.listeners.DetalhesListener;
 import pt.ipleiria.estg.dei.rentallcar.listeners.ExtrasListener;
 import pt.ipleiria.estg.dei.rentallcar.listeners.PerfilListener;
 import pt.ipleiria.estg.dei.rentallcar.listeners.VeiculosListener;
+import pt.ipleiria.estg.dei.rentallcar.utils.ExtrasJsonParser;
 import pt.ipleiria.estg.dei.rentallcar.utils.PerfilJsonParser;
-import pt.ipleiria.estg.dei.rentallcar.utils.RotasJsonParser;
 import pt.ipleiria.estg.dei.rentallcar.utils.VeiculosJsonParser;
 
 
@@ -32,7 +32,7 @@ public class SingletonGestorVeiculos {
     private static SingletonGestorVeiculos instance = null;
     private VeiculoBDHelper veiculosBD;
     private static RequestQueue volleyQueue = null;
-    private static final String mUrlAPI = "http://192.168.1.70/plsi_rentallcar/backend/web/api/";
+    private static final String mUrlAPI = "http://192.168.1.76/plsi_rentallcar/backend/web/api/";
     private static final String TOKEN = "AMSI-TOKEN";
     private VeiculosListener veiculosListener;
     private DetalhesListener detalhesListener;
@@ -65,6 +65,7 @@ public class SingletonGestorVeiculos {
     public void setDetalhesListener(DetalhesListener detalhesListener) {
         this.detalhesListener = detalhesListener;
     }
+
     public void setDadosPessoaisListener(PerfilListener perfilListener) {
         this.perfilListener = perfilListener;
     }
@@ -238,16 +239,16 @@ public class SingletonGestorVeiculos {
 
     //endregion
 
-    //region métodos Rotas
-    public void getAllExtrasAPI(final Context context) {
-        if (!RotasJsonParser.isConnectionInternet(context)) {
+    //region métodos Horarios
+    public void getAllExtrasEXPAPI(final Context context, int id) {
+        if (!ExtrasJsonParser.isConnectionInternet(context)) {
             Toast.makeText(context, "Sem internet", Toast.LENGTH_SHORT).show();
 
         } else {
             JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPI + "extra", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    extras = RotasJsonParser.parseJsonExtras(response);
+                    extras = ExtrasJsonParser.parseJsonExtras(response);
 
                     if (extrasListener != null)
                         extrasListener.onRefreshListaExtras(extras);
@@ -256,23 +257,17 @@ public class SingletonGestorVeiculos {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, "erro", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
             volleyQueue.add(req);
         }
     }
-
-    public Extras getExtra(int id) {
-        for (Extras b : extras)
-            if (b.getId() == id)
-                return b;
-        return null;
-    }
 //endregion
 
+
     //region métodos getDadosPessoais
-    public Perfil getDadosPessoaisAPI (final Context context, int id){
+    public Perfil getDadosPessoaisAPI(final Context context, int id) {
         if (!PerfilJsonParser.isConnectionInternet(context)) {
             Toast.makeText(context, "Sem internet", Toast.LENGTH_SHORT).show();
 
@@ -282,7 +277,7 @@ public class SingletonGestorVeiculos {
                 public void onResponse(String response) {
                     perfil = PerfilJsonParser.parseJsonDadosPessoal(response);
 
-                    if(perfilListener!=null)
+                    if (perfilListener != null)
                         perfilListener.onRefreshPerfil(perfil);
                 }
             }, new Response.ErrorListener() {

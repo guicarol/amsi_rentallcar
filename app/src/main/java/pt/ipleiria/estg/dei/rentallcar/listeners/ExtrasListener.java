@@ -6,5 +6,5 @@ import pt.ipleiria.estg.dei.rentallcar.modelo.Extras;
 
 public interface ExtrasListener {
 
-    void onRefreshListaExtras(ArrayList<Extras> rotas);
+    void onRefreshListaExtras(ArrayList<Extras> extras);
 }

@@ -21,7 +21,7 @@
                 android:id="@+id/imgCapa"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.6"
+                android:layout_weight="0.5"
                 android:src="@drawable/programarandroid2" />
 
             <EditText
@@ -29,57 +29,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:text="@string/txt_marca"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:text="@string/txt_marca" />
 
             <EditText
                 android:id="@+id/etModelo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:text="@string/txt_modelo"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:text="@string/txt_modelo" />
 
             <EditText
                 android:id="@+id/etCombustivel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:text="@string/txt_combustivel"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:text="@string/txt_combustivel" />
 
             <EditText
                 android:id="@+id/etPreco"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:text="@string/txt_preco"
-                android:inputType="number" />
+                android:inputType="number"
+                android:text="@string/txt_preco" />
+
             <EditText
                 android:id="@+id/etMatricula"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:text="Matricula"
-                android:inputType="number" />
+                android:inputType="number"
+                android:text="Matricula" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TESTE" />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
 
-                <ListView
-                    android:id="@+id/listaExtras"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
-            </LinearLayout>
         </LinearLayout>
-
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

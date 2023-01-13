@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import pt.ipleiria.estg.dei.rentallcar.R;
-import pt.ipleiria.estg.dei.rentallcar.vistas.Extras;
+import pt.ipleiria.estg.dei.rentallcar.modelo.Extras;
 
 public class ListaExtrasAdaptador extends BaseAdapter {
 
@@ -60,16 +60,16 @@ public class ListaExtrasAdaptador extends BaseAdapter {
 
 
     private class ViewHolderLista{
-        private TextView tvExtras, tvHorarioChegada;
+        private TextView tvHorarioPartida, tvHorarioChegada;
 
         public ViewHolderLista(View view){
-            tvExtras =view.findViewById(R.id.tvExtra);
-            //tvHorarioChegada=view.findViewById(R.id.tvHorarioChegada);
+            tvHorarioPartida=view.findViewById(R.id.tvExtra);
+           // tvHorarioChegada=view.findViewById(R.id.tvHorarioChegada);
         }
 
         public void update(Extras extras){
-            tvExtras.setText(" " + extras.get());
-            //tvHorarioChegada.setText(" " + horarios.getHoraFim());
+            tvHorarioPartida.setText(" " + extras.getDescricao());
+           // tvHorarioChegada.setText(" " + horarios.getHoraFim());
         }
 
     }

@@ -26,14 +26,13 @@ public class Extras extends AppCompatActivity {
 
 //        tvNomeRota = findViewById(R.id.tvNomeRota);
   //      btComprarBilhete = findViewById(R.id.btComprarBilhete);
-        listaExtras = findViewById(R.id.listaExtras);
 
-        id = getIntent().getIntExtra("ID_ROTA", 0);
+       // id = getIntent().getIntExtra("ID_ROTA", 0);
 
-        rota = SingletonGestorVeiculos.getInstance(getApplicationContext()).getExtra(id);
+        //rota = SingletonGestorVeiculos.getInstance(getApplicationContext()).getExtra(id);
 
         //SingletonGestorVeiculos.getInstance(this).setVeiculosListener(this);
-        //SingletonGestorVeiculos.getInstance(this).getAllHorariosEXPAPI(this, id);
+        SingletonGestorVeiculos.getInstance(this).getAllExtrasEXPAPI(this, id);
 
         //setTitle("Detalhes: " + rota.getNome());
         // tvNomeRota.setText(rota.getNome());

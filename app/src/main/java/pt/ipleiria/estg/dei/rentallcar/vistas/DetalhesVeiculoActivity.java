@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -30,6 +31,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
     private Veiculo veiculo;
     private EditText etMarca, etModelo, etPreco, etCombustivel, etMatricula;
     private ImageView imgCapa;
+    private ListView listaExtras;
     private FloatingActionButton fabGuardar;
     public static final String IDVEICULO = "IDVEICULO";
     public static final int MIN_CHAR = 3;
@@ -46,6 +48,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
         etMatricula = findViewById(R.id.etMatricula);
         imgCapa = findViewById(R.id.imgCapa);
         fabGuardar = findViewById(R.id.fabGuardar);
+        //listaExtras = findViewById(R.id.listaExtras);
 
         int id = getIntent().getIntExtra(IDVEICULO, 0);
 
@@ -129,7 +132,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
         etModelo.setText(veiculo.getModelo());
         etCombustivel.setText(veiculo.getCombustivel());
         etPreco.setText(veiculo.getPreco() + "");
-        etMatricula.setText(etMatricula.toString()+ veiculo.getMatricula());
+        etMatricula.setText(veiculo.getMatricula());
         Glide.with(this)
                 .load(veiculo.getDescricao())
                 .placeholder(R.drawable.logo)
@@ -145,7 +148,6 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
         }
         return false;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -182,4 +184,5 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
                 })
                 .show();
     }
+
 }
