@@ -18,7 +18,9 @@ import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 
 public class Utilizador extends Fragment implements PerfilListener {
 
-    private String email, username;
+    private String email;
+    private String username;
+    private int id;
 
     private TextView logout, etNome, etApelido, etTelefone, etNif, etEmail, etUsername;
 
@@ -33,8 +35,13 @@ public class Utilizador extends Fragment implements PerfilListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_utilizador, container, false);
 
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE);
+        username = sharedPreferences.getString("username", "");
+        email = sharedPreferences.getString("email", "");
+        id=sharedPreferences.getInt("id",-1);
+
         SingletonGestorVeiculos.getInstance(getContext()).setDadosPessoaisListener(this);
-        SingletonGestorVeiculos.getInstance(getContext()).getDadosPessoaisAPI(getContext(), 2);
+        SingletonGestorVeiculos.getInstance(getContext()).getDadosPessoaisAPI(getContext(), id);
 
         logout = (TextView) view.findViewById(R.id.LogOut);
         etNome = view.findViewById(R.id.etNome);
@@ -44,11 +51,6 @@ public class Utilizador extends Fragment implements PerfilListener {
         etEmail = view.findViewById(R.id.etEmail);
         etUsername = view.findViewById(R.id.etUsername);
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE);
-        username = sharedPreferences.getString("username", "");
-        email=sharedPreferences.getString("email","");
-
-
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +58,6 @@ public class Utilizador extends Fragment implements PerfilListener {
                 Intent intent = new Intent(view.getContext(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
-
             }
 
         });

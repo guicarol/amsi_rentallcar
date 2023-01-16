@@ -33,10 +33,8 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
     private DrawerLayout drawer;
     private String email;
     private FragmentManager fragmentManager;
-    public static final String EMAIL = "EMAIL", SHARED_FILE = "DADOS_USER", OPERACAO="OPERACAO";
-    public static final int  EDIT=10, ADD=20, DELETE=30;
-
-
+    public static final String EMAIL = "EMAIL", SHARED_FILE = "DADOS_USER", OPERACAO = "OPERACAO";
+    public static final int EDIT = 10, ADD = 20, DELETE = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +53,6 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
         navigationView.setNavigationItemSelectedListener(this);
         fragmentManager = getSupportFragmentManager();
         carregarFragmentoInicial();
-
     }
 
     private boolean carregarFragmentoInicial() {
@@ -72,7 +69,6 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
             SharedPreferences.Editor editor = sharedInfoUser.edit();
             editor.putString(EMAIL, email);
             editor.apply();
-
         } else
             email = sharedInfoUser.getString(EMAIL, "Sem Email");
 
@@ -119,9 +115,7 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
     }
 
     public void onClickPesquisar(View view) {
-        Intent intent=new Intent(this, ResultadoPesquisa.class);
+        Intent intent = new Intent(this, ResultadoPesquisa.class);
         startActivity(intent);
     }
-
-
 }

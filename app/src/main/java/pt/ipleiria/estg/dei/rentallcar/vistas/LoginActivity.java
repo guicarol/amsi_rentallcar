@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("username", username);
                                 editor.putString("email", jsonObject.getString("email"));
+                                editor.putInt("id", jsonObject.getInt("id"));
                                 editor.apply();
                                 Intent intent = new Intent(LoginActivity.this, MenuMainActivity.class);
                                 startActivity(intent);
