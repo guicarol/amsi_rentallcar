@@ -16,13 +16,12 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/txt_email"
-        android:inputType="textEmailAddress"
-        android:text="teste@teste.com" />
+        android:inputType="textPersonName"
+        android:text="admin" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -31,7 +30,7 @@
         android:ems="10"
         android:hint="@string/txt_password"
         android:inputType="textPassword"
-        android:text="123324" />
+        android:text="admin12345" />
 
     <Button
         android:id="@+id/btnLogin"

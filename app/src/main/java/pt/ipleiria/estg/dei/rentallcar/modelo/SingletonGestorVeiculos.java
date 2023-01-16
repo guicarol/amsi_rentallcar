@@ -32,7 +32,7 @@ public class SingletonGestorVeiculos {
     private static SingletonGestorVeiculos instance = null;
     private VeiculoBDHelper veiculosBD;
     private static RequestQueue volleyQueue = null;
-    private static final String mUrlAPI = "http://192.168.1.76/plsi_rentallcar/backend/web/api/";
+    private static final String mUrlAPI = "http://192.168.1.70/plsi_rentallcar/backend/web/api/";
     private static final String TOKEN = "AMSI-TOKEN";
     private VeiculosListener veiculosListener;
     private DetalhesListener detalhesListener;
@@ -268,6 +268,7 @@ public class SingletonGestorVeiculos {
 
     //region métodos getDadosPessoais
     public Perfil getDadosPessoaisAPI(final Context context, int id) {
+
         if (!PerfilJsonParser.isConnectionInternet(context)) {
             Toast.makeText(context, "Sem internet", Toast.LENGTH_SHORT).show();
 

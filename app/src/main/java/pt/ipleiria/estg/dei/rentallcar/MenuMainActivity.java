@@ -36,6 +36,8 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
     public static final String EMAIL = "EMAIL", SHARED_FILE = "DADOS_USER", OPERACAO="OPERACAO";
     public static final int  EDIT=10, ADD=20, DELETE=30;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,11 +86,11 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
         Fragment fragment = null;
         switch (item.getItemId()) {
 
-            case R.id.utilizador:
+            case R.id.pesquisar:
                 fragment = new ListaVeiculoFragment();
                 setTitle(item.getTitle());
                 break;
-            case R.id.pesquisar:
+            case R.id.utilizador:
                 fragment = new Utilizador();
                 setTitle(item.getTitle());
                 break;
