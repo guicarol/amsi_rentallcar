@@ -20,12 +20,12 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.navigation.NavigationView;
 
-import pt.ipleiria.estg.dei.rentallcar.vistas.Favoritos;
+import pt.ipleiria.estg.dei.rentallcar.vistas.FavoritosFragment;
 import pt.ipleiria.estg.dei.rentallcar.vistas.ListaVeiculoFragment;
 import pt.ipleiria.estg.dei.rentallcar.vistas.ReservasFragment;
 import pt.ipleiria.estg.dei.rentallcar.vistas.ResultadoPesquisa;
 import pt.ipleiria.estg.dei.rentallcar.vistas.SobreFragment;
-import pt.ipleiria.estg.dei.rentallcar.vistas.Utilizador;
+import pt.ipleiria.estg.dei.rentallcar.vistas.UtilizadorFragment;
 
 public class MenuMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -87,7 +87,7 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
                 setTitle(item.getTitle());
                 break;
             case R.id.utilizador:
-                fragment = new Utilizador();
+                fragment = new UtilizadorFragment();
                 setTitle(item.getTitle());
                 break;
             case R.id.reservas:
@@ -95,7 +95,7 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
                 setTitle(item.getTitle());
                 break;
             case R.id.favoritos:
-                fragment = new Favoritos();
+                fragment = new FavoritosFragment();
                 setTitle(item.getTitle());
                 break;
             case R.id.sobre:

@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(final String username, final String password) {
-        String loginUrl = "http://192.168.1.65/plsi_rentallcar/backend/web/api/user/login";
+        String loginUrl = "http://192.168.1.70/plsi_rentallcar/backend/web/api/user/login";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, loginUrl,
                 new com.android.volley.Response.Listener<String>() {

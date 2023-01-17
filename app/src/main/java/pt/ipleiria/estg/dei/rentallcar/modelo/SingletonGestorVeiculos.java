@@ -31,8 +31,9 @@ public class SingletonGestorVeiculos {
     private ArrayList<Veiculo> veiculos;
     private static SingletonGestorVeiculos instance = null;
     private VeiculoBDHelper veiculosBD;
+    private DatabaseHelper favorito;
     private static RequestQueue volleyQueue = null;
-    private static final String mUrlAPI = "http://192.168.1.65/plsi_rentallcar/backend/web/api/";
+    private static final String mUrlAPI = "http://192.168.1.70/plsi_rentallcar/backend/web/api/";
     private static final String TOKEN = "AMSI-TOKEN";
     private VeiculosListener veiculosListener;
     private DetalhesListener detalhesListener;
@@ -55,6 +56,7 @@ public class SingletonGestorVeiculos {
         //gerarDadosDinamico();
         veiculos = new ArrayList<>();
         veiculosBD = new VeiculoBDHelper(context);
+        favorito=new DatabaseHelper(context);
 
     }
 
@@ -75,6 +77,11 @@ public class SingletonGestorVeiculos {
 
     public ArrayList<Veiculo> getVeiculosBD() {
         veiculos = veiculosBD.getAllLivroBD();
+        return new ArrayList(veiculos);
+    }
+
+    public ArrayList<Veiculo> getFavorito() {
+        veiculos = favorito.getAllLivroBD();
         return new ArrayList(veiculos);
     }
 
