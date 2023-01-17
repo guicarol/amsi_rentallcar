@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(final String username, final String password) {
-        String loginUrl = "http://192.168.1.70/plsi_rentallcar/backend/web/api/user/login";
+        String loginUrl = "http://192.168.1.65/plsi_rentallcar/backend/web/api/user/login";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, loginUrl,
                 new com.android.volley.Response.Listener<String>() {
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                                 // For example, you can start a new activity or save the user's information in SharedPreferences
 
                                 Toast.makeText(LoginActivity.this, "Login efetuado com sucesso", Toast.LENGTH_LONG).show();
-                                SharedPreferences sharedPreferences = getSharedPreferences("user_info", Context.MODE_PRIVATE);
+                               SharedPreferences sharedPreferences = getSharedPreferences("user_info", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("username", username);
                                 editor.putString("email", jsonObject.getString("email"));

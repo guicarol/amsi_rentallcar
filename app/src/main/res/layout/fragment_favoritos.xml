@@ -89,12 +89,13 @@
                 android:id="@+id/tvPreco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
         </LinearLayout>
     </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/checkBox"
+    <ImageButton
+        android:id="@+id/imageButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="fav" />
+        android:src="@drawable/ic_action_favorito" />
 </LinearLayout>

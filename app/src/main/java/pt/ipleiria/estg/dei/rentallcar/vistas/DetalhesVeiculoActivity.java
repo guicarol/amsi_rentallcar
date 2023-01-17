@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -29,7 +30,7 @@ import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
 public class DetalhesVeiculoActivity extends AppCompatActivity {
 
     private Veiculo veiculo;
-    private EditText etMarca, etModelo, etPreco, etCombustivel, etMatricula;
+    private TextView etMarca,etModelo, etPreco, etCombustivel, etMatricula;
     private ImageView imgCapa;
     private ListView listaExtras;
     private FloatingActionButton fabGuardar;
@@ -55,7 +56,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
         veiculo = SingletonGestorVeiculos.getInstance(getApplicationContext()).getVeiculo(id);
         if (veiculo != null) {
             carregarVeiculo();
-            fabGuardar.setImageResource(R.drawable.ic_action_guardar);
+            fabGuardar.setImageResource(R.drawable.ic_action_favorito);
         } else {
             setTitle(getString(R.string.act_detalhes));
             fabGuardar.setImageResource(R.drawable.ic_action_adicionar);
@@ -149,15 +150,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
         return false;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.itemRemover:
-                dialogRemove();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     private void dialogRemove() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);

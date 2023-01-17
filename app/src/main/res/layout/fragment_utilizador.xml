@@ -65,14 +65,6 @@
         android:hint="@string/txt_email"
         android:inputType="textEmailAddress" />
 
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/txt_password"
-        android:inputType="textPassword" />
-
     <Button
         android:id="@+id/btnRegistar"
         android:layout_width="match_parent"
@@ -84,16 +76,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.3" />
-
-    <Button
-        android:id="@+id/btn_usado"
-        android:layout_width="match_parent"
-        android:layout_height="74dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#4CAF50"
-        android:onClick="onClickLista"
-        android:text="extras"
-        android:textSize="16sp" />
 
 
     <TextView
