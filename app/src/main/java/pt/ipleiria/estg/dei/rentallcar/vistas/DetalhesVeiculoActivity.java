@@ -77,7 +77,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
         container = findViewById(R.id.container);
         getCheckboxData();
 
-        fabGuardar=findViewById(R.id.fabGuardar);
+        fabGuardar = findViewById(R.id.fabGuardar);
         fabGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,7 +93,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
             setTitle(getString(R.string.act_detalhes));
             fabGuardar.setImageResource(R.drawable.ic_action_adicionar);
         }
-       /* fabGuardar.setOnClickListener(new View.OnClickListener() {
+        fabGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isVeiculoValido()) {
@@ -118,14 +118,13 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
                         //criar Livro
                         Veiculo livroAux = new Veiculo(0, preco, "http://amsi.dei.estg.ipleiria.pt/img/ipl_semfundo.png", marca, modelo, combustivel, matricula);
                         SingletonGestorVeiculos.getInstance(getApplicationContext()).adicionarVeiculoAPI(livroAux, getApplicationContext());
-
                     }
                     setResult(RESULT_OK, intent);
                     finish();
                 }
 
             }
-        }*/;
+        });
     }
 
     private void getDropdownData() {
@@ -204,7 +203,6 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
         ArrayList<Veiculo> itemsList = new ArrayList<>();
         itemsList.add(new Veiculo(id, veiculo.getPreco(), veiculo.getDescricao(), veiculo.getMarca(), veiculo.getModelo(), veiculo.getCombustivel(), veiculo.getMatricula()));
     }
-
 
     private boolean isVeiculoValido() {
         String titulo = etMarca.getText().toString();
@@ -285,5 +283,4 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
                 })
                 .show();
     }
-
 }

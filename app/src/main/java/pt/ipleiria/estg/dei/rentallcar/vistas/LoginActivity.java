@@ -32,7 +32,6 @@ import pt.ipleiria.estg.dei.rentallcar.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-
     private static final int MIN_PASS = 4;
     private EditText etUsername, etPassword;
     private Button loginButton;
@@ -137,7 +136,6 @@ public class LoginActivity extends AppCompatActivity {
                 return null;
             }
         };
-
         // Add the request to the RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);

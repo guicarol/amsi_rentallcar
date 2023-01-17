@@ -12,7 +12,6 @@ import pt.ipleiria.estg.dei.rentallcar.R;
 
 public class Pesquisar extends Fragment {
 
-
     public Pesquisar() {
         // Required empty public constructor
     }

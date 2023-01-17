@@ -34,14 +34,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".vistas.ResultadoPesquisa"
-            android:exported="false"
-            android:parentActivityName=".vistas.MainActivity">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".MenuMainActivity"
             android:exported="false"
             android:label="Rentallcar"
@@ -61,13 +53,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".vistas.MainActivity"
-            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -35,7 +35,6 @@ public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
     public static final int DETALHES = 1;
 
     public ListaVeiculoFragment() {
-
     }
 
     @Override
@@ -59,7 +58,6 @@ public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
                 startActivityForResult(intent, DETALHES);
             }
         });
-
         return view;
     }
 
@@ -103,7 +101,6 @@ public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
                 return true;
             }
         });
-
         super.onCreateOptionsMenu(menu, inflater);
     }
 

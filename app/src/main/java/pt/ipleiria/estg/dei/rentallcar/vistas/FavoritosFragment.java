@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment;
 
 import pt.ipleiria.estg.dei.rentallcar.R;
 
-public class SobreFragment extends Fragment {
+public class FavoritosFragment extends Fragment {
 
-    public SobreFragment() {
+
+    public FavoritosFragment() {
         // Required empty public constructor
     }
 
@@ -19,6 +20,6 @@ public class SobreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sobre, container, false);
+        return inflater.inflate(R.layout.fragment_favoritos, container, false);
     }
 }

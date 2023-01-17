@@ -1,10 +1,8 @@
 package pt.ipleiria.estg.dei.rentallcar.vistas;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import pt.ipleiria.estg.dei.rentallcar.R;
 
@@ -16,6 +14,5 @@ public class ResultadoPesquisa extends AppCompatActivity {
         setContentView(R.layout.activity_resultado_pesquisa);
         setTitle("Resultado");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 }
