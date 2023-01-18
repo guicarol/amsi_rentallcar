@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,13 +49,12 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
     private int id;
     private TextView etMarca, etModelo, etPreco, etCombustivel, etMatricula;
     private ImageView imgCapa;
-    private ListView listaExtras;
     private FloatingActionButton fabGuardar;
     public static final String IDVEICULO = "IDVEICULO";
     public static final int MIN_CHAR = 3;
     public static final int MIN_NUMERO = 4;
-    private Spinner spinner;
-    private LinearLayout container;
+    private Spinner dpwnseguro;
+    private LinearLayout ctnrextras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +69,10 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
         id = getIntent().getIntExtra(IDVEICULO, 0);
 
         //listaExtras = findViewById(R.id.listaExtras);
-        spinner = findViewById(R.id.spinner1);
+        dpwnseguro = findViewById(R.id.dpwn_seguro);
         getDropdownData();
 
-        container = findViewById(R.id.container);
+        ctnrextras = findViewById(R.id.container_extras);
         getCheckboxData();
 
         fabGuardar = findViewById(R.id.fabGuardar);
@@ -102,8 +100,10 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
                     String modelo = etModelo.getText().toString();
                     int preco = Integer.parseInt(etPreco.getText().toString());
                     String matricula = etMatricula.getText().toString();
+                    String extra= ctnrextras.toString();
+                    String seguro= dpwnseguro.toString();
                     Intent intent = new Intent();
-                    if (veiculo != null) {
+                    /*if (veiculo != null) {
                         //editar livro
                         //livroAux= new Livro(preco,livro.getCapa(),marca,modelo,combustivel);
                         veiculo.setMarca(marca);
@@ -114,9 +114,10 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
                         SingletonGestorVeiculos.getInstance(getApplicationContext()).editarVeiculoBD(veiculo);
                         intent.putExtra(MenuMainActivity.OPERACAO, MenuMainActivity.EDIT);
 
-                    } else {
-                        //criar Livro
-                        Veiculo livroAux = new Veiculo(0, preco, "http://amsi.dei.estg.ipleiria.pt/img/ipl_semfundo.png", marca, modelo, combustivel, matricula);
+                    } else */
+                    {
+                        //adicionar veiculo favorito
+                        Veiculo livroAux = new Veiculo(id, preco, "http://amsi.dei.estg.ipleiria.pt/img/ipl_semfundo.png", marca, modelo, combustivel, matricula);
                         SingletonGestorVeiculos.getInstance(getApplicationContext()).adicionarVeiculoAPI(livroAux, getApplicationContext());
                     }
                     setResult(RESULT_OK, intent);
@@ -142,7 +143,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(DetalhesVeiculoActivity.this, android.R.layout.simple_spinner_item, list);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(adapter);
+                    dpwnseguro.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -176,7 +177,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
                         String value = jsonObject.getString("descricao");
                         CheckBox checkBox = new CheckBox(DetalhesVeiculoActivity.this);
                         checkBox.setText(value);
-                        container.addView(checkBox);
+                        ctnrextras.addView(checkBox);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

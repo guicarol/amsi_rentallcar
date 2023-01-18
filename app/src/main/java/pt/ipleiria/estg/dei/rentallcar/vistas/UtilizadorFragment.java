@@ -57,14 +57,13 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_utilizador, container, false);
-
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_info", MODE_PRIVATE);
         username = sharedPreferences.getString("username", "");
         email = sharedPreferences.getString("email", "");
         id = sharedPreferences.getInt("id", -1);
 
         SingletonGestorVeiculos.getInstance(getContext()).setDadosPessoaisListener(this);
-        SingletonGestorVeiculos.getInstance(getContext()).getDadosPessoaisAPI(getContext(), id);
+        SingletonGestorVeiculos.getInstance(getContext()).getPerfilAPI(getContext(), id);
 
         logout = (TextView) view.findViewById(R.id.LogOut);
         etNome = view.findViewById(R.id.etNome);
@@ -86,16 +85,60 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
         btnalterar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                teste();
+                String name = etUsername.getText().toString();
+                String email = etEmail.getText().toString();
+                //String password = passwordEditText.getText().toString();
+                registo(name, email);
             }
         });
 
-        perfil = SingletonGestorVeiculos.getInstance(getContext()).getDadosPessoaisAPI(getContext(), 12);
-
         return view;
     }
+    private void registo(String username,  String email) {
+        // Encrypt the password and add the salt value
+        //String hashedPassword = hashPassword(password + salt);
+        String url = "http://192.168.1.70/plsi_rentallcar/backend/web/api/user/updateprofile?id=1";
 
-  /*  private void updateUser() {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("username", username);
+            jsonBody.put("email", email);
+            //jsonBody.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, jsonBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Handle the response
+                        try {
+                            String message = response.getString("message");
+                            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Handle the error
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                // you can add more headers if needed
+                return headers;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(jsonObjectRequest);
+    }
+   /* private void updateUser() {
         btnalterar.setEnabled(false);
 
         String url = "http://192.168.1.70/plsi_rentallcar/backend/web/api/user/update";
@@ -146,7 +189,7 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
         requestQueue.add(jsonObjectRequest);
     }*/
 
-    private void updateUser() {
+    private void uspdateUser() {
         String name = etUsername.getText().toString();
         String email = etEmail.getText().toString();
         // String password = passwordEditText.getText().toString();
@@ -156,7 +199,7 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
         params.put("email", email);
         // params.put("password", password);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, "http://192.168.1.70/plsi_rentallcar/backend/web/api/user/update", new JSONObject(params),
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, "http://192.168.1.70/plsi_rentallcar/backend/web/api/user/update" + id, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -205,7 +248,7 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
         String email = etEmail.getText().toString();
         String url = "https://example.com/api/update-user?id=" + id;
 
-        String loginUrl = "http://192.168.1.70/plsi_rentallcar/backend/web/api/user/update?id="+ id;
+        String loginUrl = "http://192.168.1.70/plsi_rentallcar/backend/web/api/user/update?id=" + id;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, loginUrl,
                 new com.android.volley.Response.Listener<String>() {
@@ -276,8 +319,8 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
         if (perfil != null) {
             etNome.setText(perfil.getNome());
             etApelido.setText(perfil.getApelido());
-            etTelefone.setText(perfil.getTelemovel());
-            etNif.setText(perfil.getNif());
+            etTelefone.setText(perfil.getTelemovel() + "");
+            etNif.setText(perfil.getNif() + "");
             etEmail.setText(email);
             etUsername.setText(username);
             //etNome.setText(" " + perfil.getNome() + " " + perfil.getApelido());

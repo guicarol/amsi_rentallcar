@@ -56,7 +56,7 @@ public class SingletonGestorVeiculos {
         //gerarDadosDinamico();
         veiculos = new ArrayList<>();
         veiculosBD = new VeiculoBDHelper(context);
-        favorito=new DatabaseHelper(context);
+        favorito = new DatabaseHelper(context);
 
     }
 
@@ -116,7 +116,6 @@ public class SingletonGestorVeiculos {
         }
     }
     //endregion
-
 
     //region LIVRO-API
     public void adicionarVeiculoAPI(final Veiculo veiculo, final Context context) {
@@ -238,12 +237,8 @@ public class SingletonGestorVeiculos {
                 }
             };
             volleyQueue.add(req);
-
         }
-
     }
-
-
     //endregion
 
     //region métodos Horarios
@@ -272,9 +267,8 @@ public class SingletonGestorVeiculos {
     }
 //endregion
 
-
     //region métodos getDadosPessoais
-    public Perfil getDadosPessoaisAPI(final Context context, int id) {
+    public Perfil getPerfilAPI(final Context context, int id) {
 
         if (!PerfilJsonParser.isConnectionInternet(context)) {
             Toast.makeText(context, "Sem internet", Toast.LENGTH_SHORT).show();
@@ -299,6 +293,6 @@ public class SingletonGestorVeiculos {
         }
         return null;
     }
-//endregion
 
+//endregion
 }

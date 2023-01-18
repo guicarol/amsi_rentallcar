@@ -23,8 +23,8 @@ public class PerfilJsonParser {
                 String nome = dados.getString("nome");
                 String apelido = dados.getString("apelido");
                 //String imgPerfil = dados.getString("imgPerfil");
-                String telemovel = dados.getString("telemovel");
-                String nif = dados.getString("nif");
+                int telemovel = dados.getInt("telemovel");
+                int nif = dados.getInt("nif");
                 Perfil auxDadosPessoal = new Perfil(id, nome, apelido, /*imgPerfil,*/ telemovel, nif);
                 dadosPessoais.add(auxDadosPessoal);
             }
@@ -42,8 +42,8 @@ public class PerfilJsonParser {
             String nome = dados.getString("nome");
             String apelido = dados.getString("apelido");
             //String imgPerfil = dados.getString("imgPerfil");
-            String telemovel = dados.getString("telemovel");
-            String nif = dados.getString("nif");
+            int telemovel = dados.getInt("telemovel");
+            int nif = dados.getInt("nif");
             auxDadosPessoal = new Perfil(id, nome, apelido, /*imgPerfil,*/ telemovel, nif);
         } catch (JSONException e) {
             e.printStackTrace();
