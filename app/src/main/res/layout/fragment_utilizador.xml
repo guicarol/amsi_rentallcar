@@ -17,13 +17,11 @@
         android:layout_weight="0.3"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <EditText
+    <TextView
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName" />
+        android:text="Username" />
 
     <EditText
         android:id="@+id/etNome"
@@ -31,7 +29,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Nome"
-        android:inputType="textPersonName" />
+        android:inputType="" />
 
     <EditText
         android:id="@+id/etApelido"

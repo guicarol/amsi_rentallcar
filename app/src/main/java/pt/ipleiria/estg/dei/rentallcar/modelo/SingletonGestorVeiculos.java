@@ -33,7 +33,7 @@ public class SingletonGestorVeiculos {
     private VeiculoBDHelper veiculosBD;
     private DatabaseHelper favorito;
     private static RequestQueue volleyQueue = null;
-    private static final String mUrlAPI = "http://192.168.1.70/plsi_rentallcar/backend/web/api/";
+    public static final String mUrlAPI = "http://192.168.1.70/plsi_rentallcar/backend/web/api/";
     private static final String TOKEN = "AMSI-TOKEN";
     private VeiculosListener veiculosListener;
     private DetalhesListener detalhesListener;
@@ -43,6 +43,7 @@ public class SingletonGestorVeiculos {
 
     private PerfilListener perfilListener;
     private Perfil perfil;
+
 
     public static synchronized SingletonGestorVeiculos getInstance(Context context) {
         if (instance == null)
@@ -57,7 +58,6 @@ public class SingletonGestorVeiculos {
         veiculos = new ArrayList<>();
         veiculosBD = new VeiculoBDHelper(context);
         favorito = new DatabaseHelper(context);
-
     }
 
     public void setVeiculosListener(VeiculosListener veiculosListener) {
@@ -71,7 +71,6 @@ public class SingletonGestorVeiculos {
     public void setDadosPessoaisListener(PerfilListener perfilListener) {
         this.perfilListener = perfilListener;
     }
-
 
     //region LIVRO-BD
 
@@ -149,9 +148,7 @@ public class SingletonGestorVeiculos {
                 }
             };
             volleyQueue.add(req);
-
         }
-
     }
 
     public void getAllVeiculosAPI(final Context context) {
@@ -169,7 +166,6 @@ public class SingletonGestorVeiculos {
 
                     if (veiculosListener != null)
                         veiculosListener.onRefreshListaVeiculos(veiculos);
-
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -178,7 +174,6 @@ public class SingletonGestorVeiculos {
                 }
             });
             volleyQueue.add(req);
-
         }
     }
 
@@ -216,7 +211,6 @@ public class SingletonGestorVeiculos {
                     editarVeiculoBD(veiculo);
                     if (detalhesListener != null)
                         detalhesListener.onRefreshDetalhes(MenuMainActivity.EDIT);
-
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -245,16 +239,13 @@ public class SingletonGestorVeiculos {
     public void getAllExtrasEXPAPI(final Context context, int id) {
         if (!ExtrasJsonParser.isConnectionInternet(context)) {
             Toast.makeText(context, "Sem internet", Toast.LENGTH_SHORT).show();
-
         } else {
             JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPI + "extra", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     extras = ExtrasJsonParser.parseJsonExtras(response);
-
                     if (extrasListener != null)
                         extrasListener.onRefreshListaExtras(extras);
-
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -272,9 +263,8 @@ public class SingletonGestorVeiculos {
 
         if (!PerfilJsonParser.isConnectionInternet(context)) {
             Toast.makeText(context, "Sem internet", Toast.LENGTH_SHORT).show();
-
         } else {
-            StringRequest req = new StringRequest(Request.Method.GET, mUrlAPI + "profile/view?id=" + id, new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.GET, mUrlAPI + "user/viewprofile?id=" + id, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     perfil = PerfilJsonParser.parseJsonDadosPessoal(response);

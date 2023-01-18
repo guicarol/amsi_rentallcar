@@ -29,6 +29,7 @@ import java.util.Map;
 
 import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
 import pt.ipleiria.estg.dei.rentallcar.R;
+import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(final String username, final String password) {
-        String loginUrl = "http://192.168.1.70/plsi_rentallcar/backend/web/api/user/login";
+        String loginUrl = SingletonGestorVeiculos.mUrlAPI+"user/login";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, loginUrl,
                 new com.android.volley.Response.Listener<String>() {

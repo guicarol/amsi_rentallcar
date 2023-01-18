@@ -31,12 +31,11 @@ import java.util.Map;
 
 import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
 import pt.ipleiria.estg.dei.rentallcar.R;
+import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 
 public class RegistoActivity extends AppCompatActivity {
 
-    private EditText usernameEditText;
-    private EditText passwordEditText;
-    private EditText emailEditText;
+    private EditText usernameEditText, passwordEditText, emailEditText, etNome, etApelido, etTelefone, etNif;
     private Button signupButton;
     private static final String salt = "your_salt_value";
 
@@ -48,6 +47,13 @@ public class RegistoActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.etUsername);
         passwordEditText = findViewById(R.id.etPassword);
         emailEditText = findViewById(R.id.etEmail);
+
+        etNome = findViewById(R.id.etNome);
+        etApelido = findViewById(R.id.etApelido);
+        etTelefone = findViewById(R.id.etTelefone);
+        etNif = findViewById(R.id.etNif);
+
+
         signupButton = findViewById(R.id.btnRegistar);
 
         signupButton.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +63,12 @@ public class RegistoActivity extends AppCompatActivity {
                 final String password = passwordEditText.getText().toString();
                 final String email = emailEditText.getText().toString();
                 registo(username, password, email);
+
+                String nome = etNome.getText().toString();
+                String apelido = etApelido.getText().toString();
+                String telemovel = etTelefone.getText().toString();
+                String nif = etNif.getText().toString();
+               // UpdatePerfil(nome, apelido, telemovel, nif);
             }
         });
     }
@@ -65,7 +77,7 @@ public class RegistoActivity extends AppCompatActivity {
         // Encrypt the password and add the salt value
         //String hashedPassword = hashPassword(password + salt);
 
-        String url = "http://192.168.1.70/plsi_rentallcar/backend/web/api/user/signup";
+        String url = SingletonGestorVeiculos.mUrlAPI + "user/signup";
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new com.android.volley.Response.Listener<String>() {
 
             @Override
@@ -143,7 +155,7 @@ public class RegistoActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    
+
     private boolean isEmailValido(String email) {
         if (email == null)
             return false;

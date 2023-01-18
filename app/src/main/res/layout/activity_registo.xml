@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_margin="20dp"
+    android:orientation="vertical"
     tools:context=".vistas.RegistoActivity">
 
     <ImageView
@@ -20,33 +20,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Username"
-        android:text="teste"/>
+        android:inputType="textPersonName"
+        android:text="teste" />
 
     <EditText
         android:id="@+id/etNome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Noome" />
+        android:hint="Nome"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etApelido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Apelido" />
+        android:hint="Apelido"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etTelefone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Telefone" />
+        android:hint="Telefone"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etNif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nif"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etNrCarta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nr Carta conducao"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etEmail"
@@ -55,7 +71,7 @@
         android:ems="10"
         android:hint="@string/txt_email"
         android:inputType="textEmailAddress"
-        android:text="teste@teste.pt"/>
+        android:text="teste@teste.pt" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -64,25 +80,34 @@
         android:ems="10"
         android:hint="@string/txt_password"
         android:inputType="textPassword"
-        android:text="teste12345"/>
+        android:text="teste12345" />
+
+    <EditText
+        android:id="@+id/etPassword2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/txt_password"
+        android:inputType="textPassword"
+        android:text="teste12345" />
 
     <Button
         android:id="@+id/btnRegistar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txt_registar"
-        android:onClick="onClickRegistar"/>
+        android:onClick="onClickRegistar"
+        android:text="@string/txt_registar" />
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txt_login"
-        android:onClick="onClickLogin"/>
+        android:onClick="onClickLogin"
+        android:text="@string/txt_login" />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"/>
+        android:layout_weight="0.3" />
 
 </LinearLayout>

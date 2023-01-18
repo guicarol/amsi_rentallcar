@@ -129,7 +129,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
     }
 
     private void getDropdownData() {
-        String url = "http://192.168.1.70/plsi_rentallcar/backend/web/api/seguro";
+        String url = SingletonGestorVeiculos.mUrlAPI+"seguro";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -166,7 +166,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
     }
 
     private void getCheckboxData() {
-        String url = "http://192.168.1.70/plsi_rentallcar/backend/web/api/extra";
+        String url = SingletonGestorVeiculos.mUrlAPI+"extra";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
