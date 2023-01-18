@@ -38,7 +38,7 @@ import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 
 public class RegistoActivity extends AppCompatActivity {
 
-    private EditText usernameEditText, passwordEditText, emailEditText, etNome, etApelido, etTelefone, etNif;
+    private EditText usernameEditText, passwordEditText, verifypassword, emailEditText, etNome, etApelido, etTelefone, etNif, etNrCarta;
     private Button signupButton;
     private ImageView imgCapa;
 
@@ -51,19 +51,22 @@ public class RegistoActivity extends AppCompatActivity {
 
         usernameEditText = findViewById(R.id.etUsername);
         passwordEditText = findViewById(R.id.etPassword);
+        verifypassword = findViewById(R.id.etPassword2);
         emailEditText = findViewById(R.id.etEmail);
 
         etNome = findViewById(R.id.etNome);
         etApelido = findViewById(R.id.etApelido);
         etTelefone = findViewById(R.id.etTelefone);
         etNif = findViewById(R.id.etNif);
+        etNrCarta = findViewById(R.id.etNrCarta);
         imgCapa = findViewById(R.id.imageView);
 
         Glide.with(this)
                 .load(RegistoActivity.this)
-                .placeholder(R.drawable.logo)
+                .placeholder(R.drawable.user)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgCapa);
+
         signupButton = findViewById(R.id.btnRegistar);
 
         signupButton.setOnClickListener(new View.OnClickListener() {
@@ -72,12 +75,18 @@ public class RegistoActivity extends AppCompatActivity {
                 final String username = usernameEditText.getText().toString();
                 final String password = passwordEditText.getText().toString();
                 final String email = emailEditText.getText().toString();
-                registo(username, password, email);
+                final String verify = verifypassword.getText().toString();
+                if (password.equals(verify)) {
+                    registo(username, password, email);
+                } else {
+                    Toast.makeText(RegistoActivity.this, "Verifique as passwords", Toast.LENGTH_LONG).show();
+                }
 
                 String nome = etNome.getText().toString();
                 String apelido = etApelido.getText().toString();
                 String telemovel = etTelefone.getText().toString();
                 String nif = etNif.getText().toString();
+                String nrcarta = etNrCarta.getText().toString();
                 // UpdatePerfil(nome, apelido, telemovel, nif);
             }
         });
@@ -96,11 +105,10 @@ public class RegistoActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getBoolean("success")) {
                         // Handle successful signup
-                        Toast.makeText(RegistoActivity.this, "Login efetuado com sucesso", Toast.LENGTH_LONG).show();
-
+                        Toast.makeText(RegistoActivity.this, "Registo efetuado com sucesso", Toast.LENGTH_LONG).show();
                     } else {
                         // Handle signup failure
-                        Toast.makeText(RegistoActivity.this, "Erro no login", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegistoActivity.this, "Erro no registo", Toast.LENGTH_LONG).show();
 
                         if (username == null) {
                             usernameEditText.setError("Erro no username");
@@ -117,12 +125,16 @@ public class RegistoActivity extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     // Handle JSON exception
+                    Toast.makeText(RegistoActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Handle error
+                Toast.makeText(RegistoActivity.this, "Erro no registo", Toast.LENGTH_LONG).show();
+
             }
         }) {
             @Override

@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                                 // Intent dados = new Intent(this, Utilizador.class);
                                 //dados.putExtra("EMAIL", email);
                             } else {
-                                Toast.makeText(LoginActivity.this, "Erro no login", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Erro no login", Toast.LENGTH_LONG).show();
 
                                 if (username == null) {
                                     etUsername.setError("Erro no username");

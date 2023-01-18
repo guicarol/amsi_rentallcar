@@ -46,7 +46,7 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
     private Button btnalterar;
 
 
-    private TextView logout, etNome, etApelido, etTelefone, etNif, etEmail, etUsername;
+    private TextView logout, etNome, etApelido, etTelefone, etNif, etEmail, etUsername, etNrCarta;
 
     private Perfil perfil;
 
@@ -74,6 +74,7 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
         etApelido = view.findViewById(R.id.etApelido);
         etTelefone = view.findViewById(R.id.etTelefone);
         etNif = view.findViewById(R.id.etNif);
+        etNrCarta = view.findViewById(R.id.etNrCarta);
 
         etEmail = view.findViewById(R.id.etEmail);
         etUsername = view.findViewById(R.id.etUsername);
@@ -95,24 +96,26 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
                 String email = etEmail.getText().toString();
                 //String password = passwordEditText.getText().toString();
                 UpdateUser(username, email);
-                String nome=etNome.getText().toString();
-                String apelido=etApelido.getText().toString();
-                String telemovel=etTelefone.getText().toString();
-                String nif=etNif.getText().toString();
-                UpdatePerfil(nome,apelido,telemovel,nif);
+                String nome = etNome.getText().toString();
+                String apelido = etApelido.getText().toString();
+                String telemovel = etTelefone.getText().toString();
+                String nif = etNif.getText().toString();
+                String carta = etNrCarta.getText().toString();
+                UpdatePerfil(nome, apelido, telemovel, nif, carta);
             }
         });
         return view;
     }
 
-    private void UpdatePerfil(String nome, String apelido, String telemovel, String nif) {
+    private void UpdatePerfil(String nome, String apelido, String telemovel, String nif, String carta) {
         String url = SingletonGestorVeiculos.mUrlAPI + "user/updateprofile?id=" + id;
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("nome", nome);
             jsonBody.put("apelido", apelido);
-            jsonBody.put("telemovel", telemovel+"");
-            jsonBody.put("nif", nif+"");
+            jsonBody.put("telemovel", telemovel + "");
+            jsonBody.put("nif", nif + "");
+            jsonBody.put("nr_carta_conducao", carta + "");
             //jsonBody.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -157,6 +160,8 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
         try {
             jsonBody.put("username", username);
             jsonBody.put("email", email);
+
+
             //jsonBody.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -200,11 +205,12 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
             etApelido.setText(perfil.getApelido());
             etTelefone.setText(perfil.getTelemovel() + "");
             etNif.setText(perfil.getNif() + "");
+            etNrCarta.setText(perfil.getNif() + "");
             etEmail.setText(email);
             etUsername.setText(username);
             Glide.with(this)
                     .load(getActivity())
-                    .placeholder(R.drawable.logo)
+                    .placeholder(R.drawable.user)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgCapa);
             //etNome.setText(" " + perfil.getNome() + " " + perfil.getApelido());
