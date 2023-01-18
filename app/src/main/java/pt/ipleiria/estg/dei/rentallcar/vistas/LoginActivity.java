@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int MIN_PASS = 4;
     private EditText etUsername, etPassword;
     private Button loginButton;
+    private ImageView imgCapa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +47,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
+        imgCapa = findViewById(R.id.imageView);
         loginButton = (Button) findViewById(R.id.btnLogin);
-
+        Glide.with(this)
+                .load(LoginActivity.this)
+                .placeholder(R.drawable.logo)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imgCapa);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

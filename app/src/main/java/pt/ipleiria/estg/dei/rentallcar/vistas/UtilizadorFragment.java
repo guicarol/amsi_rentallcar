@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +41,7 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
     private String email;
     private String username;
     private int id;
+    private ImageView imgCapa;
 
     private Button btnalterar;
 
@@ -63,6 +67,8 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
         SingletonGestorVeiculos.getInstance(getContext()).getPerfilAPI(getContext(), id);
 
         logout = (TextView) view.findViewById(R.id.LogOut);
+
+        imgCapa = view.findViewById(R.id.imageView);
 
         etNome = view.findViewById(R.id.etNome);
         etApelido = view.findViewById(R.id.etApelido);
@@ -196,6 +202,11 @@ public class UtilizadorFragment extends Fragment implements PerfilListener {
             etNif.setText(perfil.getNif() + "");
             etEmail.setText(email);
             etUsername.setText(username);
+            Glide.with(this)
+                    .load(getActivity())
+                    .placeholder(R.drawable.logo)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imgCapa);
             //etNome.setText(" " + perfil.getNome() + " " + perfil.getApelido());
         }
     }

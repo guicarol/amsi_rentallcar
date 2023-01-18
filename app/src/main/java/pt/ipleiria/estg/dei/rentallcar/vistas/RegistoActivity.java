@@ -7,6 +7,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -18,6 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +40,8 @@ public class RegistoActivity extends AppCompatActivity {
 
     private EditText usernameEditText, passwordEditText, emailEditText, etNome, etApelido, etTelefone, etNif;
     private Button signupButton;
+    private ImageView imgCapa;
+
     private static final String salt = "your_salt_value";
 
     @Override
@@ -52,8 +57,13 @@ public class RegistoActivity extends AppCompatActivity {
         etApelido = findViewById(R.id.etApelido);
         etTelefone = findViewById(R.id.etTelefone);
         etNif = findViewById(R.id.etNif);
+        imgCapa = findViewById(R.id.imageView);
 
-
+        Glide.with(this)
+                .load(RegistoActivity.this)
+                .placeholder(R.drawable.logo)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imgCapa);
         signupButton = findViewById(R.id.btnRegistar);
 
         signupButton.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +78,7 @@ public class RegistoActivity extends AppCompatActivity {
                 String apelido = etApelido.getText().toString();
                 String telemovel = etTelefone.getText().toString();
                 String nif = etNif.getText().toString();
-               // UpdatePerfil(nome, apelido, telemovel, nif);
+                // UpdatePerfil(nome, apelido, telemovel, nif);
             }
         });
     }
