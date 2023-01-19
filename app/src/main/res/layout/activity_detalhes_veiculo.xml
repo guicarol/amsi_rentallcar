@@ -153,7 +153,7 @@
                     android:text="Data Levantamento" />
 
                 <EditText
-                    android:id="@+id/editTextDate"
+                    android:id="@+id/etDataL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -176,7 +176,7 @@
                     android:text="Data Devolução" />
 
                 <EditText
-                    android:id="@+id/editTextDate1"
+                    android:id="@+id/etDataD"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -204,15 +204,39 @@
                 android:text="Seguro"
                 android:textSize="20dp"
                 android:textStyle="bold"/>
+
             <Spinner
                 android:id="@+id/dpwn_seguro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:drawable/btn_dropdown"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/dpwn_localizacaol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+                <Spinner
+                    android:id="@+id/dpwn_localizacaod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnReservar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Reservar!" />

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -92,7 +93,7 @@ public class RegistoActivity extends AppCompatActivity {
         });
     }
 
-    private void registo(String username, String password, String email) {
+    private void regissto(String username, String password, String email) {
         // Encrypt the password and add the salt value
         //String hashedPassword = hashPassword(password + salt);
 
@@ -152,6 +153,45 @@ public class RegistoActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void registo(String username, String password, String email) {
+
+        String credentials = username + ":" + password; // Your username and password
+        String auth = "Basic " + android.util.Base64.encodeToString(credentials.getBytes(), android.util.Base64.NO_WRAP);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://192.168.1.76/plsi_rentallcar/backend/web/api/user/signup";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Handle the response
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle the error
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + getSharedPreferences("user_data", MODE_PRIVATE).getString("auth_token", ""));
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("name", username);
+                params.put("email", email);
+                params.put("password", password);
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String hashPassword(String password) {
