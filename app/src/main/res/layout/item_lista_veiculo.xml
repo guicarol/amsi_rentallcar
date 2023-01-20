@@ -76,7 +76,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/tvCombustivel"
+                android:id="@+id/tvDataLevantamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -98,7 +98,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/tvPreco"
+                android:id="@+id/tvDataDevolucao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"

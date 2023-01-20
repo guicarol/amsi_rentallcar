@@ -66,8 +66,8 @@ public class ListaVeiculoAdaptador extends BaseAdapter {
         public ViewHolderlista(View view) {
             tvMarca = view.findViewById(R.id.tvMarca);
             tvModelo = view.findViewById(R.id.tvModelo);
-            tvCombustivel = view.findViewById(R.id.tvCombustivel);
-            tvPreco = view.findViewById(R.id.tvPreco);
+            tvCombustivel = view.findViewById(R.id.tvDataLevantamento);
+            tvPreco = view.findViewById(R.id.tvDataDevolucao);
 
         }
 

@@ -49,10 +49,6 @@
                 android:text="@string/txt_modelo"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvModelo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -61,16 +57,17 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tvModelo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_combustivel"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvCombustivel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <LinearLayout
@@ -86,9 +83,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvPreco"
+                android:id="@+id/textView31"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </LinearLayout>

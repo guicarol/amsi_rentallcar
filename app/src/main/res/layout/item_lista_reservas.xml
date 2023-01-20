@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="10dp"
     tools:context=".vistas.ReservasFragment">
 
@@ -28,8 +28,7 @@
             <TextView
                 android:id="@+id/tvMarca"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -47,8 +46,7 @@
             <TextView
                 android:id="@+id/tvModelo"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,10 +62,9 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvCombustivel"
+                android:id="@+id/tvDataLevantamento"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -83,15 +80,16 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvPreco"
+                android:id="@+id/tvDataDevolucao"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
+
     <Button
-        android:id="@+id/checkBox"
+        android:id="@+id/btnPedirAssistencia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pedir assistência" />
+        android:text="Pedir assistência"
+        android:visibility="invisible" />
 </LinearLayout>

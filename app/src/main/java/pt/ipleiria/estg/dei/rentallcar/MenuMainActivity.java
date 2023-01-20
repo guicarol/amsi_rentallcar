@@ -21,8 +21,8 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.navigation.NavigationView;
 
 import pt.ipleiria.estg.dei.rentallcar.vistas.FavoritosFragment;
+import pt.ipleiria.estg.dei.rentallcar.vistas.ListaReservaFragment;
 import pt.ipleiria.estg.dei.rentallcar.vistas.ListaVeiculoFragment;
-import pt.ipleiria.estg.dei.rentallcar.vistas.ReservasFragment;
 import pt.ipleiria.estg.dei.rentallcar.vistas.ResultadoPesquisa;
 import pt.ipleiria.estg.dei.rentallcar.vistas.SobreFragment;
 import pt.ipleiria.estg.dei.rentallcar.vistas.UtilizadorFragment;
@@ -81,17 +81,17 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
         switch (item.getItemId()) {
-
-            case R.id.pesquisar:
-                fragment = new ListaVeiculoFragment();
-                setTitle(item.getTitle());
-                break;
             case R.id.utilizador:
                 fragment = new UtilizadorFragment();
                 setTitle(item.getTitle());
                 break;
+            case R.id.pesquisar:
+                fragment = new ListaVeiculoFragment();
+                setTitle(item.getTitle());
+                break;
+
             case R.id.reservas:
-                fragment = new ReservasFragment();
+                fragment = new ListaReservaFragment();
                 setTitle(item.getTitle());
                 break;
             case R.id.favoritos:
