@@ -51,7 +51,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
 
     private Veiculo veiculo;
     private int idprofile, idveiculo, idseguro, idLocalizacaol, idLocalizacaod;
-    private TextView etMarca, etModelo, etPreco, etCombustivel, etMatricula, etDataD, etDataL;
+    private TextView etMarca, etModelo, etPreco, etCombustivel, etMatricula, etDescricao, etTipoVeiculo, etFranquia;
     private ImageView imgCapa;
     private FloatingActionButton fabGuardar;
     private Button btnReservar;
@@ -70,6 +70,9 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         etModelo = findViewById(R.id.etModelo);
         etPreco = findViewById(R.id.etPreco);
         etMatricula = findViewById(R.id.etMatricula);
+        etDescricao = findViewById(R.id.etDescricao);
+        etTipoVeiculo = findViewById(R.id.etTipoVeiculo);
+        etFranquia = findViewById(R.id.etFranquia);
 
         SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
         idprofile = sharedPreferences.getInt("id", -1);
@@ -135,8 +138,8 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
                     } else */
                     {
                         //adicionar veiculo favorito
-                        Veiculo livroAux = new Veiculo(idveiculo, preco, "http://amsi.dei.estg.ipleiria.pt/img/ipl_semfundo.png", marca, modelo, combustivel, matricula);
-                        SingletonGestorVeiculos.getInstance(getApplicationContext()).adicionarVeiculoAPI(livroAux, getApplicationContext());
+                      //  Veiculo livroAux = new Veiculo(idveiculo, preco, "http://amsi.dei.estg.ipleiria.pt/img/ipl_semfundo.png", marca, modelo, combustivel, matricula);
+                        //SingletonGestorVeiculos.getInstance(getApplicationContext()).adicionarVeiculoAPI(livroAux, getApplicationContext());
                     }
                     setResult(RESULT_OK, intent);
                     finish();
@@ -368,7 +371,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
 
     private void addToFavorites() {
         ArrayList<Veiculo> itemsList = new ArrayList<>();
-        itemsList.add(new Veiculo(idveiculo, veiculo.getPreco(), veiculo.getDescricao(), veiculo.getMarca(), veiculo.getModelo(), veiculo.getCombustivel(), veiculo.getMatricula()));
+    //    itemsList.add(new Veiculo(idveiculo, veiculo.getPreco(), veiculo.getDescricao(), veiculo.getMarca(), veiculo.getModelo(), veiculo.getCombustivel(), veiculo.getMatricula()));
     }
 
     private boolean isVeiculoValido() {
@@ -409,6 +412,9 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         etCombustivel.setText(veiculo.getCombustivel());
         etPreco.setText(veiculo.getPreco() + "");
         etMatricula.setText(veiculo.getMatricula());
+        etDescricao.setText(veiculo.getDescricao());
+       // etTipoVeiculo.setText(veiculo.getTipoveiculo()+"");
+        //etFranquia.setText(veiculo.getFranquia()+"");
         Glide.with(this)
                 .load(veiculo.getDescricao())
                 .placeholder(R.drawable.logo)
