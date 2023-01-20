@@ -318,9 +318,15 @@ public class SingletonGestorVeiculos {
                 }
             });
             volleyQueue.add(req);
-
         }
 
+    }
+
+    public Reserva getReserva(int id) {
+        for (Reserva l : reservas)
+            if (l.getId() == id)
+                return l;
+        return null;
     }
 
 //endregion
