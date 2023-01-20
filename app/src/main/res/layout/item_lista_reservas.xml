@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    tools:context=".vistas.ReservasFragment">
+    tools:context=".vistas.ListaReservaFragment">
 
 
     <LinearLayout
@@ -86,10 +86,5 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnPedirAssistencia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pedir assistência"
-        android:visibility="invisible" />
+
 </LinearLayout>

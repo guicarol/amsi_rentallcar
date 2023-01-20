@@ -2,12 +2,14 @@ package pt.ipleiria.estg.dei.rentallcar.vistas;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -22,6 +24,8 @@ import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 
 public class ListaReservaFragment extends Fragment implements ReservasListener {
     private ListView lvReservas;
+    public static final int DETALHES = 2;
+
 
 
     public  ListaReservaFragment() {
@@ -37,7 +41,16 @@ public class ListaReservaFragment extends Fragment implements ReservasListener {
         SingletonGestorVeiculos.getInstance(getContext()).setReservasListener(this);
         SingletonGestorVeiculos.getInstance(getContext()).getReservaAPI(getContext(),id);
 
-    return view;
+        lvReservas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                Intent intent = new Intent(getContext(), DetalhesReservaActivity.class);
+                intent.putExtra(DetalhesReservaActivity.IDRESERVA, (int) id);
+                startActivityForResult(intent, DETALHES);
+            }
+        });
+        return view;
     }
 
     @Override

@@ -47,12 +47,13 @@ import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
 public class DetalhesReservaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Veiculo veiculo;
-    private int idprofile, idveiculo, idseguro, idLocalizacaol, idLocalizacaod;
+    private int idprofile,idreserva, idveiculo, idseguro, idLocalizacaol, idLocalizacaod;
     private TextView etMarca, etModelo, etPreco, etCombustivel, etMatricula, etDataD, etDataL;
     private ImageView imgCapa;
     private FloatingActionButton fabGuardar;
     private Button btnReservar;
     public static final String IDVEICULO = "IDVEICULO";
+    public static final String IDRESERVA = "IDRESERVA";
     public static final int MIN_CHAR = 3;
     public static final int MIN_NUMERO = 4;
     private Spinner dpwnseguro, dpwdn_localizacaol, dpwn_localizacaod;
@@ -69,6 +70,7 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
         idprofile = sharedPreferences.getInt("id", -1);
         imgCapa = findViewById(R.id.imgCapa);
         idveiculo = getIntent().getIntExtra(IDVEICULO, 0);
+        idreserva = getIntent().getIntExtra(IDRESERVA, 0);
 
         //listaExtras = findViewById(R.id.listaExtras);
         dpwnseguro = (Spinner) findViewById(R.id.dpwn_seguro);
