@@ -1,6 +1,5 @@
 package pt.ipleiria.estg.dei.rentallcar.vistas;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -17,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
@@ -42,12 +40,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
 import pt.ipleiria.estg.dei.rentallcar.R;
 import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
 
-public class DetalhesVeiculoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class DetalhesReservaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Veiculo veiculo;
     private int idprofile, idveiculo, idseguro, idLocalizacaol, idLocalizacaod;
@@ -64,52 +61,56 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalhes_veiculo);
+        setContentView(R.layout.activity_reserva_veiculo);
         etMarca = findViewById(R.id.etMarca);
-        etCombustivel = findViewById(R.id.etCombustivel);
-        etModelo = findViewById(R.id.etModelo);
-        etPreco = findViewById(R.id.etPreco);
-        etMatricula = findViewById(R.id.etMatricula);
-
+        etDataL = findViewById(R.id.etDataL);
+        etDataD = findViewById(R.id.etDataD);
         SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
         idprofile = sharedPreferences.getInt("id", -1);
         imgCapa = findViewById(R.id.imgCapa);
         idveiculo = getIntent().getIntExtra(IDVEICULO, 0);
 
         //listaExtras = findViewById(R.id.listaExtras);
-        //getDropdownSeguro();
+        dpwnseguro = (Spinner) findViewById(R.id.dpwn_seguro);
+        getDropdownSeguro();
 
         //listaExtras = findViewById(R.id.listaExtras);
+        dpwdn_localizacaol = (Spinner) findViewById(R.id.dpwn_localizacaol);
+        getDropdownLocalizacaol();
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.dpwn_seguro, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dpwdn_localizacaol.setAdapter(adapter);
+        dpwdn_localizacaol.setOnItemSelectedListener(this);
 
+        dpwn_localizacaod = (Spinner) findViewById(R.id.dpwn_localizacaod);
+        getDropdownLocalizacaod();
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dpwn_localizacaod.setAdapter(adapter);
+        dpwn_localizacaod.setOnItemSelectedListener(this);
+
+        ctnrextras = findViewById(R.id.container_extras);
+        getCheckboxData();
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dpwnseguro.setAdapter(adapter);
+        dpwnseguro.setOnItemSelectedListener(this);
 
         btnReservar = findViewById(R.id.btnReservar);
-
         btnReservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DetalhesVeiculoActivity.this, DetalhesReservaActivity.class);
-                intent.putExtra(DetalhesReservaActivity.IDVEICULO, (int) idveiculo);
-                startActivity(intent);
-            }
-        });
-
-        fabGuardar = findViewById(R.id.fabGuardar);
-        fabGuardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addToFavorites();
+                criarReserva(idprofile, idveiculo, idseguro, etDataL.toString(), etDataD.toString(), idLocalizacaol, idLocalizacaod);
             }
         });
 
         veiculo = SingletonGestorVeiculos.getInstance(getApplicationContext()).getVeiculo(idveiculo);
         if (veiculo != null) {
             carregarVeiculo();
-            fabGuardar.setImageResource(R.drawable.ic_action_favorito);
         } else {
             setTitle(getString(R.string.act_detalhes));
-            fabGuardar.setImageResource(R.drawable.ic_action_adicionar);
         }
-        fabGuardar.setOnClickListener(new View.OnClickListener() {
+        /*fabGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isVeiculoValido()) {
@@ -132,7 +133,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
                         SingletonGestorVeiculos.getInstance(getApplicationContext()).editarVeiculoBD(veiculo);
                         intent.putExtra(MenuMainActivity.OPERACAO, MenuMainActivity.EDIT);
 
-                    } else */
+                    } else
                     {
                         //adicionar veiculo favorito
                         Veiculo livroAux = new Veiculo(idveiculo, preco, "http://amsi.dei.estg.ipleiria.pt/img/ipl_semfundo.png", marca, modelo, combustivel, matricula);
@@ -143,7 +144,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
                 }
 
             }
-        });
+        });*/
     }
 
     private void criarReserva(int idprofile, int idveiculo, int idseguro, String dataL, String dataD, int idLocalizacaol, int idLocalizacaod) {
@@ -161,9 +162,9 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
                     public void onResponse(JSONObject response) {
                         // Handle the response
                         try {
-                            String message = response.getString("message");
-                            Toast.makeText(DetalhesVeiculoActivity.this, message, Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(DetalhesVeiculoActivity.this, MenuMainActivity.class);
+                            String message = response.getString("success");
+                            Toast.makeText(DetalhesReservaActivity.this, message, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(DetalhesReservaActivity.this, ListaVeiculoFragment.class);
                             startActivity(intent);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -173,7 +174,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Handle the error
-                Toast.makeText(DetalhesVeiculoActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(DetalhesReservaActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -184,7 +185,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
                 return headers;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(DetalhesVeiculoActivity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(DetalhesReservaActivity.this);
         requestQueue.add(jsonObjectRequest);
     }
 
@@ -201,7 +202,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
                         String value = jsonObject.getString("cobertura");
                         list.add(value);
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DetalhesVeiculoActivity.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DetalhesReservaActivity.this, android.R.layout.simple_spinner_item, list);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     dpwnseguro.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -211,7 +212,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetalhesVeiculoActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetalhesReservaActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -238,7 +239,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
                         String value = jsonObject.getString("morada");
                         list.add(value);
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DetalhesVeiculoActivity.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DetalhesReservaActivity.this, android.R.layout.simple_spinner_item, list);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     dpwdn_localizacaol.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -248,7 +249,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetalhesVeiculoActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetalhesReservaActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -275,7 +276,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
                         String value = jsonObject.getString("morada");
                         list.add(value);
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DetalhesVeiculoActivity.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DetalhesReservaActivity.this, android.R.layout.simple_spinner_item, list);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     dpwn_localizacaod.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -285,7 +286,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetalhesVeiculoActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetalhesReservaActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -341,7 +342,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String value = jsonObject.getString("descricao");
-                        CheckBox checkBox = new CheckBox(DetalhesVeiculoActivity.this);
+                        CheckBox checkBox = new CheckBox(DetalhesReservaActivity.this);
                         checkBox.setText(value);
                         ctnrextras.addView(checkBox);
                     }
@@ -352,7 +353,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetalhesVeiculoActivity.this, "Error loading checkbox data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetalhesReservaActivity.this, "Error loading checkbox data", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -364,11 +365,6 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-    }
-
-    private void addToFavorites() {
-        ArrayList<Veiculo> itemsList = new ArrayList<>();
-        itemsList.add(new Veiculo(idveiculo, veiculo.getPreco(), veiculo.getDescricao(), veiculo.getMarca(), veiculo.getModelo(), veiculo.getCombustivel(), veiculo.getMatricula()));
     }
 
     private boolean isVeiculoValido() {
@@ -405,10 +401,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         String nome = String.format(res.getString(R.string.act_livro), veiculo.getMarca() + " " + veiculo.getModelo());
         setTitle(nome);
         etMarca.setText(veiculo.getMarca());
-        etModelo.setText(veiculo.getModelo());
-        etCombustivel.setText(veiculo.getCombustivel());
-        etPreco.setText(veiculo.getPreco() + "");
-        etMatricula.setText(veiculo.getMatricula());
+
         Glide.with(this)
                 .load(veiculo.getDescricao())
                 .placeholder(R.drawable.logo)
@@ -424,31 +417,4 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         }
         return false;
     }
-
-    private void dialogRemove() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Remover Livro")
-                .setMessage("Pretende mesmo remover o livro")
-                .setIcon(android.R.drawable.ic_delete)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        SingletonGestorVeiculos.getInstance(getApplicationContext()).removerVeiculoBD(veiculo.getId());
-                        Intent intent = new Intent();
-                        intent.putExtra(MenuMainActivity.OPERACAO, MenuMainActivity.DELETE);
-                        setResult(RESULT_OK, intent);
-
-                        finish();
-
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
-                .show();
-    }
-
 }

@@ -93,7 +93,7 @@ public class RegistoActivity extends AppCompatActivity {
         });
     }
 
-    private void regissto(String username, String password, String email) {
+    private void registo(String username, String password, String email) {
         // Encrypt the password and add the salt value
         //String hashedPassword = hashPassword(password + salt);
 
@@ -153,7 +153,7 @@ public class RegistoActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void registo(String username, String password, String email) {
+    private void regissto(String username, String password, String email) {
 
         String credentials = username + ":" + password; // Your username and password
         String auth = "Basic " + android.util.Base64.encodeToString(credentials.getBytes(), android.util.Base64.NO_WRAP);
