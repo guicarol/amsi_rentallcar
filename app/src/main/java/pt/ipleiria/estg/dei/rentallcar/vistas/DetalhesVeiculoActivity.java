@@ -87,8 +87,8 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         btnReservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DetalhesVeiculoActivity.this, DetalhesReservaActivity.class);
-                intent.putExtra(DetalhesReservaActivity.IDVEICULO, (int) idveiculo);
+                Intent intent = new Intent(DetalhesVeiculoActivity.this, ReservaVeiculoActivity.class);
+                intent.putExtra(ReservaVeiculoActivity.IDVEICULO, (int) idveiculo);
                 startActivity(intent);
             }
         });

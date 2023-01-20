@@ -1,6 +1,5 @@
 package pt.ipleiria.estg.dei.rentallcar.vistas;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -17,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
@@ -28,6 +26,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -40,15 +40,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
 import pt.ipleiria.estg.dei.rentallcar.R;
-import pt.ipleiria.estg.dei.rentallcar.modelo.Reserva;
 import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
+import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
 
-public class DetalhesReservaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ReservaVeiculoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private Reserva reserva;
-    private int idprofile, idveiculo, idseguro, idLocalizacaol, idLocalizacaod,idreserva;
+    private Veiculo veiculo;
+    private int idprofile,idreserva, idveiculo, idseguro, idLocalizacaol, idLocalizacaod;
     private TextView etMarca, etModelo, etPreco, etCombustivel, etMatricula, etDataD, etDataL;
     private ImageView imgCapa;
     private FloatingActionButton fabGuardar;
@@ -56,54 +55,57 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
     public static final String IDVEICULO = "IDVEICULO";
     public static final int MIN_CHAR = 3;
     public static final int MIN_NUMERO = 4;
-    public static final String IDRESERVA = "IDRESERVA";
-
     private Spinner dpwnseguro, dpwdn_localizacaol, dpwn_localizacaod;
     private LinearLayout ctnrextras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalhes_reserva);
+        setContentView(R.layout.activity_reserva_veiculo);
         etMarca = findViewById(R.id.etMarca);
-      //  etCombustivel = findViewById(R.id.etCombustivel);
-        //etModelo = findViewById(R.id.etModelo);
-        //etPreco = findViewById(R.id.etPreco);
-        //etMatricula = findViewById(R.id.etMatricula);
-        idreserva = getIntent().getIntExtra(IDRESERVA, 0);
-
+        etDataL = findViewById(R.id.etDataL);
+        etDataD = findViewById(R.id.etDataD);
         SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
         idprofile = sharedPreferences.getInt("id", -1);
         imgCapa = findViewById(R.id.imgCapa);
         idveiculo = getIntent().getIntExtra(IDVEICULO, 0);
 
-        /*//listaExtras = findViewById(R.id.listaExtras);
-        //getDropdownSeguro();
+        //listaExtras = findViewById(R.id.listaExtras);
+        dpwnseguro = (Spinner) findViewById(R.id.dpwn_seguro);
+        getDropdownSeguro();
 
         //listaExtras = findViewById(R.id.listaExtras);
+        dpwdn_localizacaol = (Spinner) findViewById(R.id.dpwn_localizacaol);
+        getDropdownLocalizacaol();
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.dpwn_seguro, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dpwdn_localizacaol.setAdapter(adapter);
+        dpwdn_localizacaol.setOnItemSelectedListener(this);
 
+        dpwn_localizacaod = (Spinner) findViewById(R.id.dpwn_localizacaod);
+        getDropdownLocalizacaod();
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dpwn_localizacaod.setAdapter(adapter);
+        dpwn_localizacaod.setOnItemSelectedListener(this);
 
-       // btnReservar = findViewById(R.id.btnReservar);
+        ctnrextras = findViewById(R.id.container_extras);
+        getCheckboxData();
 
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dpwnseguro.setAdapter(adapter);
+        dpwnseguro.setOnItemSelectedListener(this);
+
+        btnReservar = findViewById(R.id.btnReservar);
         btnReservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DetalhesReservaActivity.this, ReservaVeiculoActivity.class);
-                intent.putExtra(ReservaVeiculoActivity.IDVEICULO, (int) idveiculo);
-                startActivity(intent);
+                criarReserva(idprofile, idveiculo, idseguro, etDataL.toString(), etDataD.toString(), idLocalizacaol, idLocalizacaod);
             }
         });
 
-       // fabGuardar = findViewById(R.id.fabGuardar);
-        fabGuardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addToFavorites();
-            }
-        });*/
-
-        reserva = SingletonGestorVeiculos.getInstance(getApplicationContext()).getReserva(idreserva);
-        if (reserva != null) {
+        veiculo = SingletonGestorVeiculos.getInstance(getApplicationContext()).getVeiculo(idveiculo);
+        if (veiculo != null) {
             carregarVeiculo();
         } else {
             setTitle(getString(R.string.act_detalhes));
@@ -160,9 +162,9 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
                     public void onResponse(JSONObject response) {
                         // Handle the response
                         try {
-                            String message = response.getString("message");
-                            Toast.makeText(DetalhesReservaActivity.this, message, Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(DetalhesReservaActivity.this, MenuMainActivity.class);
+                            String message = response.getString("success");
+                            Toast.makeText(ReservaVeiculoActivity.this, message, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(ReservaVeiculoActivity.this, ListaVeiculoFragment.class);
                             startActivity(intent);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -172,7 +174,7 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Handle the error
-                Toast.makeText(DetalhesReservaActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ReservaVeiculoActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -183,7 +185,7 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
                 return headers;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(DetalhesReservaActivity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(ReservaVeiculoActivity.this);
         requestQueue.add(jsonObjectRequest);
     }
 
@@ -200,7 +202,7 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
                         String value = jsonObject.getString("cobertura");
                         list.add(value);
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DetalhesReservaActivity.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(ReservaVeiculoActivity.this, android.R.layout.simple_spinner_item, list);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     dpwnseguro.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -210,7 +212,7 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetalhesReservaActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReservaVeiculoActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -237,7 +239,7 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
                         String value = jsonObject.getString("morada");
                         list.add(value);
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DetalhesReservaActivity.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(ReservaVeiculoActivity.this, android.R.layout.simple_spinner_item, list);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     dpwdn_localizacaol.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -247,7 +249,7 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetalhesReservaActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReservaVeiculoActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -274,7 +276,7 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
                         String value = jsonObject.getString("morada");
                         list.add(value);
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DetalhesReservaActivity.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(ReservaVeiculoActivity.this, android.R.layout.simple_spinner_item, list);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     dpwn_localizacaod.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -284,7 +286,7 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetalhesReservaActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReservaVeiculoActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -340,7 +342,7 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String value = jsonObject.getString("descricao");
-                        CheckBox checkBox = new CheckBox(DetalhesReservaActivity.this);
+                        CheckBox checkBox = new CheckBox(ReservaVeiculoActivity.this);
                         checkBox.setText(value);
                         ctnrextras.addView(checkBox);
                     }
@@ -351,7 +353,7 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetalhesReservaActivity.this, "Error loading checkbox data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReservaVeiculoActivity.this, "Error loading checkbox data", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -396,53 +398,23 @@ public class DetalhesReservaActivity extends AppCompatActivity implements Adapte
 
     private void carregarVeiculo() {
         Resources res = getResources();
-        String nome = String.format(res.getString(R.string.act_livro), reserva.getMarca() + " " + reserva.getModelo());
+        String nome = String.format(res.getString(R.string.act_livro), veiculo.getMarca() + " " + veiculo.getModelo());
         setTitle(nome);
-        etMarca.setText(reserva.getMarca());
-        //etModelo.setText(reserva.getModelo());
-        /*etCombustivel.setText(reserva.getCombustivel());
-        etPreco.setText(reserva.getPreco() + "");
-        etMatricula.setText(reserva.getMatricula());
+        etMarca.setText(veiculo.getMarca());
+
         Glide.with(this)
-                .load(reserva.getDescricao())
+                .load(veiculo.getDescricao())
                 .placeholder(R.drawable.logo)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgCapa);*/
+                .into(imgCapa);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (reserva != null) {
+        if (veiculo != null) {
             getMenuInflater().inflate(R.menu.menu_detalhes_livro, menu);
             return super.onCreateOptionsMenu(menu);
         }
         return false;
     }
-
-    private void dialogRemove() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Remover Livro")
-                .setMessage("Pretende mesmo remover o livro")
-                .setIcon(android.R.drawable.ic_delete)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        SingletonGestorVeiculos.getInstance(getApplicationContext()).removerVeiculoBD(reserva.getId());
-                        Intent intent = new Intent();
-                        intent.putExtra(MenuMainActivity.OPERACAO, MenuMainActivity.DELETE);
-                        setResult(RESULT_OK, intent);
-
-                        finish();
-
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
-                .show();
-    }
-
 }
