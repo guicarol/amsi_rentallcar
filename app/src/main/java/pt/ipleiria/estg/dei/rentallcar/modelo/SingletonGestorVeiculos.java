@@ -22,9 +22,11 @@ import pt.ipleiria.estg.dei.rentallcar.listeners.DetalhesListener;
 import pt.ipleiria.estg.dei.rentallcar.listeners.ExtrasListener;
 import pt.ipleiria.estg.dei.rentallcar.listeners.PerfilListener;
 import pt.ipleiria.estg.dei.rentallcar.listeners.VeiculosListener;
+import pt.ipleiria.estg.dei.rentallcar.listeners.ReservasListener;
 import pt.ipleiria.estg.dei.rentallcar.utils.ExtrasJsonParser;
 import pt.ipleiria.estg.dei.rentallcar.utils.PerfilJsonParser;
 import pt.ipleiria.estg.dei.rentallcar.utils.VeiculosJsonParser;
+import pt.ipleiria.estg.dei.rentallcar.utils.ReservasJsonParser;
 
 
 public class SingletonGestorVeiculos {
@@ -33,13 +35,16 @@ public class SingletonGestorVeiculos {
     private VeiculoBDHelper veiculosBD;
     private DatabaseHelper favorito;
     private static RequestQueue volleyQueue = null;
-    public static final String mUrlAPI = "http://192.168.1.70/plsi_rentallcar/backend/web/api/";
+    public static final String mUrlAPI = "http://192.168.1.65/plsi_rentallcar/backend/web/api/";
     private static final String TOKEN = "AMSI-TOKEN";
     private VeiculosListener veiculosListener;
     private DetalhesListener detalhesListener;
 
     private ExtrasListener extrasListener;
     private ArrayList<Extras> extras;
+
+    private ReservasListener reservasListener;
+    private ArrayList<Reserva> reservas;
 
     private PerfilListener perfilListener;
     private Perfil perfil;
@@ -62,6 +67,11 @@ public class SingletonGestorVeiculos {
 
     public void setVeiculosListener(VeiculosListener veiculosListener) {
         this.veiculosListener = veiculosListener;
+
+    }
+
+    public void setReservasListener(ReservasListener reservasListener) {
+        this.reservasListener = reservasListener;
     }
 
     public void setDetalhesListener(DetalhesListener detalhesListener) {
@@ -282,6 +292,35 @@ public class SingletonGestorVeiculos {
             return perfil;
         }
         return null;
+    }
+
+//endregion
+
+
+    //region métodos getDadosReserva
+    public void getReservaAPI(final Context context, int id) {
+
+        if (!ReservasJsonParser.isConnectionInternet(context)) {
+            Toast.makeText(context, "Sem internet", Toast.LENGTH_SHORT).show();
+        } else {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPI + "reserva/reservas?id=" + id, null,new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    reservas = ReservasJsonParser.parserJsonReservas(response);
+
+                    if (reservasListener != null)
+                        reservasListener.onRefreshListaReservas(reservas);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            volleyQueue.add(req);
+
+        }
+
     }
 
 //endregion
