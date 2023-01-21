@@ -125,7 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="7dp"
-                    android:text="Descrição"
+                    android:text="Descrição:"
                     android:textSize="20dp"
 
                     android:textStyle="bold" />
@@ -171,7 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="7dp"
-                    android:text="@string/txt_preco"
+                    android:text="Preço por dia:"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
@@ -202,7 +202,7 @@
                     android:id="@+id/etFranquia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Franquia"
+                    android:text="Franquia:"
                     android:textSize="20dp" />
             </LinearLayout>
 

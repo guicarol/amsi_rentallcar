@@ -21,7 +21,7 @@ public class DetalhesReservaActivity extends AppCompatActivity {
 
     private Reserva reserva;
     private int idprofile, idreserva;
-    private TextView etMarca, etModelo, tvLocalL, etseguro, tvDataL, tvLocalD, tvDataD,tvPreco;
+    private TextView etMarca, etModelo, tvLocalL, etseguro, tvDataL, tvLocalD, tvDataD, tvPreco;
     private ImageView imgCapa;
     private FloatingActionButton fabGuardar;
     private Button btnPedirAssistencia;
@@ -41,7 +41,7 @@ public class DetalhesReservaActivity extends AppCompatActivity {
         tvDataL = findViewById(R.id.tvDataL);
         tvLocalD = findViewById(R.id.tvLocalD);
         tvDataD = findViewById(R.id.tvDataD);
-        tvPreco=findViewById(R.id.tvPreco);
+        tvPreco = findViewById(R.id.tvPreco);
         idreserva = getIntent().getIntExtra(IDRESERVA, 0);
 
         btnPedirAssistencia = findViewById(R.id.btnPedirAssistencia);
@@ -49,7 +49,7 @@ public class DetalhesReservaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DetalhesReservaActivity.this, AssistenciaActivity.class);
-                intent.putExtra(DetalhesReservaActivity.IDRESERVA, idreserva);
+                intent.putExtra(DetalhesReservaActivity.IDVEICULO, reserva.getVeiculo_id());
                 startActivity(intent);
                 finish();
             }
@@ -75,7 +75,8 @@ public class DetalhesReservaActivity extends AppCompatActivity {
         tvDataL.setText(reserva.getData_inicio() + "");
         tvLocalD.setText(reserva.getLocalizacao_devolucao());
         tvDataD.setText(reserva.getData_fim() + "");
-        tvPreco.setText(reserva.getVeiculo_id()+"");
+        tvPreco.setText(reserva.getPreco() + "€");
+
     }
 
     @Override

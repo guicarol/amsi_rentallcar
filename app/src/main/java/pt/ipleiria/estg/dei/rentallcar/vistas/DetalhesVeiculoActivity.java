@@ -116,15 +116,14 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         fabGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isVeiculoValido()) {
-                    String marca = etMarca.getText().toString();
-                    String combustivel = etCombustivel.getText().toString();
-                    String modelo = etModelo.getText().toString();
-                    int preco = Integer.parseInt(etPreco.getText().toString());
-                    String matricula = etMatricula.getText().toString();
-                    String extra = ctnrextras.toString();
-                    String seguro = dpwnseguro.toString();
-                    Intent intent = new Intent();
+                String marca = etMarca.getText().toString();
+                String combustivel = etCombustivel.getText().toString();
+                String modelo = etModelo.getText().toString();
+                int preco = Integer.parseInt(etPreco.getText().toString());
+                String matricula = etMatricula.getText().toString();
+                String extra = ctnrextras.toString();
+                String seguro = dpwnseguro.toString();
+                Intent intent = new Intent();
                     /*if (veiculo != null) {
                         //editar livro
                         //livroAux= new Livro(preco,livro.getCapa(),marca,modelo,combustivel);
@@ -137,14 +136,14 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
                         intent.putExtra(MenuMainActivity.OPERACAO, MenuMainActivity.EDIT);
 
                     } else */
-                    {
-                        //adicionar veiculo favorito
-                      //  Veiculo livroAux = new Veiculo(idveiculo, preco, "http://amsi.dei.estg.ipleiria.pt/img/ipl_semfundo.png", marca, modelo, combustivel, matricula);
-                        //SingletonGestorVeiculos.getInstance(getApplicationContext()).adicionarVeiculoAPI(livroAux, getApplicationContext());
-                    }
-                    setResult(RESULT_OK, intent);
-                    finish();
+                {
+                    //adicionar veiculo favorito
+                    //  Veiculo livroAux = new Veiculo(idveiculo, preco, "http://amsi.dei.estg.ipleiria.pt/img/ipl_semfundo.png", marca, modelo, combustivel, matricula);
+                    //SingletonGestorVeiculos.getInstance(getApplicationContext()).adicionarVeiculoAPI(livroAux, getApplicationContext());
                 }
+                setResult(RESULT_OK, intent);
+                finish();
+
 
             }
         });
@@ -372,36 +371,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
 
     private void addToFavorites() {
         ArrayList<Veiculo> itemsList = new ArrayList<>();
-    //    itemsList.add(new Veiculo(idveiculo, veiculo.getPreco(), veiculo.getDescricao(), veiculo.getMarca(), veiculo.getModelo(), veiculo.getCombustivel(), veiculo.getMatricula()));
-    }
-
-    private boolean isVeiculoValido() {
-        String titulo = etMarca.getText().toString();
-        String autor = etCombustivel.getText().toString();
-        String serie = etModelo.getText().toString();
-        String ano = etPreco.getText().toString();
-        if (titulo.length() < MIN_CHAR) {
-            etMarca.setError("Titulo invalido");
-            return false;
-        }
-
-        if (titulo.length() < MIN_CHAR) {
-            etCombustivel.setError("Serie invalida");
-            return false;
-        } else if (autor.length() < MIN_CHAR) {
-            etCombustivel.setError("autor invalido");
-            return false;
-        } else if (serie.length() < MIN_CHAR) {
-            etModelo.setError("serie invalido");
-            return false;
-        } else {
-            int anoNumero = Integer.parseInt(ano);
-            if (anoNumero < 1900 || anoNumero > Calendar.getInstance().get(Calendar.YEAR)) {
-                etPreco.setError("Ano invalido");
-                return false;
-            }
-        }
-        return true;
+        //    itemsList.add(new Veiculo(idveiculo, veiculo.getPreco(), veiculo.getDescricao(), veiculo.getMarca(), veiculo.getModelo(), veiculo.getCombustivel(), veiculo.getMatricula()));
     }
 
     private void carregarVeiculo() {
@@ -411,10 +381,10 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         etMarca.setText(veiculo.getMarca());
         etModelo.setText(veiculo.getModelo());
         etCombustivel.setText(veiculo.getCombustivel());
-        etPreco.setText(veiculo.getPreco() + "");
+        etPreco.setText(veiculo.getPreco() + "€");
         etMatricula.setText(veiculo.getMatricula());
         etDescricao.setText(veiculo.getDescricao());
-       // etTipoVeiculo.setText(veiculo.getTipoveiculo()+"");
+        // etTipoVeiculo.setText(veiculo.getTipoveiculo()+"");
         //etFranquia.setText(veiculo.getFranquia()+"");
         Glide.with(this)
                 .load(veiculo.getDescricao())
