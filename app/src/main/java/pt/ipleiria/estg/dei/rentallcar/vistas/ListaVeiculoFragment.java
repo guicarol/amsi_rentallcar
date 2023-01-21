@@ -55,7 +55,7 @@ public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
                 // Toast.makeText(getContext(), livros.get(position).getTitulo(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), DetalhesVeiculoActivity.class);
                 intent.putExtra(DetalhesVeiculoActivity.IDVEICULO, (int) id);
-                startActivityForResult(intent, DETALHES);
+                startActivity(intent);
             }
         });
         return view;

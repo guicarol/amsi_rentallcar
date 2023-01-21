@@ -44,7 +44,7 @@ import pt.ipleiria.estg.dei.rentallcar.R;
 import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
 
-public class ReservaVeiculoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AssistenciaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Veiculo veiculo;
     private int idprofile, idreserva, idveiculo, idseguro, idLocalizacaol, idLocalizacaod;
@@ -166,8 +166,8 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
                         try {
                             String message = response.getString("message");
                             int idreserva = response.getInt("idreserva");
-                            Toast.makeText(ReservaVeiculoActivity.this, message, Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(ReservaVeiculoActivity.this, ListaReservaFragment.class);
+                            Toast.makeText(AssistenciaActivity.this, message, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(AssistenciaActivity.this, ListaReservaFragment.class);
                             intent.putExtra(DetalhesReservaActivity.IDRESERVA,  idreserva);
                             startActivity(intent);
                             finish();
@@ -180,7 +180,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Handle the error
-                Toast.makeText(ReservaVeiculoActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(AssistenciaActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -191,7 +191,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
                 return headers;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(ReservaVeiculoActivity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(AssistenciaActivity.this);
         requestQueue.add(jsonObjectRequest);
     }
 
@@ -208,7 +208,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
                         String value = jsonObject.getString("cobertura");
                         list.add(value);
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(ReservaVeiculoActivity.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(AssistenciaActivity.this, android.R.layout.simple_spinner_item, list);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     dpwnseguro.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -218,7 +218,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ReservaVeiculoActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AssistenciaActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -245,7 +245,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
                         String value = jsonObject.getString("morada");
                         list.add(value);
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(ReservaVeiculoActivity.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(AssistenciaActivity.this, android.R.layout.simple_spinner_item, list);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     dpwdn_localizacaol.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -255,7 +255,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ReservaVeiculoActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AssistenciaActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -282,7 +282,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
                         String value = jsonObject.getString("morada");
                         list.add(value);
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(ReservaVeiculoActivity.this, android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(AssistenciaActivity.this, android.R.layout.simple_spinner_item, list);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     dpwn_localizacaod.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -292,7 +292,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ReservaVeiculoActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AssistenciaActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -348,7 +348,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String value = jsonObject.getString("descricao");
-                        CheckBox checkBox = new CheckBox(ReservaVeiculoActivity.this);
+                        CheckBox checkBox = new CheckBox(AssistenciaActivity.this);
                         checkBox.setText(value);
                         ctnrextras.addView(checkBox);
                     }
@@ -359,7 +359,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ReservaVeiculoActivity.this, "Error loading checkbox data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AssistenciaActivity.this, "Error loading checkbox data", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

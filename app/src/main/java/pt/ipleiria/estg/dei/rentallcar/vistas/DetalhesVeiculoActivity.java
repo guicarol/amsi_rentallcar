@@ -93,6 +93,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
                 Intent intent = new Intent(DetalhesVeiculoActivity.this, ReservaVeiculoActivity.class);
                 intent.putExtra(ReservaVeiculoActivity.IDVEICULO, (int) idveiculo);
                 startActivity(intent);
+                finish();
             }
         });
 
