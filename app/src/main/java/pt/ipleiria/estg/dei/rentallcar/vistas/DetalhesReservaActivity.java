@@ -63,7 +63,6 @@ public class DetalhesReservaActivity extends AppCompatActivity {
         }
     }
 
-
     private void carregarVeiculo() {
         Resources res = getResources();
         String nome = String.format(res.getString(R.string.act_livro), reserva.getMarca() + " " + reserva.getModelo());
@@ -76,7 +75,6 @@ public class DetalhesReservaActivity extends AppCompatActivity {
         tvLocalD.setText(reserva.getLocalizacao_devolucao());
         tvDataD.setText(reserva.getData_fim() + "");
         tvPreco.setText(reserva.getPreco() + "€");
-
     }
 
     @Override
@@ -87,6 +85,4 @@ public class DetalhesReservaActivity extends AppCompatActivity {
         }
         return false;
     }
-
-
 }

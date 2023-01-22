@@ -3,6 +3,7 @@ package pt.ipleiria.estg.dei.rentallcar.vistas;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -77,23 +78,23 @@ public class RegistoActivity extends AppCompatActivity {
                 final String password = passwordEditText.getText().toString();
                 final String email = emailEditText.getText().toString();
                 final String verify = verifypassword.getText().toString();
-                if (password.equals(verify)) {
-                    registo(username, password, email);
-                } else {
-                    Toast.makeText(RegistoActivity.this, "Verifique as passwords", Toast.LENGTH_LONG).show();
-                }
-
                 String nome = etNome.getText().toString();
                 String apelido = etApelido.getText().toString();
                 String telemovel = etTelefone.getText().toString();
                 String nif = etNif.getText().toString();
                 String nrcarta = etNrCarta.getText().toString();
                 // UpdatePerfil(nome, apelido, telemovel, nif);
+                if (password.equals(verify)) {
+                    registo(username, password, email, nome, apelido, telemovel, nif, nrcarta);
+                } else {
+                    Toast.makeText(RegistoActivity.this, "Verifique as passwords", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }
 
-    private void registo(String username, String password, String email) {
+    private void registo(String username, String password, String email, String nome, String apelido, String telemovel, String nif, String nr_carta_conducao) {
         // Encrypt the password and add the salt value
         //String hashedPassword = hashPassword(password + salt);
 
@@ -104,9 +105,12 @@ public class RegistoActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.getBoolean("success")) {
+                    if (jsonObject.has("status")) {
                         // Handle successful signup
                         Toast.makeText(RegistoActivity.this, "Registo efetuado com sucesso", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(RegistoActivity.this, Log.class);
+                        startActivity(intent);
+                        finish();
                     } else {
                         // Handle signup failure
                         Toast.makeText(RegistoActivity.this, "Erro no registo", Toast.LENGTH_LONG).show();
@@ -136,6 +140,7 @@ public class RegistoActivity extends AppCompatActivity {
                 // Handle error
                 Toast.makeText(RegistoActivity.this, "Erro no registo", Toast.LENGTH_LONG).show();
 
+
             }
         }) {
             @Override
@@ -144,6 +149,12 @@ public class RegistoActivity extends AppCompatActivity {
                 params.put("username", username);
                 params.put("password", password);
                 params.put("email", email);
+                params.put("nome", nome);
+                params.put("apelido", apelido);
+                params.put("telemovel", telemovel+"");
+                params.put("nif", nif+"");
+
+                params.put("nr_carta_conducao", nr_carta_conducao);
                 return params;
             }
 

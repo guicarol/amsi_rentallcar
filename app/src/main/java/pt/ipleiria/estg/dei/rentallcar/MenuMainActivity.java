@@ -23,6 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 import pt.ipleiria.estg.dei.rentallcar.vistas.FavoritosFragment;
 import pt.ipleiria.estg.dei.rentallcar.vistas.ListaReservaFragment;
 import pt.ipleiria.estg.dei.rentallcar.vistas.ListaVeiculoFragment;
+import pt.ipleiria.estg.dei.rentallcar.vistas.LoginActivity;
 import pt.ipleiria.estg.dei.rentallcar.vistas.ResultadoPesquisa;
 import pt.ipleiria.estg.dei.rentallcar.vistas.SobreFragment;
 import pt.ipleiria.estg.dei.rentallcar.vistas.UtilizadorFragment;
@@ -104,7 +105,7 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
                 break;
 
             case R.id.logout:
-                onDestroy();
+                logout();
                 break;
         }
         if (fragment != null)
@@ -112,6 +113,12 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout() {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void onClickPesquisar(View view) {
