@@ -100,7 +100,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
         btnReservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                criarReserva(idprofile, idveiculo, idseguro, etDataL.toString(), etDataD.toString(), idLocalizacaol, idLocalizacaod);
+                criarReserva(idprofile, idveiculo, idseguro, etDataL.getText().toString(), etDataD.getText().toString(), idLocalizacaol, idLocalizacaod);
 
             }
 
@@ -150,7 +150,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
     }
 
     private void criarReserva(int idprofile, int idveiculo, int idseguro, String dataL, String dataD, int idLocalizacaol, int idLocalizacaod) {
-        String url = SingletonGestorVeiculos.mUrlAPI + "veiculo/create?data_inicio=2023-12-23%2000:00:00&data_fim=2023-12-23%2000:00:00&veiculo_id=" + idveiculo + "&profile_id=" + idprofile + "&id=1&seguro_id=" + idseguro + "&localizacaol=" + idLocalizacaol + "&localizacaod=" + idLocalizacaod;
+        String url = SingletonGestorVeiculos.mUrlAPI + "veiculo/create?data_inicio="+dataL+"&data_fim="+dataD+"&veiculo_id=" + idveiculo + "&profile_id=" + idprofile + "&id=1&seguro_id=" + idseguro + "&localizacaol=" + idLocalizacaol + "&localizacaod=" + idLocalizacaod;
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("nome", "teste");
