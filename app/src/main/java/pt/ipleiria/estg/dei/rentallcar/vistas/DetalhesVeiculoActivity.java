@@ -37,19 +37,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
 import pt.ipleiria.estg.dei.rentallcar.R;
+import pt.ipleiria.estg.dei.rentallcar.modelo.Favorito;
+import pt.ipleiria.estg.dei.rentallcar.modelo.FavoritoHelper;
 import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
 
 public class DetalhesVeiculoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Veiculo veiculo;
+    private Favorito favorito;
     private int idprofile, idveiculo, idseguro, idLocalizacaol, idLocalizacaod;
     private TextView etMarca, etModelo, etPreco, etCombustivel, etMatricula, etDescricao, etTipoVeiculo, etFranquia;
     private ImageView imgCapa;
@@ -113,35 +115,15 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
             setTitle(getString(R.string.act_detalhes));
             fabGuardar.setImageResource(R.drawable.ic_action_adicionar);
         }
+
         fabGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String marca = etMarca.getText().toString();
-                String combustivel = etCombustivel.getText().toString();
-                String modelo = etModelo.getText().toString();
-                int preco = Integer.parseInt(etPreco.getText().toString());
-                String matricula = etMatricula.getText().toString();
-                String extra = ctnrextras.toString();
-                String seguro = dpwnseguro.toString();
-                Intent intent = new Intent();
-                    /*if (veiculo != null) {
-                        //editar livro
-                        //livroAux= new Livro(preco,livro.getCapa(),marca,modelo,combustivel);
-                        veiculo.setMarca(marca);
-                        veiculo.setCombustivel(combustivel);
-                        veiculo.setModelo(modelo);
-                        veiculo.setPreco(preco);
-                        veiculo.setMatricula(matricula);
-                        SingletonGestorVeiculos.getInstance(getApplicationContext()).editarVeiculoBD(veiculo);
-                        intent.putExtra(MenuMainActivity.OPERACAO, MenuMainActivity.EDIT);
-
-                    } else */
-                {
-                    //adicionar veiculo favorito
-                    //  Veiculo livroAux = new Veiculo(idveiculo, preco, "http://amsi.dei.estg.ipleiria.pt/img/ipl_semfundo.png", marca, modelo, combustivel, matricula);
-                    //SingletonGestorVeiculos.getInstance(getApplicationContext()).adicionarVeiculoAPI(livroAux, getApplicationContext());
-                }
-                setResult(RESULT_OK, intent);
+                FavoritoHelper myDb = new FavoritoHelper(getApplicationContext());
+                myDb.adicionarLivroBD(new Favorito(veiculo.getId(),veiculo.getPreco(),veiculo.getDescricao(),veiculo.getMarca(), veiculo.getModelo(), veiculo.getCombustivel(),veiculo.getMatricula()));
+                Toast.makeText(DetalhesVeiculoActivity.this, "Veiculo guardado com sucesso!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(DetalhesVeiculoActivity.this, MenuMainActivity.class);
+                startActivity(intent);
                 finish();
 
 

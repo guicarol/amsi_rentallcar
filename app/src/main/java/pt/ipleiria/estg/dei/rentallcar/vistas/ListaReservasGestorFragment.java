@@ -22,13 +22,13 @@ import pt.ipleiria.estg.dei.rentallcar.modelo.Reserva;
 import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 
 
-public class ListaReservaFragment extends Fragment implements ReservasListener {
+public class ListaReservasGestorFragment extends Fragment implements ReservasListener {
     private ListView lvReservas;
     public static final int DETALHES = 2;
 
 
 
-    public  ListaReservaFragment() {
+    public ListaReservasGestorFragment() {
 
     }
 
@@ -39,7 +39,7 @@ public class ListaReservaFragment extends Fragment implements ReservasListener {
         int id = sharedPreferences.getInt("id", -1);
         lvReservas= view.findViewById(R.id.lvReservas);
         SingletonGestorVeiculos.getInstance(getContext()).setReservasListener(this);
-        SingletonGestorVeiculos.getInstance(getContext()).getReservaAPI(getContext(),id);
+        SingletonGestorVeiculos.getInstance(getContext()).getALLReservasAPI(getContext());
 
         lvReservas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

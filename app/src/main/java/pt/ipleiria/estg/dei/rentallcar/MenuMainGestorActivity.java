@@ -26,7 +26,7 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.navigation.NavigationView;
 
 import pt.ipleiria.estg.dei.rentallcar.vistas.Camara_GestorFragment;
-import pt.ipleiria.estg.dei.rentallcar.vistas.ListaReservaFragment;
+import pt.ipleiria.estg.dei.rentallcar.vistas.ListaReservasGestorFragment;
 import pt.ipleiria.estg.dei.rentallcar.vistas.LoginActivity;
 import pt.ipleiria.estg.dei.rentallcar.vistas.ResultadoPesquisa;
 import pt.ipleiria.estg.dei.rentallcar.vistas.UtilizadorFragment;
@@ -94,7 +94,7 @@ public class MenuMainGestorActivity extends AppCompatActivity implements Navigat
                 setTitle(item.getTitle());
                 break;
             case R.id.reservas:
-                fragment = new ListaReservaFragment();
+                fragment = new ListaReservasGestorFragment();
                 setTitle(item.getTitle());
                 break;
             case R.id.camara:

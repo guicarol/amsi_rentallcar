@@ -20,6 +20,7 @@ import java.util.Map;
 import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
 import pt.ipleiria.estg.dei.rentallcar.listeners.DetalhesListener;
 import pt.ipleiria.estg.dei.rentallcar.listeners.ExtrasListener;
+import pt.ipleiria.estg.dei.rentallcar.listeners.FavoritosListener;
 import pt.ipleiria.estg.dei.rentallcar.listeners.PerfilListener;
 import pt.ipleiria.estg.dei.rentallcar.listeners.VeiculosListener;
 import pt.ipleiria.estg.dei.rentallcar.listeners.ReservasListener;
@@ -33,12 +34,15 @@ public class SingletonGestorVeiculos {
     private ArrayList<Veiculo> veiculos;
     private static SingletonGestorVeiculos instance = null;
     private VeiculoBDHelper veiculosBD;
-    private DatabaseHelper favorito;
+    private FavoritoHelper favoritoBD;
     private static RequestQueue volleyQueue = null;
     public static final String mUrlAPI = "http://192.168.1.65/plsi_rentallcar/backend/web/api/";
     private static final String TOKEN = "AMSI-TOKEN";
     private VeiculosListener veiculosListener;
     private DetalhesListener detalhesListener;
+
+    private FavoritosListener favoritosListener;
+    private ArrayList<Favorito> favoritos;
 
     private ExtrasListener extrasListener;
     private ArrayList<Extras> extras;
@@ -62,12 +66,15 @@ public class SingletonGestorVeiculos {
         //gerarDadosDinamico();
         veiculos = new ArrayList<>();
         veiculosBD = new VeiculoBDHelper(context);
-        favorito = new DatabaseHelper(context);
+        favoritoBD = new FavoritoHelper(context);
     }
 
     public void setVeiculosListener(VeiculosListener veiculosListener) {
         this.veiculosListener = veiculosListener;
+    }
 
+    public void setFavoritosListener(FavoritosListener favoritosListener) {
+        this.favoritosListener = favoritosListener;
     }
 
     public void setReservasListener(ReservasListener reservasListener) {
@@ -82,15 +89,44 @@ public class SingletonGestorVeiculos {
         this.perfilListener = perfilListener;
     }
 
+
+    public ArrayList<Favorito> getFavoritos() {
+        favoritos = favoritoBD.getAllLivroBD();
+        return new ArrayList(favoritos);
+    }
+
+    public Favorito getFavorito(int id) {
+        for (Favorito l : favoritos)
+            if (l.getId() == id)
+                return l;
+        return null;
+    }
+
+    public void adicionarFavoritoBD(Favorito favorito) {
+        favoritoBD.adicionarLivroBD(favorito);
+    }
+
+    public void adicionarFavoritosBD(ArrayList<Favorito> favoritos) {
+        favoritoBD.removerAllLivrosBD();
+        for (Favorito l : favoritos)
+            adicionarFavoritoBD(l);
+    }
+
+    public void removerFavoritoBD(int id) {
+        Favorito veiculoAux = getFavorito(id);
+        if (veiculoAux != null) {
+            if (favoritoBD.removerLivroBD(id)) ;
+        }
+    }
+
+
+    //endregion
+
+
     //region LIVRO-BD
 
     public ArrayList<Veiculo> getVeiculosBD() {
         veiculos = veiculosBD.getAllLivroBD();
-        return new ArrayList(veiculos);
-    }
-
-    public ArrayList<Veiculo> getFavorito() {
-        veiculos = favorito.getAllLivroBD();
         return new ArrayList(veiculos);
     }
 
@@ -171,6 +207,7 @@ public class SingletonGestorVeiculos {
             JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPI + "veiculo", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
+
                     veiculos = VeiculosJsonParser.parserJsonVeiculos(response);
                     adicionarVeiculosBD(veiculos);
 
@@ -303,7 +340,7 @@ public class SingletonGestorVeiculos {
         if (!ReservasJsonParser.isConnectionInternet(context)) {
             Toast.makeText(context, "Sem internet", Toast.LENGTH_SHORT).show();
         } else {
-            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPI + "reserva/reservas?id=" + id, null,new Response.Listener<JSONArray>() {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPI + "reserva/reservas?id=" + id, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     reservas = ReservasJsonParser.parserJsonReservas(response);

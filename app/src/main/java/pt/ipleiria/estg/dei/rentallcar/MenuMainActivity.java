@@ -20,7 +20,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.navigation.NavigationView;
 
-import pt.ipleiria.estg.dei.rentallcar.vistas.FavoritosFragment;
+import pt.ipleiria.estg.dei.rentallcar.vistas.ListaFavoritosFragment;
 import pt.ipleiria.estg.dei.rentallcar.vistas.ListaReservaFragment;
 import pt.ipleiria.estg.dei.rentallcar.vistas.ListaVeiculoFragment;
 import pt.ipleiria.estg.dei.rentallcar.vistas.LoginActivity;
@@ -96,7 +96,7 @@ public class MenuMainActivity extends AppCompatActivity implements NavigationVie
                 setTitle(item.getTitle());
                 break;
             case R.id.favoritos:
-                fragment = new FavoritosFragment();
+                fragment = new ListaFavoritosFragment();
                 setTitle(item.getTitle());
                 break;
             case R.id.sobre:

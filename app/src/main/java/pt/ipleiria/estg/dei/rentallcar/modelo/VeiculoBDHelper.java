@@ -43,25 +43,21 @@ public class VeiculoBDHelper extends SQLiteOpenHelper {
         String deleteSQLTableLivro = "DROP TABLE IF EXISTS " + TABLE_VEICULOS;
         sqLiteDatabase.execSQL(deleteSQLTableLivro);
         this.onCreate(sqLiteDatabase);
-
     }
 
     public Veiculo adicionarLivroBD(Veiculo veiculo) {
 
         ContentValues values = new ContentValues();
+        values.put(ID,veiculo.getId());
         values.put(MARCA, veiculo.getMarca());
         values.put(MODELO, veiculo.getModelo());
         values.put(COMBUSTIVEL, veiculo.getCombustivel());
         values.put(PRECO, veiculo.getPreco());
         values.put(DESCRICAO, veiculo.getDescricao());
+        values.put(MATRICULA,veiculo.getMatricula());
+        db.insert(TABLE_VEICULOS, null, values);
 
-        long id = db.insert(TABLE_VEICULOS, null, values);
-
-        if (id > -1) {
-            veiculo.setId((int) id);
-            return veiculo;
-        }
-        return null;
+        return veiculo;
     }
 
     public boolean editarLivroBD(Veiculo veiculo) {
@@ -95,7 +91,6 @@ public class VeiculoBDHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Veiculo veiculoAux = new Veiculo(cursor.getInt(5), cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(6));
-
                 veiculos.add(veiculoAux);
 
             } while (cursor.moveToNext());

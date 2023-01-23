@@ -53,8 +53,6 @@ public class ListaVeiculoFragment extends Fragment implements VeiculosListener {
         return view;
     }
 
-
-
     @Override
     public void onResume() {
         if (searchView != null)

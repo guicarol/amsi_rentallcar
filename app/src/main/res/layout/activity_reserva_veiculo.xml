@@ -101,13 +101,15 @@
                 android:layout_height="wrap_content"
                 android:text="@string/txt_extras"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="invisible"/>
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/container_extras"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical"
+                android:visibility="invisible"></LinearLayout>
 
             <TextView
                 android:id="@+id/textView16"

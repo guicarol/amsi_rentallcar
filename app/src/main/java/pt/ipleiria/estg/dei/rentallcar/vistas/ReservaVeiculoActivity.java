@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -90,7 +89,8 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
         dpwn_localizacaod.setOnItemSelectedListener(this);
 
         ctnrextras = findViewById(R.id.container_extras);
-        getCheckboxData();
+       // getCheckboxData();
+
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dpwnseguro.setAdapter(adapter);
@@ -100,6 +100,15 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
         btnReservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+               /* Integer[] selecteditems = new Integer[ctnrextras.getChildCount()];
+
+                for (int i = 0; i < ctnrextras.getChildCount(); i++) {
+                    CheckBox checkBox = (CheckBox) ctnrextras.getChildAt(i);
+                    if (checkBox.isChecked()) {
+                        selecteditems[i] = (int) checkBox.getTag();
+                    }
+                }*/
                 criarReserva(idprofile, idveiculo, idseguro, etDataL.getText().toString(), etDataD.getText().toString(), idLocalizacaol, idLocalizacaod);
 
             }
@@ -112,41 +121,6 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
         } else {
             setTitle(getString(R.string.act_detalhes));
         }
-        /*fabGuardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isVeiculoValido()) {
-                    String marca = etMarca.getText().toString();
-                    String combustivel = etCombustivel.getText().toString();
-                    String modelo = etModelo.getText().toString();
-                    int preco = Integer.parseInt(etPreco.getText().toString());
-                    String matricula = etMatricula.getText().toString();
-                    String extra = ctnrextras.toString();
-                    String seguro = dpwnseguro.toString();
-                    Intent intent = new Intent();
-                    /*if (veiculo != null) {
-                        //editar livro
-                        //livroAux= new Livro(preco,livro.getCapa(),marca,modelo,combustivel);
-                        veiculo.setMarca(marca);
-                        veiculo.setCombustivel(combustivel);
-                        veiculo.setModelo(modelo);
-                        veiculo.setPreco(preco);
-                        veiculo.setMatricula(matricula);
-                        SingletonGestorVeiculos.getInstance(getApplicationContext()).editarVeiculoBD(veiculo);
-                        intent.putExtra(MenuMainActivity.OPERACAO, MenuMainActivity.EDIT);
-
-                    } else
-                    {
-                        //adicionar veiculo favorito
-                        Veiculo livroAux = new Veiculo(idveiculo, preco, "http://amsi.dei.estg.ipleiria.pt/img/ipl_semfundo.png", marca, modelo, combustivel, matricula);
-                        SingletonGestorVeiculos.getInstance(getApplicationContext()).adicionarVeiculoAPI(livroAux, getApplicationContext());
-                    }
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
-
-            }
-        });*/
     }
 
     private void criarReserva(int idprofile, int idveiculo, int idseguro, String dataL, String dataD, int idLocalizacaol, int idLocalizacaod) {
@@ -338,7 +312,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
 
     }
 
-    private void getCheckboxData() {
+    /*private void getCheckboxData() {
         String url = SingletonGestorVeiculos.mUrlAPI + "extra";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -348,8 +322,10 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String value = jsonObject.getString("descricao");
+                        int id = jsonObject.getInt("id_extra");
                         CheckBox checkBox = new CheckBox(ReservaVeiculoActivity.this);
                         checkBox.setText(value);
+                        checkBox.setTag(id);
                         ctnrextras.addView(checkBox);
                     }
                 } catch (JSONException e) {
@@ -371,7 +347,8 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-    }
+    }*/
+
 
     private boolean isVeiculoValido() {
         String titulo = etMarca.getText().toString();
