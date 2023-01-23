@@ -322,12 +322,38 @@ public class SingletonGestorVeiculos {
 
     }
 
+    public void getALLReservasAPI(final Context context) {
+
+        if (!ReservasJsonParser.isConnectionInternet(context)) {
+            Toast.makeText(context, "Sem internet", Toast.LENGTH_SHORT).show();
+        } else {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPI + "reserva/todasreservas", null,new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    reservas = ReservasJsonParser.parserJsonReservas(response);
+
+                    if (reservasListener != null)
+                        reservasListener.onRefreshListaReservas(reservas);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            volleyQueue.add(req);
+        }
+
+    }
+
     public Reserva getReserva(int id) {
         for (Reserva l : reservas)
             if (l.getId() == id)
                 return l;
         return null;
     }
+
+
 
 //endregion
 }
