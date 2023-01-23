@@ -128,14 +128,14 @@ public class AssistenciaActivity extends AppCompatActivity {
         Resources res = getResources();
         String nome = String.format(res.getString(R.string.act_livro), veiculo.getMarca() + " " + veiculo.getModelo());
         setTitle(nome);
-        etVeiculo.setText(nome);
+        etVeiculo.setText(veiculo.getMarca());
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         etDataPedido.setText(format.format(calendar.getTime()));
 
         Glide.with(this)
                 .load(veiculo.getDescricao())
-                .placeholder(R.drawable.logo)
+                .placeholder(R.drawable.assistencia)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgCapa);
     }

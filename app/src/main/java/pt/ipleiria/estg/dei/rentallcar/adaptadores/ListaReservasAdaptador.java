@@ -64,7 +64,7 @@ public class ListaReservasAdaptador extends BaseAdapter {
     }
 
     private class ViewHolderlista {
-        private TextView tvMarca, tvModelo, tvDataLevantamento, tvDataDevolucao;
+        private TextView tvMarca, tvModelo, tvDataLevantamento, tvDataDevolucao, tvMatricula;
         private Button btnPedirAssistencia;
 
 
@@ -73,6 +73,7 @@ public class ListaReservasAdaptador extends BaseAdapter {
             tvModelo = view.findViewById(R.id.tvModelo);
             tvDataLevantamento = view.findViewById(R.id.tvDataLevantamento);
             tvDataDevolucao = view.findViewById(R.id.tvDataDevolucao);
+            tvMatricula = view.findViewById(R.id.tvMatricula);
             btnPedirAssistencia = view.findViewById(R.id.btnPedirAssistencia);
 
 
@@ -86,25 +87,10 @@ public class ListaReservasAdaptador extends BaseAdapter {
                 tvModelo.setText(reserva.getModelo());
                 tvDataLevantamento.setText(reserva.getData_inicio());
                 tvDataDevolucao.setText(reserva.getData_fim());
+                tvMatricula.setText(reserva.getMatricula());
 
 
-                String dateFormat = reserva.getData_inicio();
-                String dateFormat2 = reserva.getData_inicio();
-                SimpleDateFormat format = new SimpleDateFormat("d/m/yyyy");
-                Date date = new Date();
-                try {
 
-                    Date dataInicio = format.parse(dateFormat);
-                    Date dataFim = format.parse(dateFormat2);
-
-                    if(date.compareTo(dataInicio) >= 0 && date.compareTo(dataFim)<= 0 ){
-                        btnPedirAssistencia.setVisibility(View.VISIBLE);
-
-
-                    }
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
 
 
 

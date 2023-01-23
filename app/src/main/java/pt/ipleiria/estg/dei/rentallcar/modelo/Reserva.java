@@ -3,9 +3,9 @@ package pt.ipleiria.estg.dei.rentallcar.modelo;
 public class Reserva {
 
     private int id, veiculo_id, profile_id, seguro_id, preco;
-    private String data_inicio, data_fim, marca, modelo, seguro, localizacao_levantamento, localizacao_devolucao;
+    private String data_inicio, data_fim, marca, modelo, seguro, localizacao_levantamento, localizacao_devolucao,matricula;
 
-    public Reserva(int id, String data_inicio, String data_fim, int veiculo_id, String marca, String modelo, int profile_id, int seguro_id, String seguro, String localizacao_levantamento, String localizacao_devolucao, int preco) {
+    public Reserva(int id, String data_inicio, String data_fim, int veiculo_id, String marca, String modelo, int profile_id, int seguro_id, String seguro, String localizacao_levantamento, String localizacao_devolucao, int preco, String matricula) {
         this.id = id;
         this.data_inicio = data_inicio;
         this.data_fim = data_fim;
@@ -18,6 +18,7 @@ public class Reserva {
         this.localizacao_levantamento = localizacao_levantamento;
         this.localizacao_devolucao = localizacao_devolucao;
         this.preco = preco;
+        this.matricula=matricula;
     }
 
     public int getId() {
@@ -114,6 +115,14 @@ public class Reserva {
 
     public void setPreco(int preco) {
         this.preco = preco;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
 }
