@@ -2,6 +2,7 @@ package pt.ipleiria.estg.dei.rentallcar.vistas;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,8 +28,7 @@ public class ListaReservaFragment extends Fragment implements ReservasListener {
     public static final int DETALHES = 2;
 
 
-
-    public  ListaReservaFragment() {
+    public ListaReservaFragment() {
 
     }
 
@@ -37,9 +37,9 @@ public class ListaReservaFragment extends Fragment implements ReservasListener {
         View view = inflater.inflate(R.layout.fragment_lista_reservas, container, false);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_info", MODE_PRIVATE);
         int id = sharedPreferences.getInt("id", -1);
-        lvReservas= view.findViewById(R.id.lvReservas);
+        lvReservas = view.findViewById(R.id.lvReservas);
         SingletonGestorVeiculos.getInstance(getContext()).setReservasListener(this);
-        SingletonGestorVeiculos.getInstance(getContext()).getReservaAPI(getContext(),id);
+        SingletonGestorVeiculos.getInstance(getContext()).getReservaAPI(getContext(), id);
 
         lvReservas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,5 +57,16 @@ public class ListaReservaFragment extends Fragment implements ReservasListener {
     public void onRefreshListaReservas(ArrayList<Reserva> reservas) {
         if (reservas != null)
             lvReservas.setAdapter(new ListaReservasAdaptador(getContext(), reservas));
+      else
+
+            showMessage("Error", "Não tem reservas");
+
+    }
+    public void showMessage(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
     }
 }

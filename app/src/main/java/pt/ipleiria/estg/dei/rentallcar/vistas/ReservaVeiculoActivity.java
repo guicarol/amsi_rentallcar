@@ -95,12 +95,19 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dpwnseguro.setAdapter(adapter);
         dpwnseguro.setOnItemSelectedListener(this);
-
+        if (etDataD.getText().toString() == null || etDataL.getText().toString() == null) {
+            Toast.makeText(ReservaVeiculoActivity.this, "Verifique as datas", Toast.LENGTH_LONG).show();
+            return;
+        }
         btnReservar = findViewById(R.id.btnReservar);
         btnReservar.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-
+                if (etDataD.getText() == null || etDataL.getText() == null) {
+                    Toast.makeText(ReservaVeiculoActivity.this, "Verifique as datas", Toast.LENGTH_LONG).show();
+                    return;
+                } else {
                /* Integer[] selecteditems = new Integer[ctnrextras.getChildCount()];
 
                 for (int i = 0; i < ctnrextras.getChildCount(); i++) {
@@ -109,7 +116,8 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
                         selecteditems[i] = (int) checkBox.getTag();
                     }
                 }*/
-                criarReserva(idprofile, idveiculo, idseguro, etDataL.getText().toString(), etDataD.getText().toString(), idLocalizacaol, idLocalizacaod);
+                    criarReserva(idprofile, idveiculo, idseguro, etDataL.getText().toString(), etDataD.getText().toString(), idLocalizacaol, idLocalizacaod);
+                }
 
             }
 

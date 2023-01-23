@@ -48,7 +48,6 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
         etPreco = findViewById(R.id.etPreco);
         etMatricula = findViewById(R.id.etMatricula);
         etDescricao = findViewById(R.id.etDescricao);
-        etTipoVeiculo = findViewById(R.id.etTipoVeiculo);
         etFranquia = findViewById(R.id.etFranquia);
 
         SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
@@ -90,7 +89,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
                 myDb = new DatabaseHelper(getApplicationContext());
 
 // To insert data
-                myDb.insertData(idprofile+"", veiculo.getMarca() + " " + veiculo.getModelo());
+                myDb.insertData(idprofile + "", veiculo.getMarca() + " " + veiculo.getModelo());
                 Toast.makeText(DetalhesVeiculoActivity.this, "Veiculo guardado com sucesso", Toast.LENGTH_LONG).show();
 
             }
@@ -107,7 +106,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
         etPreco.setText(veiculo.getPreco() + "€");
         etMatricula.setText(veiculo.getMatricula());
         etDescricao.setText(veiculo.getDescricao());
-        etFranquia.setText(veiculo.getFranquia()+"");
+        etFranquia.setText(veiculo.getFranquia() + "");
         // etTipoVeiculo.setText(veiculo.getTipoveiculo()+"");
         //etFranquia.setText(veiculo.getFranquia()+"");
         Glide.with(this)

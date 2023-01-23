@@ -40,7 +40,7 @@ public class ListaFavoritosFragment extends Fragment {
         // Check if there are any data in the cursor
         if (res.getCount() == 0) {
             // Show message if there are no data
-            showMessage("Error", "No data found");
+            showMessage("Error", "Não tem favoritos");
             return view;
         }
 

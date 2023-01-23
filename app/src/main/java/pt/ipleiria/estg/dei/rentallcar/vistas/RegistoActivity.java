@@ -113,8 +113,6 @@ public class RegistoActivity extends AppCompatActivity {
                         finish();
                     } else {
                         // Handle signup failure
-                        Toast.makeText(RegistoActivity.this, "Erro no registo", Toast.LENGTH_LONG).show();
-
                         if (username == null) {
                             usernameEditText.setError("Erro no username");
                             return;
@@ -147,6 +145,8 @@ public class RegistoActivity extends AppCompatActivity {
                             etNrCarta.setError("Erro no numero da carta");
                             return;
                         }
+                        Toast.makeText(RegistoActivity.this, "Erro no registo", Toast.LENGTH_LONG).show();
+
                     }
                 } catch (JSONException e) {
                     // Handle JSON exception
