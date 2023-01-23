@@ -7,48 +7,26 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
 import pt.ipleiria.estg.dei.rentallcar.R;
+import pt.ipleiria.estg.dei.rentallcar.modelo.DatabaseHelper;
 import pt.ipleiria.estg.dei.rentallcar.modelo.Favorito;
-import pt.ipleiria.estg.dei.rentallcar.modelo.FavoritoHelper;
 import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 import pt.ipleiria.estg.dei.rentallcar.modelo.Veiculo;
 
-public class DetalhesVeiculoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class DetalhesVeiculoActivity extends AppCompatActivity {
 
     private Veiculo veiculo;
     private Favorito favorito;
@@ -58,10 +36,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
     private FloatingActionButton fabGuardar;
     private Button btnReservar;
     public static final String IDVEICULO = "IDVEICULO";
-    public static final int MIN_CHAR = 3;
-    public static final int MIN_NUMERO = 4;
-    private Spinner dpwnseguro, dpwdn_localizacaol, dpwn_localizacaod;
-    private LinearLayout ctnrextras;
+    private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +55,9 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         idprofile = sharedPreferences.getInt("id", -1);
         imgCapa = findViewById(R.id.imgCapa);
         idveiculo = getIntent().getIntExtra(IDVEICULO, 0);
+        db = new DatabaseHelper(this);
 
-        //listaExtras = findViewById(R.id.listaExtras);
-        //getDropdownSeguro();
-
-        //listaExtras = findViewById(R.id.listaExtras);
-
+        fabGuardar = findViewById(R.id.fabGuardar);
 
         btnReservar = findViewById(R.id.btnReservar);
 
@@ -96,14 +68,6 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
                 intent.putExtra(ReservaVeiculoActivity.IDVEICULO, (int) idveiculo);
                 startActivity(intent);
                 finish();
-            }
-        });
-
-        fabGuardar = findViewById(R.id.fabGuardar);
-        fabGuardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addToFavorites();
             }
         });
 
@@ -119,241 +83,18 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         fabGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FavoritoHelper myDb = new FavoritoHelper(getApplicationContext());
-                myDb.adicionarLivroBD(new Favorito(veiculo.getId(),veiculo.getPreco(),veiculo.getDescricao(),veiculo.getMarca(), veiculo.getModelo(), veiculo.getCombustivel(),veiculo.getMatricula()));
-                Toast.makeText(DetalhesVeiculoActivity.this, "Veiculo guardado com sucesso!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(DetalhesVeiculoActivity.this, MenuMainActivity.class);
-                startActivity(intent);
-                finish();
 
+                DatabaseHelper myDb;
+
+// Initialize the database helper in onCreate() method
+                myDb = new DatabaseHelper(getApplicationContext());
+
+// To insert data
+                myDb.insertData(idprofile+"", veiculo.getMarca() + " " + veiculo.getModelo());
+                Toast.makeText(DetalhesVeiculoActivity.this, "Veiculo guardado com sucesso", Toast.LENGTH_LONG).show();
 
             }
         });
-    }
-
-    private void criarReserva(int idprofile, int idveiculo, int idseguro, String dataL, String dataD, int idLocalizacaol, int idLocalizacaod) {
-        String url = SingletonGestorVeiculos.mUrlAPI + "veiculo/create?data_inicio=2023-12-23%2000:00:00&data_fim=2023-12-23%2000:00:00&veiculo_id=" + idveiculo + "&profile_id=" + idprofile + "&id=1&seguro_id=" + idseguro + "&localizacaol=" + idLocalizacaol + "&localizacaod=" + idLocalizacaod;
-        JSONObject jsonBody = new JSONObject();
-        try {
-            jsonBody.put("nome", "teste");
-            //jsonBody.put("password", password);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonBody,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Handle the response
-                        try {
-                            String message = response.getString("message");
-                            Toast.makeText(DetalhesVeiculoActivity.this, message, Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(DetalhesVeiculoActivity.this, MenuMainActivity.class);
-                            startActivity(intent);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // Handle the error
-                Toast.makeText(DetalhesVeiculoActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/json");
-                // you can add more headers if needed
-                return headers;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(DetalhesVeiculoActivity.this);
-        requestQueue.add(jsonObjectRequest);
-    }
-
-    private void getDropdownSeguro() {
-        String url = SingletonGestorVeiculos.mUrlAPI + "seguro";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    List<String> list = new ArrayList<>();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String value = jsonObject.getString("cobertura");
-                        list.add(value);
-                    }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DetalhesVeiculoActivity.this, android.R.layout.simple_spinner_item, list);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    dpwnseguro.setAdapter(adapter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetalhesVeiculoActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + getSharedPreferences("user_data", MODE_PRIVATE).getString("auth_token", ""));
-                return headers;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void getDropdownLocalizacaol() {
-        String url = SingletonGestorVeiculos.mUrlAPI + "localizacao";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    List<String> list = new ArrayList<>();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String value = jsonObject.getString("morada");
-                        list.add(value);
-                    }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DetalhesVeiculoActivity.this, android.R.layout.simple_spinner_item, list);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    dpwdn_localizacaol.setAdapter(adapter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetalhesVeiculoActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + getSharedPreferences("user_data", MODE_PRIVATE).getString("auth_token", ""));
-                return headers;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void getDropdownLocalizacaod() {
-        String url = SingletonGestorVeiculos.mUrlAPI + "localizacao";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    List<String> list = new ArrayList<>();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String value = jsonObject.getString("morada");
-                        list.add(value);
-                    }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DetalhesVeiculoActivity.this, android.R.layout.simple_spinner_item, list);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    dpwn_localizacaod.setAdapter(adapter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetalhesVeiculoActivity.this, "Error loading dropdown data", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + getSharedPreferences("user_data", MODE_PRIVATE).getString("auth_token", ""));
-                return headers;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Spinner spinner = (Spinner) parent;
-        if (spinner.getId() == R.id.dpwn_seguro) {
-            // Here, you can get the selected item's id
-            long selectedId = id + 1;
-
-            idseguro = Integer.parseInt(String.valueOf(selectedId));
-
-            // Do something with the id, like sending it to the API
-        } else if (spinner.getId() == R.id.dpwn_localizacaol) {
-            // Here, you can get the selected item's id
-            long selectedId = id + 1;
-
-            idLocalizacaol = Integer.parseInt(String.valueOf(selectedId));
-
-            // Do something with the id, like sending it to the API
-        } else if (spinner.getId() == R.id.dpwn_localizacaod) {
-            // Here, you can get the selected item's id
-            long selectedId = id + 1;
-
-            idLocalizacaod = Integer.parseInt(String.valueOf(selectedId));
-
-            // Do something with the id, like sending it to the API
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    private void getCheckboxData() {
-        String url = SingletonGestorVeiculos.mUrlAPI + "extra";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String value = jsonObject.getString("descricao");
-                        CheckBox checkBox = new CheckBox(DetalhesVeiculoActivity.this);
-                        checkBox.setText(value);
-                        ctnrextras.addView(checkBox);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetalhesVeiculoActivity.this, "Error loading checkbox data", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + getSharedPreferences("user_data", MODE_PRIVATE).getString("auth_token", ""));
-                return headers;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void addToFavorites() {
-        ArrayList<Veiculo> itemsList = new ArrayList<>();
-        //    itemsList.add(new Veiculo(idveiculo, veiculo.getPreco(), veiculo.getDescricao(), veiculo.getMarca(), veiculo.getModelo(), veiculo.getCombustivel(), veiculo.getMatricula()));
     }
 
     private void carregarVeiculo() {
@@ -366,6 +107,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity implements Adapte
         etPreco.setText(veiculo.getPreco() + "€");
         etMatricula.setText(veiculo.getMatricula());
         etDescricao.setText(veiculo.getDescricao());
+        etFranquia.setText(veiculo.getFranquia()+"");
         // etTipoVeiculo.setText(veiculo.getTipoveiculo()+"");
         //etFranquia.setText(veiculo.getFranquia()+"");
         Glide.with(this)

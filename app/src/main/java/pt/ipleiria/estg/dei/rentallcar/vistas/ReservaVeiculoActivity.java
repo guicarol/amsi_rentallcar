@@ -89,7 +89,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
         dpwn_localizacaod.setOnItemSelectedListener(this);
 
         ctnrextras = findViewById(R.id.container_extras);
-       // getCheckboxData();
+        // getCheckboxData();
 
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -124,7 +124,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
     }
 
     private void criarReserva(int idprofile, int idveiculo, int idseguro, String dataL, String dataD, int idLocalizacaol, int idLocalizacaod) {
-        String url = SingletonGestorVeiculos.mUrlAPI + "veiculo/create?data_inicio="+dataL+"&data_fim="+dataD+"&veiculo_id=" + idveiculo + "&profile_id=" + idprofile + "&id=1&seguro_id=" + idseguro + "&localizacaol=" + idLocalizacaol + "&localizacaod=" + idLocalizacaod;
+        String url = SingletonGestorVeiculos.mUrlAPI + "veiculo/create?data_inicio=" + dataL + "&data_fim=" + dataD + "&veiculo_id=" + idveiculo + "&profile_id=" + idprofile + "&id=1&seguro_id=" + idseguro + "&localizacaol=" + idLocalizacaol + "&localizacaod=" + idLocalizacaod;
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("nome", "teste");
@@ -142,7 +142,7 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
                             int idreserva = response.getInt("idreserva");
                             Toast.makeText(ReservaVeiculoActivity.this, message, Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(ReservaVeiculoActivity.this, ListaReservaFragment.class);
-                            intent.putExtra(DetalhesReservaActivity.IDRESERVA,  idreserva);
+                            intent.putExtra(DetalhesReservaActivity.IDRESERVA, idreserva);
                             startActivity(intent);
                             finish();
                         } catch (

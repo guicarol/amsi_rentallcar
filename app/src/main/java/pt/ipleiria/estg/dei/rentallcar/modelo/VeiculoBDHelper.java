@@ -12,10 +12,10 @@ import java.util.ArrayList;
 
 public class VeiculoBDHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "bdveiculos";
+    private static final String DB_NAME = "bd_veiculos";
     private static final int DB_VERSION = 1;
     private static final String TABLE_VEICULOS = "veiculos";
-    private static final String ID = "id_veiculo", MARCA = "marca", MODELO = "modelo", COMBUSTIVEL = "combustivel", PRECO = "preco", DESCRICAO = "descricao", MATRICULA = "matricula";
+    private static final String ID = "id_veiculo", MARCA = "marca", MODELO = "modelo", COMBUSTIVEL = "combustivel", PRECO = "preco", DESCRICAO = "descricao", MATRICULA = "matricula", FRANQUIA = "franquia";
     private final SQLiteDatabase db;
 
     public VeiculoBDHelper(@Nullable Context context) {
@@ -46,18 +46,24 @@ public class VeiculoBDHelper extends SQLiteOpenHelper {
     }
 
     public Veiculo adicionarLivroBD(Veiculo veiculo) {
-
+        removerAllLivrosBD();
         ContentValues values = new ContentValues();
-        values.put(ID,veiculo.getId());
+        values.put(ID, veiculo.getId());
         values.put(MARCA, veiculo.getMarca());
         values.put(MODELO, veiculo.getModelo());
         values.put(COMBUSTIVEL, veiculo.getCombustivel());
         values.put(PRECO, veiculo.getPreco());
         values.put(DESCRICAO, veiculo.getDescricao());
-        values.put(MATRICULA,veiculo.getMatricula());
+        values.put(MATRICULA, veiculo.getMatricula());
         db.insert(TABLE_VEICULOS, null, values);
 
-        return veiculo;
+        long id = db.insert(TABLE_VEICULOS, null, values);
+
+        if (id > -1) {
+            veiculo.setId((int) id);
+            return veiculo;
+        }
+        return null;
     }
 
     public boolean editarLivroBD(Veiculo veiculo) {
@@ -86,11 +92,11 @@ public class VeiculoBDHelper extends SQLiteOpenHelper {
 
     public ArrayList<Veiculo> getAllLivroBD() {
         ArrayList<Veiculo> veiculos = new ArrayList<>();
-        Cursor cursor = db.query(TABLE_VEICULOS, new String[]{PRECO, DESCRICAO, MARCA, MODELO, COMBUSTIVEL, ID, MATRICULA}, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_VEICULOS, new String[]{PRECO, DESCRICAO, MARCA, MODELO, COMBUSTIVEL, ID, MATRICULA, FRANQUIA}, null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
-                Veiculo veiculoAux = new Veiculo(cursor.getInt(5), cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(6));
+                Veiculo veiculoAux = new Veiculo(cursor.getInt(5), cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(6), cursor.getInt(7));
                 veiculos.add(veiculoAux);
 
             } while (cursor.moveToNext());

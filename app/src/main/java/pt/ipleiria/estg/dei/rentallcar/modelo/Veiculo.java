@@ -2,11 +2,11 @@ package pt.ipleiria.estg.dei.rentallcar.modelo;
 
 public class Veiculo {
 
-    private int id, preco;
+    private int id, preco,franquia;
     private String marca, combustivel, modelo,matricula, descricao;
     private static int autoIncrementId=1;
 
-    public Veiculo(int id, int preco, String descricao, String marca, String modelo, String combustivel,String matricula) {
+    public Veiculo(int id, int preco, String descricao, String marca, String modelo, String combustivel,String matricula,int franquia) {
         this.id = id;
         this.preco = preco;
         this.descricao = descricao;
@@ -14,6 +14,7 @@ public class Veiculo {
         this.combustivel = combustivel;
         this.modelo = modelo;
         this.matricula=matricula;
+        this.franquia=franquia;
     }
 
     public int getId() {
@@ -68,7 +69,16 @@ public class Veiculo {
         return matricula;
     }
 
-    public void setMatricula(String modelo) {
+    public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
+
+    public int getFranquia() {
+        return franquia;
+    }
+
+    public void setFranquia(int franquia) {
+        this.franquia = franquia;
+    }
+
 }

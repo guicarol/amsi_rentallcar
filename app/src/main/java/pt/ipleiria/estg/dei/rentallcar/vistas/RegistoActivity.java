@@ -127,6 +127,26 @@ public class RegistoActivity extends AppCompatActivity {
                             passwordEditText.setError(getString(R.string.txt_password_invalida));
                             return;
                         }
+                        if (nome == null) {
+                            etNome.setError("Erro no nome");
+                            return;
+                        }
+                        if (apelido == null) {
+                            etApelido.setError("Erro no apelido");
+                            return;
+                        }
+                        if (telemovel == null) {
+                            etTelefone.setError("Erro no telemovel");
+                            return;
+                        }
+                        if (nif == null) {
+                            etNif.setError("Erro no nif");
+                            return;
+                        }
+                        if (nr_carta_conducao == null) {
+                            etNrCarta.setError("Erro no numero da carta");
+                            return;
+                        }
                     }
                 } catch (JSONException e) {
                     // Handle JSON exception

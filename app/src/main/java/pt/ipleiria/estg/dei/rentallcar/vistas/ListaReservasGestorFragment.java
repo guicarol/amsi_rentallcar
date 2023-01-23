@@ -44,8 +44,7 @@ public class ListaReservasGestorFragment extends Fragment implements ReservasLis
         lvReservas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-                Intent intent = new Intent(getContext(), DetalhesReservaActivity.class);
+                Intent intent = new Intent(getContext(), DetalhesReservaGestorActivity.class);
                 intent.putExtra(DetalhesReservaActivity.IDRESERVA, (int) id);
                 startActivityForResult(intent, DETALHES);
             }

@@ -43,6 +43,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".vistas.DetalhesReservaGestorActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".vistas.AssistenciaActivity"
             android:exported="false">
             <meta-data

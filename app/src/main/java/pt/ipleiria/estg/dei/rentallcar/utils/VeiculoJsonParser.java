@@ -19,14 +19,15 @@ public class VeiculoJsonParser {
         try {
             for (int i = 0; i < response.length(); i++) {
                 JSONObject livro = (JSONObject) response.get(i);
-                int id = livro.getInt("id");
-                String titulo = livro.getString("titulo");
-                String serie = livro.getString("serie");
-                String autor = livro.getString("autor");
-                int ano = livro.getInt("ano");
+                int id_veiculo = livro.getInt("id_veiculo");
+                String marca = livro.getString("marca");
+                String modelo = livro.getString("modelo");
+                String combustivel = livro.getString("combustivel");
+                int preco = livro.getInt("preco");
                 String descricao = livro.getString("descricao");
                 String matricula = livro.getString("matricula");
-                Veiculo livroAux = new Veiculo(id, ano, descricao, titulo, serie, autor, matricula);
+                int franquia = livro.getInt("franquia");
+                Veiculo livroAux = new Veiculo(id_veiculo, preco,descricao, marca, modelo, combustivel,matricula,franquia);
                 livros.add(livroAux);
             }
 
@@ -40,15 +41,15 @@ public class VeiculoJsonParser {
         Veiculo livroAux = null;
         try {
             JSONObject livro = new JSONObject(response);
-            int id = livro.getInt("id");
-            String titulo = livro.getString("titulo");
-            String serie = livro.getString("serie");
-            String autor = livro.getString("autor");
-            int ano = livro.getInt("ano");
+            int id = livro.getInt("id_veiculo");
+            String marca = livro.getString("marca");
+            String modelo = livro.getString("modelo");
+            String combustivel = livro.getString("combustivel");
+            int preco = livro.getInt("preco");
             String descricao = livro.getString("descricao");
             String matricula = livro.getString("matricula");
-
-            livroAux = new Veiculo(id, ano, descricao, titulo, serie, autor, matricula);
+            int franquia = livro.getInt("franquia");
+            livroAux = new Veiculo(id, preco, descricao, marca, modelo, combustivel,matricula,franquia);
 
         } catch (JSONException e) {
             e.printStackTrace();

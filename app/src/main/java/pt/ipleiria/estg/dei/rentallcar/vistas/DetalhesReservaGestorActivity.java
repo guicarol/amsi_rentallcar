@@ -2,8 +2,6 @@ package pt.ipleiria.estg.dei.rentallcar.vistas;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -19,13 +17,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import androidmads.library.qrgenearator.QRGContents;
-import androidmads.library.qrgenearator.QRGEncoder;
 import pt.ipleiria.estg.dei.rentallcar.R;
 import pt.ipleiria.estg.dei.rentallcar.modelo.Reserva;
 import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 
-public class DetalhesReservaActivity extends AppCompatActivity {
+public class DetalhesReservaGestorActivity extends AppCompatActivity {
 
     private Reserva reserva;
     private int idprofile, idreserva;
@@ -37,7 +33,6 @@ public class DetalhesReservaActivity extends AppCompatActivity {
     public static final int MIN_CHAR = 3;
     public static final int MIN_NUMERO = 4;
     public static final String IDRESERVA = "IDRESERVA";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +54,8 @@ public class DetalhesReservaActivity extends AppCompatActivity {
         btnPedirAssistencia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DetalhesReservaActivity.this, AssistenciaActivity.class);
-                intent.putExtra(DetalhesReservaActivity.IDVEICULO, reserva.getVeiculo_id());
+                Intent intent = new Intent(DetalhesReservaGestorActivity.this, AssistenciaActivity.class);
+                intent.putExtra(DetalhesReservaGestorActivity.IDVEICULO, reserva.getVeiculo_id());
                 startActivity(intent);
                 finish();
             }
@@ -87,8 +82,6 @@ public class DetalhesReservaActivity extends AppCompatActivity {
         tvDataD.setText(reserva.getData_fim() + "");
         tvPreco.setText(reserva.getPreco() + "€");
         tvMatricula.setText(reserva.getMatricula());
-        imgCapa.setImageBitmap(makeqr(reserva.getId() + ""));
-
 
         String dateFormat = reserva.getData_inicio();
         String dateFormat2 = reserva.getData_fim();
@@ -113,20 +106,6 @@ public class DetalhesReservaActivity extends AppCompatActivity {
 
     }
 
-    public static Bitmap makeqr(String id){
-
-
-        QRGEncoder qrgEncoder = new QRGEncoder(id , null, QRGContents.Type.TEXT, 500);
-        qrgEncoder.setColorBlack(Color.WHITE);
-        qrgEncoder.setColorWhite(Color.BLACK);
-        try {
-            Bitmap bitmap = qrgEncoder.getBitmap();
-            return bitmap;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

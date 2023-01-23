@@ -36,7 +36,7 @@ public class SingletonGestorVeiculos {
     private VeiculoBDHelper veiculosBD;
     private FavoritoHelper favoritoBD;
     private static RequestQueue volleyQueue = null;
-    public static final String mUrlAPI = "http://192.168.1.65/plsi_rentallcar/backend/web/api/";
+    public static final String mUrlAPI = "http://192.168.1.70/plsi_rentallcar/backend/web/api/";
     private static final String TOKEN = "AMSI-TOKEN";
     private VeiculosListener veiculosListener;
     private DetalhesListener detalhesListener;

@@ -36,7 +36,7 @@ public class Camara_GestorFragment extends Fragment implements ReservasListener 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         activity = getActivity();
         view = inflater.inflate(R.layout.fragment_camara__gestor, container, false);
@@ -45,7 +45,7 @@ public class Camara_GestorFragment extends Fragment implements ReservasListener 
         SingletonGestorVeiculos.getInstance(getContext()).setReservasListener(this);
         SingletonGestorVeiculos.getInstance(getContext()).getALLReservasAPI(getContext());
 
-        Scan = new CodeScanner(activity,ScanView);
+        Scan = new CodeScanner(activity, ScanView);
 
         return view;
     }
@@ -73,15 +73,12 @@ public class Camara_GestorFragment extends Fragment implements ReservasListener 
 
                         Reserva reserva = SingletonGestorVeiculos.getInstance(getContext()).getReserva(Integer.parseInt(resultado.getText()));
 
-                        if (reserva != null)
-                        {
+                        if (reserva != null) {
                             Intent intent = new Intent(getContext(), DetalhesReservaActivity.class);
                             intent.putExtra(DetalhesReservaActivity.IDRESERVA, reserva.getId());
                             startActivityForResult(intent, DETALHES);
 
-
-
-                        }else{
+                        } else {
                             Scan.startPreview();
                         }
                     }
