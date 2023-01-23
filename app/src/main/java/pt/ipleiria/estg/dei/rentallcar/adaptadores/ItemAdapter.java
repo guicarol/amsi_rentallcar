@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -64,13 +65,14 @@ public class ItemAdapter extends BaseAdapter {
     }
     private class ViewHolderlista {
         private TextView tvMarca, tvModelo, tvCombustivel, tvPreco;
+         private Button btnDelete;
 
 
         public ViewHolderlista(View view) {
             tvMarca = view.findViewById(R.id.tvMarca);
             tvModelo = view.findViewById(R.id.tvModelo);
-            tvCombustivel = view.findViewById(R.id.tvDataLevantamento);
-            tvPreco = view.findViewById(R.id.tvDataDevolucao);
+            btnDelete= view.findViewById(R.id.btnDelete);
+
 
         }
 
@@ -78,8 +80,7 @@ public class ItemAdapter extends BaseAdapter {
             if(favorito!=null) {
                 tvMarca.setText(favorito.getMarca());
                 tvModelo.setText(favorito.getModelo());
-                tvCombustivel.setText(favorito.getCombustivel());
-                tvPreco.setText(favorito.getPreco() + "€");
+
             }
         }
     }
