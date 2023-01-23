@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import pt.ipleiria.estg.dei.rentallcar.MenuMainActivity;
+import pt.ipleiria.estg.dei.rentallcar.MenuMainGestorActivity;
 import pt.ipleiria.estg.dei.rentallcar.R;
 import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
 
@@ -84,11 +85,20 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("email", jsonObject.getString("email"));
                                 editor.putInt("id", jsonObject.getInt("id"));
                                 editor.apply();
-                                Intent intent = new Intent(LoginActivity.this, MenuMainActivity.class);
-                                startActivity(intent);
-                                intent.putExtra("EMAIL", username);
-                                startActivity(intent);
-                                finish();
+
+                                if(jsonObject.getString("role").equals("cliente")) {
+                                    Intent intent = new Intent(LoginActivity.this, MenuMainActivity.class);
+                                    startActivity(intent);
+                                    intent.putExtra("EMAIL", username);
+                                    startActivity(intent);
+                                    finish();
+                                }else {
+                                    Intent intent = new Intent(LoginActivity.this, MenuMainGestorActivity.class);
+                                    startActivity(intent);
+                                    intent.putExtra("EMAIL", username);
+                                    startActivity(intent);
+                                    finish();
+                                }
 
                                 // Intent dados = new Intent(this, Utilizador.class);
                                 //dados.putExtra("EMAIL", email);

@@ -2,6 +2,8 @@ package pt.ipleiria.estg.dei.rentallcar.vistas;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -13,6 +15,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
 import pt.ipleiria.estg.dei.rentallcar.R;
 import pt.ipleiria.estg.dei.rentallcar.modelo.Reserva;
 import pt.ipleiria.estg.dei.rentallcar.modelo.SingletonGestorVeiculos;
@@ -21,7 +29,7 @@ public class DetalhesReservaActivity extends AppCompatActivity {
 
     private Reserva reserva;
     private int idprofile, idreserva;
-    private TextView etMarca, etModelo, tvLocalL, etseguro, tvDataL, tvLocalD, tvDataD, tvPreco;
+    private TextView etMarca, etModelo, tvLocalL, etseguro, tvDataL, tvLocalD, tvDataD, tvPreco, tvMatricula;
     private ImageView imgCapa;
     private FloatingActionButton fabGuardar;
     private Button btnPedirAssistencia;
@@ -29,6 +37,7 @@ public class DetalhesReservaActivity extends AppCompatActivity {
     public static final int MIN_CHAR = 3;
     public static final int MIN_NUMERO = 4;
     public static final String IDRESERVA = "IDRESERVA";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +51,12 @@ public class DetalhesReservaActivity extends AppCompatActivity {
         tvLocalD = findViewById(R.id.tvLocalD);
         tvDataD = findViewById(R.id.tvDataD);
         tvPreco = findViewById(R.id.tvPreco);
+        tvMatricula = findViewById(R.id.tvMatricula);
         idreserva = getIntent().getIntExtra(IDRESERVA, 0);
+        imgCapa = findViewById(R.id.imgCapa);
+
+
+
 
         btnPedirAssistencia = findViewById(R.id.btnPedirAssistencia);
         btnPedirAssistencia.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +89,46 @@ public class DetalhesReservaActivity extends AppCompatActivity {
         tvLocalD.setText(reserva.getLocalizacao_devolucao());
         tvDataD.setText(reserva.getData_fim() + "");
         tvPreco.setText(reserva.getPreco() + "€");
+        tvMatricula.setText(reserva.getMatricula());
+        imgCapa.setImageBitmap(makeqr(reserva.getId() + ""));
+
+
+        String dateFormat = reserva.getData_inicio();
+        String dateFormat2 = reserva.getData_fim();
+        SimpleDateFormat format = new SimpleDateFormat("d/MM/yyyy");
+        Date date = new Date();
+        try {
+
+            Date dataInicio = format.parse(dateFormat);
+            Date dataFim = format.parse(dateFormat2);
+
+
+
+            if(date.compareTo(dataInicio) >= 0 && date.compareTo(dataFim) <= 0 ){
+                btnPedirAssistencia.setVisibility(View.VISIBLE);
+
+
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public static Bitmap makeqr(String id){
+
+
+        QRGEncoder qrgEncoder = new QRGEncoder(id , null, QRGContents.Type.TEXT, 500);
+        qrgEncoder.setColorBlack(Color.WHITE);
+        qrgEncoder.setColorWhite(Color.BLACK);
+        try {
+            Bitmap bitmap = qrgEncoder.getBitmap();
+            return bitmap;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -85,4 +139,8 @@ public class DetalhesReservaActivity extends AppCompatActivity {
         }
         return false;
     }
+
+
+
+
 }
