@@ -158,7 +158,7 @@ public class RegistoActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Handle error
-                Toast.makeText(RegistoActivity.this, "Erro no registo", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegistoActivity.this, "Erro no registo, tente novamente  ", Toast.LENGTH_LONG).show();
 
 
             }

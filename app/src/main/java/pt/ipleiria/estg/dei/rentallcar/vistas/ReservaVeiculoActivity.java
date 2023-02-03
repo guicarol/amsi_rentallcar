@@ -2,7 +2,6 @@ package pt.ipleiria.estg.dei.rentallcar.vistas;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -388,10 +387,8 @@ public class ReservaVeiculoActivity extends AppCompatActivity implements Adapter
     }
 
     private void carregarVeiculo() {
-        Resources res = getResources();
-        String nome = String.format(res.getString(R.string.act_livro), veiculo.getMarca() + " " + veiculo.getModelo());
-        setTitle(nome);
-        etMarca.setText(veiculo.getMarca());
+        setTitle("Reservar");
+        etMarca.setText( veiculo.getMarca() + " " + veiculo.getModelo());
 
         Glide.with(this)
                 .load(veiculo.getDescricao())

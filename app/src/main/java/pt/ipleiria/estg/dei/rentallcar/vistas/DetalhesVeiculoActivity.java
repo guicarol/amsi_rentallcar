@@ -106,7 +106,7 @@ public class DetalhesVeiculoActivity extends AppCompatActivity {
         etPreco.setText(veiculo.getPreco() + "€");
         etMatricula.setText(veiculo.getMatricula());
         etDescricao.setText(veiculo.getDescricao());
-        etFranquia.setText(veiculo.getFranquia() + "");
+        etFranquia.setText(veiculo.getFranquia() + "€");
         // etTipoVeiculo.setText(veiculo.getTipoveiculo()+"");
         //etFranquia.setText(veiculo.getFranquia()+"");
         Glide.with(this)

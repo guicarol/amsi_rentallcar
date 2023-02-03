@@ -103,9 +103,8 @@ public class LoginActivity extends AppCompatActivity {
                                 // Intent dados = new Intent(this, Utilizador.class);
                                 //dados.putExtra("EMAIL", email);
                             } else {
-                                Toast.makeText(LoginActivity.this, "Erro no login", Toast.LENGTH_LONG).show();
 
-                                if (username == null) {
+                                if (!isUsernameValido(username)) {
                                     etUsername.setError("Erro no username");
                                     return;
                                 }
@@ -113,6 +112,8 @@ public class LoginActivity extends AppCompatActivity {
                                     etPassword.setError(getString(R.string.txt_password_invalida));
                                     return;
                                 }
+                                Toast.makeText(LoginActivity.this, "Username ou password incorretas", Toast.LENGTH_LONG).show();
+
                                 // Handle unsuccessful login
                                 // Show an error message to the user
                             }
@@ -171,6 +172,11 @@ public class LoginActivity extends AppCompatActivity {
         if (pass == null)
             return false;
         return pass.length() >= MIN_PASS;
+    }
+    private boolean isUsernameValido(String username) {
+        if (username == null)
+            return false;
+        return username.length() >= MIN_PASS;
     }
 
     public void onClickRegistar(View view) {

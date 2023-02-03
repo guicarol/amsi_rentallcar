@@ -74,8 +74,8 @@ public class Camara_GestorFragment extends Fragment implements ReservasListener 
                         Reserva reserva = SingletonGestorVeiculos.getInstance(getContext()).getReserva(Integer.parseInt(resultado.getText()));
 
                         if (reserva != null) {
-                            Intent intent = new Intent(getContext(), DetalhesReservaActivity.class);
-                            intent.putExtra(DetalhesReservaActivity.IDRESERVA, reserva.getId());
+                            Intent intent = new Intent(getContext(), DetalhesReservaGestorActivity.class);
+                            intent.putExtra(DetalhesReservaGestorActivity.IDRESERVA, reserva.getId());
                             startActivityForResult(intent, DETALHES);
 
                         } else {
