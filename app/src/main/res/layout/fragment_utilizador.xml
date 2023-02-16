@@ -107,8 +107,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/txt_email"
-                android:inputType="textEmailAddress"
-                android:text="teste@teste.pt" />
+                android:inputType="textEmailAddress"/>
         </LinearLayout>
 
         <LinearLayout

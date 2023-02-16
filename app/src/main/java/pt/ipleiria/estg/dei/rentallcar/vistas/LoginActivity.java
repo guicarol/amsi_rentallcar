@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(final String username, final String password) {
-        String loginUrl = SingletonGestorVeiculos.mUrlAPI+"user/login";
+        String loginUrl = SingletonGestorVeiculos.mUrlAPI + "user/login";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, loginUrl,
                 new com.android.volley.Response.Listener<String>() {
@@ -75,24 +75,21 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.getBoolean("success")) {
-                                // Handle successful login
-                                // For example, you can start a new activity or save the user's information in SharedPreferences
-
                                 Toast.makeText(LoginActivity.this, "Login efetuado com sucesso", Toast.LENGTH_LONG).show();
-                               SharedPreferences sharedPreferences = getSharedPreferences("user_info", Context.MODE_PRIVATE);
+                                SharedPreferences sharedPreferences = getSharedPreferences("user_info", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("username", username);
                                 editor.putString("email", jsonObject.getString("email"));
                                 editor.putInt("id", jsonObject.getInt("id"));
                                 editor.apply();
 
-                                if(jsonObject.getString("role").equals("cliente")) {
+                                if (jsonObject.getString("role").equals("cliente")) {
                                     Intent intent = new Intent(LoginActivity.this, MenuMainActivity.class);
                                     startActivity(intent);
                                     intent.putExtra("EMAIL", username);
                                     startActivity(intent);
                                     finish();
-                                }else {
+                                } else {
                                     Intent intent = new Intent(LoginActivity.this, MenuMainGestorActivity.class);
                                     startActivity(intent);
                                     intent.putExtra("EMAIL", username);
@@ -173,6 +170,7 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         return pass.length() >= MIN_PASS;
     }
+
     private boolean isUsernameValido(String username) {
         if (username == null)
             return false;
